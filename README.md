@@ -1,39 +1,47 @@
-# Aplicación de votación en tiempo real
+# Conexión en Directo: herramientas de interacción en tiempo real
 
-Una aplicación web sencilla y sin servidor para crear y participar en votaciones en tiempo real. Utiliza WebRTC (a través de la librería PeerJS) para la comunicación directa entre el presentador y los participantes, eliminando la necesidad de un backend o una base de datos.
-
----
-
-## Características principales
-
-* **Creación de votaciones.** El presentador puede definir una pregunta y múltiples opciones de respuesta.
-* **Personalización visual.** Selector de color para personalizar el tema de la votación, con vista previa en directo.
-* **Sin servidor (Serverless).** Comunicación directa P2P (Peer-to-Peer) entre usuarios gracias a WebRTC.
-* **Múltiples formas de compartir.** Genera un código QR, un enlace directo y un código de sesión corto para que los participantes se unan.
-* **Resultados en directo.** Los resultados se actualizan instantáneamente en la pantalla del presentador a medida que llegan los votos.
-* **Modo proyector.** Una vista a pantalla completa optimizada para proyectar los resultados a una audiencia.
-* **Soporte multilingüe.** Interfaz disponible en Español, Catalán, Gallego, Euskera e Inglés.
-* **Gestión de la sesión.** El presentador puede finalizar una sesión y volver a la pantalla de edición para hacer ajustes y lanzar una nueva.
+"Conexión en Directo" es un conjunto de aplicaciones web sencillas y sin servidor para fomentar la participación en tiempo real en aulas, conferencias o cualquier tipo de presentación. Todas las herramientas utilizan tecnología **WebRTC** (a través de la librería PeerJS) para la comunicación directa entre el presentador y los participantes, eliminando la necesidad de un backend o una base de datos.
 
 ---
 
-## Cómo utilizar la aplicación
+## Filosofía del proyecto
 
-No se necesita instalación ni servidor. Simplemente abre el archivo `index.html` (o la URL donde esté alojado) en un navegador web.
+* **Sin servidor (Serverless)**: La comunicación es directa P2P (Peer-to-Peer) entre el presentador y los participantes. Ningún dato viaja a un servidor central.
+* **Privacidad por diseño**: No se requiere registro de usuarios y no se almacena ninguna información de la sesión en la nube. Cuando el presentador cierra la pestaña, los datos se pierden.
+* **Código abierto**: Todo el proyecto está disponible bajo una licencia Creative Commons que permite su uso, modificación y distribución.
+* **Soporte multilingüe**: La interfaz está disponible en español, catalán, gallego, euskera e inglés.
+
+---
+
+## Aplicaciones disponibles
+
+Este proyecto incluye varias herramientas interactivas:
+
+1.  **Votación simple**: Permite crear preguntas de opción múltiple y recibir votos en tiempo real. Los resultados se muestran como un gráfico de barras dinámico.
+2.  **Nube de palabras**: Recopila palabras o frases cortas de la audiencia para formar una nube de palabras visual. El tamaño de cada palabra es proporcional a su frecuencia. Se puede exportar como imagen (PNG) o datos (CSV).
+3.  **Lluvia de ideas y votos**: Una herramienta en dos fases. Primero, los participantes envían sus ideas de forma anónima. Después, en la fase de votación, pueden votar por las propuestas de los demás para priorizarlas.
+4.  **Muro interactivo**: Un lienzo digital colaborativo donde los participantes envían "post-its" virtuales. El presentador puede organizar las notas libremente. El resultado se puede exportar como PDF o CSV.
+
+---
+
+## Cómo utilizar las aplicaciones
+
+No se necesita instalación ni servidor. Simplemente abre el fichero `index.html` (o la URL donde esté alojado) en un navegador web.
 
 ### Para el presentador
 
-1.  En la pantalla inicial, haz clic en el enlace inferior: **"¿Eres el presentador? Inicia sesión aquí."**.
-2.  Introduce tu pregunta, las opciones de respuesta y elige un color para el tema.
-3.  Haz clic en **"Iniciar Sesión"**.
-4.  Comparte el **código QR**, el **enlace directo** o la **URL principal junto con el código de sesión** con tu audiencia.
+1.  Abre la aplicación que desees utilizar desde la página principal.
+2.  En la pantalla inicial de la aplicación, haz clic en el enlace inferior (normalmente **"¿Eres el presentador? Inicia sesión aquí."**).
+3.  Introduce la pregunta o título de la actividad, configura las opciones específicas (respuestas, límites, etc.) y personaliza el color del tema.
+4.  Haz clic en **"Iniciar Sesión"** o un botón similar.
+5.  Comparte el **código QR**, el **enlace directo** o la **URL principal junto con el código de sesión** con tu audiencia.
 
 ### Para los participantes
 
-1.  Abre la URL de la aplicación.
-2.  Introduce el código de la sesión proporcionado por el presentador.
+1.  Abre la URL de la aplicación proporcionada.
+2.  Introduce el código de la sesión que te ha dado el presentador.
 3.  Haz clic en **"Unirse"**.
-4.  Vota por tu opción preferida.
+4.  Interactúa enviando tus respuestas (votos, ideas, etc.).
 
 ---
 

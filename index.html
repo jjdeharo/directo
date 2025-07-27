@@ -3,208 +3,251 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <title>Repositorio de aplicaciones educativas</title>
+    <title>Conexión en Directo</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="estilos.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .app-card {
+            display: block;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            border: 1px solid #e5e7eb;
+            height: 100%;
+        }
+        .app-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .app-card-content {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 1.5rem; /* p-6 */
+        }
+        .app-card-description {
+            flex-grow: 1;
+        }
+        .app-icon {
+            width: 3rem;
+            height: 3rem;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        .app-card h2, .app-card p, .app-card div {
+            color: #1f2937;
+        }
+    </style>
 </head>
 <body class="text-gray-800">
 
-    <div class="container mx-auto p-4 md:p-8">
-    <header class="text-center mb-4 p-6 rounded-xl bg-gradient-to-b from-blue-50 to-gray-50">
-        <div class="flex justify-center items-center gap-4">
-            <img src="logo.png" alt="Logo del Repositorio" class="h-16 md:h-20">
-            <h1 class="text-4xl md:text-5xl font-bold text-gray-900">Repositorio de aplicaciones educativas</h1>
-        </div>
-        <p class="mt-4 text-lg text-gray-600">
-        Una colección de aplicaciones y recursos educativos creados por la comunidad
-        <a href="https://vibe-coding-educativo.github.io" target="_blank" class="text-blue-600 hover:underline font-semibold">Vibe Coding Educativo</a>.
-        </p>
-        <p class="mt-2 text-sm text-gray-500">
-        Para añadir tu aplicación, utiliza el enlace fijado en el grupo.
-        </p>
-    </header>
+    <div class="container mx-auto px-4 py-8">
 
-        <div class="flex flex-col md:flex-row gap-4 items-center mb-4">
-            <div class="relative w-full md:flex-grow">
-                <label for="search-input" class="sr-only">Búsqueda libre</label>
-                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                     <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" /></svg>
-                </div>
-                <input type="text" id="search-input" placeholder="Buscar por todos los campos..." class="w-full p-2 pl-10 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                <button id="clear-search-btn" title="Limpiar búsqueda" class="absolute inset-y-0 right-0 pr-3 flex items-center hidden text-gray-500 hover:text-gray-700 focus:outline-none">
-                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-                </button>
+        <header class="text-center mb-10">
+             <div class="flex justify-center items-center gap-3">
+                 <h1 id="main-title" class="text-4xl md:text-5xl font-extrabold text-gray-900">Conexión en Directo</h1>
+                 <a href="manual.html" id="manual-link-title" title="Manual de Usuario" class="text-gray-400 hover:text-blue-600 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-9 w-9" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                 </a>
             </div>
-
-            <div class="flex-shrink-0 flex gap-2 w-full md:w-auto">
-                 <button id="toggle-favorites-btn" title="Mostrar solo favoritos" class="action-btn flex flex-grow justify-center items-center gap-2 bg-white text-gray-700 font-semibold py-2 px-4 rounded-lg hover:bg-gray-100 shadow-sm border border-gray-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                    <span class="hidden sm:inline">Favoritos</span>
-                </button>
-                <button id="toggle-filters-btn" title="Mostrar/ocultar filtros" class="action-btn flex flex-grow justify-center items-center gap-2 bg-white text-gray-700 font-semibold py-2 px-4 rounded-lg hover:bg-gray-100 shadow-sm border border-gray-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
-                    <span>Filtros</span>
-                </button>
-                 <button id="help-btn" title="Ayuda" class="flex-shrink-0 flex justify-center items-center bg-gray-500 text-white font-semibold p-2.5 rounded-lg hover:bg-gray-600 transition shadow-sm">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-                </button>
+            <p id="main-subtitle" class="mt-3 text-lg text-gray-600 max-w-2xl mx-auto">Herramientas para fomentar la participación simultánea en el aula.</p>
+            <div class="absolute top-4 right-4">
+                <select id="lang-selector" onchange="setLanguage(this.value)" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                    <option value="es">Español</option>
+                    <option value="ca">Català</option>
+                    <option value="gl">Galego</option>
+                    <option value="eu">Euskara</option>
+                    <option value="en">English</option>
+                </select>
             </div>
-        </div>
-
-        <div id="filter-panel" class="bg-white p-4 sm:p-6 rounded-xl shadow-sm mb-8 sticky top-4 z-10 border border-gray-200 hidden">
-            <div id="filters-container" class="space-y-4"></div>
-            <div class="mt-6 border-t pt-4 flex justify-end">
-                 <button id="reset-filters-btn" class="w-full sm:w-auto px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition">Limpiar Filtros</button>
-            </div>
-        </div>
-
-        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 min-h-[2rem] gap-4">
-            <div id="results-counter" class="text-sm text-gray-600 font-medium order-2 sm:order-1"></div>
-
-            <div class="flex items-center gap-4 order-1 sm:order-2">
-                 
-                 <div id="actions-bar" class="hidden flex items-center gap-4">
-                    <button id="share-url-btn" class="hidden text-sm text-blue-600 hover:text-blue-800 font-semibold flex items-center gap-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
-                        Compartir Filtros
-                    </button>
-                    <button id="clear-favorites-btn" class="hidden text-sm text-red-600 hover:text-red-800 font-semibold flex items-center gap-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18m-2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                        Limpiar Favoritos
-                    </button>
-                    <button id="clear-all-btn" class="hidden text-sm text-blue-600 hover:text-blue-800 font-semibold flex items-center gap-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
-                        Limpiar todo
-                    </button>
-                </div>
-                <div class="flex items-center gap-2">
-                    <label for="items-per-page-selector" class="text-sm font-medium text-gray-600">Mostrar:</label>
-                    <select id="items-per-page-selector" class="text-sm rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 py-1">
-                        <option value="10">10</option>
-                        <option value="25" selected>25</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-                        <option value="all">Todas</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <div id="custom-view-message" class="hidden text-center p-4 mb-4 bg-blue-100 text-blue-800 rounded-lg shadow"></div>
-        <div id="active-filters-display" class="flex flex-wrap gap-2 mb-4"></div>
-
-        <div id="loading-message" class="flex flex-col items-center justify-center text-center py-20">
-            <svg class="animate-spin h-10 w-10 text-blue-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-            <p class="text-lg text-gray-600 font-semibold">Cargando aplicaciones...</p>
-        </div>
-        <div id="error-message" class="hidden text-center py-10 bg-red-100 text-red-700 rounded-lg"><p class="text-lg">No se pudieron cargar los datos.</p></div>
-        <div id="no-results-message" class="hidden text-center py-10"><p class="text-lg text-gray-500">No se encontraron aplicaciones.</p></div>
-        <div id="no-favorites-message" class="hidden text-center py-10"><p class="text-lg text-gray-500">No tienes aplicaciones favoritas.<br><span class="text-sm">Haz clic en el corazón de una aplicación para añadirla.</span></p></div>
+        </header>
         
-        <div id="favorites-tabs-container" class="mb-6 hidden"></div>
-
-        <div id="apps-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
-
-        <div id="pagination-container" class="flex justify-center items-center gap-4 mt-8"></div>
-    </div>
-
-    <div id="category-modal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center p-4 z-50 hidden">
-        <div class="bg-white rounded-lg shadow-xl max-w-md w-full">
-            <div class="p-5 border-b">
-                <h3 id="category-modal-title" class="text-xl font-bold text-gray-800">Gestionar Favorito</h3>
-            </div>
-            <div class="p-5">
-                <div class="mb-4">
-                    <label for="category-select" class="block text-sm font-medium text-gray-700 mb-1">Elige una categoría</label>
-                    <select id="category-select" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></select>
-                </div>
-                <div class="mb-4">
-                    <label for="new-category-input" class="block text-sm font-medium text-gray-700 mb-1">O crea una nueva</label>
-                    <input type="text" id="new-category-input" placeholder="Ej: Matemáticas, Biología..." class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
-                </div>
-                <div id="category-modal-error" class="text-red-600 text-sm mb-4 hidden"></div>
-            </div>
-            <div class="px-5 py-4 bg-gray-50 rounded-b-lg flex justify-between items-center">
-                <button id="remove-favorite-btn" class="text-sm text-red-600 hover:text-red-800 font-semibold">Quitar de Favoritos</button>
-                <div>
-                    <button id="cancel-category-btn" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition mr-2">Cancelar</button>
-                    <button id="save-category-btn" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">Guardar</button>
-                </div>
-            </div>
+        <div class="max-w-3xl mx-auto bg-blue-50 border border-blue-200 text-blue-800 rounded-lg p-4 mb-10" role="alert">
+            <p class="font-bold" id="instructions-title">¿Cómo crear una actividad?</p>
+            <p id="instructions-body">Para iniciar una actividad como presentador, abre la aplicación que quieras usar y pulsa en el enlace que encontrarás en la parte inferior de la pantalla.</p>
         </div>
-    </div>
-
-    <div id="delete-category-modal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center p-4 z-50 hidden">
-        <div class="bg-white rounded-lg shadow-xl max-w-sm w-full">
-            <div class="p-5 text-center">
-                <svg class="w-16 h-16 text-red-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-                <h3 class="text-xl font-bold text-gray-800 mb-2">¿Eliminar categoría?</h3>
-                <p id="delete-category-confirm-text" class="text-gray-600 mb-6"></p>
-            </div>
-            <div class="px-5 py-4 bg-gray-50 rounded-b-lg flex justify-end items-center gap-3">
-                <button id="cancel-delete-category-btn" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition">Cancelar</button>
-                <button id="confirm-delete-category-btn" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">Sí, eliminar</button>
-            </div>
-        </div>
-    </div>
 
 
-    <footer class="text-center pt-8 pb-4 mt-12 border-t border-gray-200 text-sm text-gray-500">
-        <p>Una iniciativa del grupo <a href="https.t.me/vceduca" target="_blank" class="text-blue-600 hover:underline font-semibold">Vibe Coding Educativo</a>. Versión 1.3</p>
-        <p class="mt-4">
-            <a href="https://github.com/jjdeharo/directo" target="_blank" class="text-gray-600 hover:text-blue-600 font-semibold inline-flex items-center">
-                <svg class="h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor">
-                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
-                </svg>
-                GitHub del proyecto
+        <main class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <a href="vota.html" class="app-card bg-green-50 rounded-xl shadow-md overflow-hidden">
+                <div class="app-card-content">
+                    <div class="app-icon bg-green-100 text-green-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                    </div>
+                    <div class="app-card-description">
+                        <h2 id="app-vota-title" class="text-xl font-bold mb-2">Votación simple</h2>
+                        <p id="app-vota-desc" class="mb-4">Crea votaciones de opción múltiple. Los participantes se unen con un código y votan desde sus dispositivos, viendo los resultados en gráficos de barras que se actualizan al momento.</p>
+                    </div>
+                </div>
             </a>
-        </p>
-        <p class="mt-2">
-            <a href="https://github.com/jjdeharo/directo/issues" target="_blank" class="text-gray-600 hover:text-blue-600 font-semibold inline-flex items-center">
-                <svg class="h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
-                </svg>
-                Informar de un error o sugerencia
+
+            <a href="nube.html" class="app-card bg-orange-50 rounded-xl shadow-md overflow-hidden">
+                <div class="app-card-content">
+                    <div class="app-icon bg-orange-100 text-orange-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" /></svg>
+                    </div>
+                    <div class="app-card-description">
+                        <h2 id="app-nube-title" class="text-xl font-bold mb-2">Nube de palabras</h2>
+                        <p id="app-nube-desc" class="mb-4">Recopila ideas y visualízalas como una nube dinámica. Puedes descargar la nube como imagen PNG o los datos en una hoja de cálculo (CSV).</p>
+                    </div>
+                </div>
             </a>
-        </p>
-    </footer>
 
-    <footer class="text-center p-6 mt-2 text-sm text-gray-600">
-      <div>
-        <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es" target="_blank" class="hover:underline px-2 font-semibold text-blue-600 hover:text-blue-800 transition-colors">
-          Licencia Creative Commons BY-SA
-        </a>
-      </div>
-    </footer>
+            <a href="ideas.html" class="app-card bg-purple-50 rounded-xl shadow-md overflow-hidden">
+                <div class="app-card-content">
+                    <div class="app-icon bg-purple-100 text-purple-600">
+                         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+                    </div>
+                     <div class="app-card-description">
+                        <h2 id="app-ideas-title" class="text-xl font-bold mb-2">Lluvia de ideas y votos</h2>
+                        <p id="app-ideas-desc" class="mb-4">Una herramienta en dos fases: primero, los participantes proponen ideas de forma anónima. Después, todos votan las propuestas para priorizar las más populares.</p>
+                    </div>
+                </div>
+            </a>
 
-    <div id="help-modal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center p-4 z-50 hidden">
-        <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full h-[85vh] flex flex-col">
-            <div class="flex-shrink-0 p-3 border-b flex justify-end items-center relative">
-                 <h3 class="text-xl font-bold text-gray-800 absolute left-1/2 -translate-x-1/2">Ayuda</h3>
-                 <button id="close-help-btn" class="text-gray-500 hover:text-gray-800 text-3xl font-bold p-1 leading-none">&times;</button>
-            </div>
-            <div class="overflow-auto flex-grow">
-                <iframe id="help-frame" src="about:blank" class="w-full h-full border-0"></iframe>
-            </div>
-        </div>
+            <a href="muro.html" class="app-card bg-cyan-50 rounded-xl shadow-md overflow-hidden">
+                <div class="app-card-content">
+                    <div class="app-icon bg-cyan-100 text-cyan-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                    </div>
+                    <div class="app-card-description">
+                        <h2 id="app-muro-title" class="text-xl font-bold mb-2">Muro interactivo</h2>
+                        <p id="app-muro-desc" class="mb-4">Permite a los participantes enviar "post-its" virtuales. El contenido no es persistente, pero puedes exportar el muro a PDF o los datos a una hoja de cálculo (CSV).</p>
+                    </div>
+                </div>
+            </a>
+
+        </main>
+
+        <footer class="text-center py-8 mt-10 text-sm text-gray-500">
+            <p>Creado por Juan José de Haro</p>
+            <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="license" class="underline hover:text-gray-700">Licencia CC BY-SA 4.0</a>
+        </footer>
     </div>
 
-    <div id="copy-confirm-msg" class="fixed bottom-5 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-sm py-2 px-4 rounded-full opacity-0 -translate-y-5 pointer-events-none">
-        ¡URL copiada al portapapeles!
-    </div>
+    <script>
+        const translations = {
+            'es': {
+                'main-title': 'Conexión en Directo',
+                'main-subtitle': 'Herramientas para fomentar la participación simultánea en el aula.',
+                'instructions-title': '¿Cómo crear una actividad?',
+                'instructions-body': "Para iniciar una actividad como presentador, abre la aplicación que quieras usar y pulsa en el enlace que encontrarás en la parte inferior de la pantalla.",
+                'manual-link-title': 'Manual de Usuario',
+                'app-vota-title': 'Votación simple',
+                'app-vota-desc': 'Crea votaciones de opción múltiple. Los participantes se unen con un código y votan desde sus dispositivos, viendo los resultados en gráficos de barras que se actualizan al momento.',
+                'app-nube-title': 'Nube de palabras',
+                'app-nube-desc': 'Recopila ideas y visualízalas como una nube dinámica. Puedes descargar la nube como imagen PNG o los datos en una hoja de cálculo (CSV).',
+                'app-ideas-title': 'Lluvia de ideas y votos',
+                'app-ideas-desc': 'Una herramienta en dos fases: primero, los participantes proponen ideas de forma anónima. Después, todos votan las propuestas para priorizar las más populares.',
+                'app-muro-title': 'Muro interactivo',
+                'app-muro-desc': 'Permite a los participantes enviar "post-its" virtuales. El contenido no es persistente, pero puedes exportar el muro a PDF o los datos a una hoja de cálculo (CSV).'
+            },
+            'ca': {
+                'main-title': 'Connexió en Directe',
+                'main-subtitle': 'Eines per fomentar la participació simultània a l\'aula.',
+                 'instructions-title': 'Com crear una activitat?',
+                'instructions-body': "Per iniciar una activitat com a presentador, obre l'aplicació que vulguis fer servir i prem a l'enllaç que trobaràs a la part inferior de la pantalla.",
+                'manual-link-title': 'Manual d\'Usuari',
+                'app-vota-title': 'Votació simple',
+                'app-vota-desc': 'Crea votacions d\'opció múltiple. Els participants s\'uneixen amb un codi i voten des dels seus dispositius, veient els resultats en gràfics de barres que s\'actualitzen al moment.',
+                'app-nube-title': 'Núvol de paraules',
+                'app-nube-desc': 'Recull idees i visualitza-les com un núvol dinàmic. Pots descarregar el núvol com a imatge PNG o les dades en un full de càlcul (CSV).',
+                'app-ideas-title': 'Pluja d\'idees i vots',
+                'app-ideas-desc': 'Una eina en dues fases: primer, els participants proposen idees de forma anònima. Després, tothom vota les propostes per prioritzar les més populars.',
+                'app-muro-title': 'Mur interactiu',
+                'app-muro-desc': 'Permet als participants enviar "post-its" virtuals. El contingut no és persistent, però pots exportar el mur a PDF o les dades a un full de càlcul (CSV).'
+            },
+            'gl': {
+                'main-title': 'Conexión en Directo',
+                'main-subtitle': 'Ferramentas para fomentar a participación simultánea na aula.',
+                'instructions-title': 'Como crear unha actividade?',
+                'instructions-body': "Para iniciar unha actividade como presentador, abre a aplicación que queiras usar e preme no enlace que atoparás na parte inferior da pantalla.",
+                'manual-link-title': 'Manual de Usuario',
+                'app-vota-title': 'Votación sinxela',
+                'app-vota-desc': 'Crea votacións de opción múltiple. Os participantes únense cun código e votan desde os seus dispositivos, vendo os resultados en gráficos de barras que se actualizan ao momento.',
+                'app-nube-title': 'Nube de palabras',
+                'app-nube-desc': 'Recolle ideas e visualízaas como unha nube dinámica. Podes descargar a nube como imaxe PNG ou os datos nunha folla de cálculo (CSV).',
+                'app-ideas-title': 'Chuvia de ideas e votos',
+                'app-ideas-desc': 'Unha ferramenta en dúas fases: primeiro, os participantes propoñen ideas de forma anónima. Despois, todos votan as propostas para priorizar as máis populares.',
+                'app-muro-title': 'Muro interactivo',
+                'app-muro-desc': 'Permite aos participantes enviar "post-its" virtuais. O contido non é persistente, pero podes exportar o muro a PDF ou os datos a unha folla de cálculo (CSV).'
+            },
+            'eu': {
+                'main-title': 'Zuzeneko Konexioa',
+                'main-subtitle': 'Ikasgelan aldibereko parte-hartzea sustatzeko tresnak.',
+                'instructions-title': 'Nola sortu jarduera bat?',
+                'instructions-body': "Jarduera bat aurkezle gisa hasteko, ireki erabili nahi duzun aplikazioa eta sakatu pantailaren behealdean aurkituko duzun estekan.",
+                'manual-link-title': 'Erabiltzailearen Eskuliburua',
+                'app-vota-title': 'Bozketa sinplea',
+                'app-vota-desc': 'Sortu aukera anitzeko bozkak. Parte-hartzaileak kode batekin batzen dira eta beren gailuetatik bozkatzen dute, emaitzak unean eguneratzen diren barra-diagrametan ikusiz.',
+                'app-nube-title': 'Hitz-hodeia',
+                'app-nube-desc': 'Bildu ideiak eta bistaratu hodei dinamiko gisa. Hodeia PNG irudi gisa edo datuak kalkulu-orri batean (CSV) deskarga ditzakezu.',
+                'app-ideas-title': 'Ideia-jasa eta botoak',
+                'app-ideas-desc': 'Bi faseko tresna: lehenik, parte-hartzaileek ideiak modu anonimoan proposatzen dituzte. Gero, denek nahiago dituzten proposamenak bozkatzen dituzte, ezagunenak lehenesteko.',
+                'app-muro-title': 'Harresi interaktiboa',
+                'app-muro-desc': '"Post-it" birtualak bidaltzeko aukera ematen die parte-hartzaileei. Edukia ez da iraunkorra, baina harresia PDFra edo datuak kalkulu-orri batera (CSV) esporta ditzakezu.'
+            },
+            'en': {
+                'main-title': 'Live Connection',
+                'main-subtitle': 'Tools to foster simultaneous participation in the classroom.',
+                'instructions-title': 'How to create an activity?',
+                'instructions-body': "To start an activity as a presenter, open the application you want to use and click on the link at the bottom of the screen.",
+                'manual-link-title': 'User Manual',
+                'app-vota-title': 'Simple Voting',
+                'app-vota-desc': 'Create multiple-choice polls. Participants join with a code and vote from their devices, viewing results in bar charts that update instantly.',
+                'app-nube-title': 'Word Cloud',
+                'app-nube-desc': 'Gather ideas and display them as a dynamic cloud. You can download the cloud as a PNG image or the data in a spreadsheet (CSV).',
+                'app-ideas-title': 'Brainstorm & Vote',
+                'app-ideas-desc': 'A two-phase tool: first, participants anonymously propose ideas. Then, everyone votes on the proposals to prioritize the most popular ones.',
+                'app-muro-title': 'Interactive Wall',
+                'app-muro-desc': 'Allows participants to send virtual "post-its". The content is not persistent, but you can export the wall to PDF or the data to a spreadsheet (CSV).'
+            }
+        };
 
-    <div id="visit-box"><span id="visit-total">–</span> visitas</div>
+        function setLanguage(lang) {
+            if (!translations[lang]) return;
+            localStorage.setItem('preferred_language', lang);
+            document.documentElement.lang = lang;
+            
+            const keys = [
+                'main-title', 'main-subtitle', 'instructions-title', 'instructions-body', 'manual-link-title',
+                'app-vota-title', 'app-vota-desc',
+                'app-nube-title', 'app-nube-desc',
+                'app-ideas-title', 'app-ideas-desc',
+                'app-muro-title', 'app-muro-desc'
+            ];
 
-    <script src="script.js"></script>
-    
-    <div id="stats-modal" class="modal-overlay">
-        <div class="modal-content">
-            <button id="modal-close-btn" class="modal-close-btn">&times;</button>
-            <iframe id="modal-iframe" src="about:blank" frameborder="0" title="Panel de Estadísticas"></iframe>
-        </div>
-    </div>
+            keys.forEach(key => {
+                const element = document.getElementById(key);
+                if (element) {
+                    if (key === 'manual-link-title') {
+                        element.setAttribute('title', translations[lang][key]);
+                    } else {
+                        element.innerText = translations[lang][key];
+                    }
+                }
+            });
+        }
 
+        window.onload = () => {
+            const savedLang = localStorage.getItem('preferred_language');
+            const browserLang = (navigator.language || navigator.userLanguage).split('-')[0];
+            const langToSet = savedLang || (translations[browserLang] ? browserLang : 'es');
+            
+            document.getElementById('lang-selector').value = langToSet;
+            setLanguage(langToSet);
+        };
+    </script>
 </body>
 </html>

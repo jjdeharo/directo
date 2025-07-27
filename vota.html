@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Votación en Tiempo Real con WebRTC</title>
+    <!-- Tailwind CSS para un diseño rápido y moderno -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- PeerJS para la conexión WebRTC -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.4.7/peerjs.min.js"></script>
+    <!-- Librería para generar Códigos QR -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <!-- Google Fonts para una mejor tipografía -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --theme-color-primary: #16a34a; /* Verde por defecto */
+            --theme-color-text: #ffffff; /* Texto para el color primario */
+            --theme-color-primary-light: #f0fdf4; 
+            --theme-color-primary-border: #86efac;
+            --theme-color-primary-dark-text: #15803d;
+            --theme-color-content-bg: #f9fafb; /* Gris muy claro por defecto */
+            --theme-color-primary-gradient-start: var(--theme-color-primary);
+            --theme-color-primary-gradient-end: #4ade80; /* Verde más claro por defecto */
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .bar-transition {
+            transition: width 0.5s ease-in-out;
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--theme-color-primary);
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        #qrcode-container {
+            background: white;
+            border-radius: 8px;
+            padding: 1rem;
+            display: inline-flex;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        #qrcode-container img {
+            display: block;
+            width: 100% !important;
+            height: auto !important;
+        }
+        /* Estilos para el Modo Proyector */
+        body.projection-mode {
+            overflow: hidden;
+        }
+        body.projection-mode #app {
+            max-width: 100%;
+            width: 100%;
+            height: 100vh;
+            border-radius: 0;
+            padding: 2rem;
+            cursor: pointer;
+            background-color: var(--theme-color-content-bg);
+        }
+        body.projection-mode #lang-selector-container,
+        body.projection-mode #sharing-info-container,
+        body.projection-mode #projection-btn,
+        body.projection-mode #edit-btn,
+        body.projection-mode .role-switch-link,
+        body.projection-mode footer {
+            display: none;
+        }
+        body.projection-mode #results-view {
+             padding: 0;
+        }
+        body.projection-mode .results-grid {
+            display: flex;
+            height: 100%;
+        }
+        body.projection-mode #results-column {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        body.projection-mode #results-question {
+            text-align: center;
+        }
+        /* Clases para aplicar el tema de color */
+        .themed-bg { background-color: var(--theme-color-primary); color: var(--theme-color-text); }
+        .themed-bg-hover:hover { filter: brightness(90%); transition: filter 0.2s; }
+        .themed-result-bar { 
+            background: linear-gradient(90deg, var(--theme-color-primary-gradient-start) 0%, var(--theme-color-primary-gradient-end) 100%);
+        }
+        .themed-info-box { background-color: var(--theme-color-primary-light); border-color: var(--theme-color-primary-border); }
+        .themed-info-box-text { color: var(--theme-color-primary-dark-text); }
+        .themed-vote-hover:hover { background-color: var(--theme-color-primary-light); border-color: var(--theme-color-primary); }
+        .themed-content-bg { background-color: var(--theme-color-content-bg); }
+
+        #session-code {
+            font-family: monospace;
+            font-size: 2.25rem;
+            font-weight: bold;
+            letter-spacing: 0.1em;
+            padding: 0.5rem 1rem;
+            border: 2px dashed var(--theme-color-primary-border);
+            border-radius: 0.5rem;
+            color: var(--theme-color-primary-dark-text);
+            background-color: #fff;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        #session-code:hover {
+            background-color: #f9fafb;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 flex flex-col items-center justify-center min-h-screen p-4">
+
+    <div id="app" class="w-full max-w-2xl mx-auto rounded-xl shadow-lg transition-all duration-300 relative">
+
+        <!-- Selector de Idioma -->
+        <div id="lang-selector-container" class="absolute top-4 right-4 z-10">
+            <select id="lang-selector" onchange="setLanguage(this.value)" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2">
+                <option value="es">Español</option>
+                <option value="ca">Català</option>
+                <option value="gl">Galego</option>
+                <option value="eu">Euskara</option>
+                <option value="en">English</option>
+            </select>
+        </div>
+
+        <!-- Vista del Presentador -->
+        <div id="presenter-view" class="hidden">
+            <div id="create-session-form" class="themed-content-bg p-6 md:p-8 rounded-xl">
+                <h2 class="text-2xl font-bold mb-6" data-translate-key="create_title">Crear una nueva votación</h2>
+                
+                <div class="flex gap-4 items-start mb-4">
+                    <div class="flex-grow">
+                        <label for="question" class="block text-sm font-medium text-gray-700 mb-1" data-translate-key="question_label">Tu pregunta:</label>
+                        <input type="text" id="question" class="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500" data-translate-key-placeholder="question_placeholder" placeholder="Ej: ¿Cuál es la capital de Cataluña?">
+                    </div>
+                    <div class="flex-shrink-0">
+                        <label for="color-picker" class="block text-sm font-medium text-gray-700 mb-1" data-translate-key="theme_color_label">Color:</label>
+                        <input type="color" id="color-picker" value="#16a34a" class="w-12 h-12 p-1 border border-gray-300 rounded-md cursor-pointer">
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1" data-translate-key="options_label">Opciones de respuesta:</label>
+                    <div id="options-container" class="space-y-2">
+                        <input type="text" name="option" class="w-full p-2 border border-gray-300 rounded-md shadow-sm" data-translate-key-placeholder="option_1_placeholder" placeholder="Opción 1">
+                        <input type="text" name="option" class="w-full p-2 border border-gray-300 rounded-md shadow-sm" data-translate-key-placeholder="option_2_placeholder" placeholder="Opción 2">
+                    </div>
+                    <button onclick="addOption()" class="mt-2 text-sm text-green-600 hover:text-green-800" data-translate-key="add_option_btn">+ Añadir opción</button>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-4 mt-6">
+                    <button onclick="generateShareableLink()" id="prepare-button" class="w-full bg-gray-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-600 transition duration-300 flex items-center justify-center">
+                        <span data-translate-key="prepare_session_btn">Preparar sesión</span>
+                    </button>
+                    <button onclick="hostSession()" id="host-button" class="w-full themed-bg themed-bg-hover font-bold py-3 px-4 rounded-lg transition duration-300 flex items-center justify-center">
+                        <span id="host-button-text" data-translate-key="start_session_btn">Iniciar Sesión</span>
+                        <div id="host-loader" class="loader hidden ml-3"></div>
+                    </button>
+                </div>
+                <div id="shareable-link-container" class="hidden mt-4 p-4 bg-gray-100 rounded-lg">
+                    <label class="block text-sm font-medium text-gray-700 mb-2" data-translate-key="shareable_link_title">Enlace de preparación listo. Cópialo y guárdalo para usarlo más tarde:</label>
+                    <input type="text" id="shareable-link-input" readonly class="w-full p-2 border border-gray-300 rounded-md bg-white font-mono text-sm">
+                </div>
+                 <p class="text-center mt-8 role-switch-link">
+                    <a href="#" onclick="event.preventDefault(); switchView('student')" class="text-sm text-gray-500 hover:text-green-600" data-translate-key="switch_to_student">¿Buscas unirte a una sesión? Haz clic aquí.</a>
+                </p>
+            </div>
+            
+            <div id="results-view" class="hidden themed-content-bg p-6 md:p-8 rounded-xl">
+                <div class="flex justify-between items-start gap-4 mb-8">
+                    <h2 id="results-question" class="text-4xl md:text-5xl font-extrabold flex-grow text-gray-800"></h2>
+                    <div class="flex gap-2 flex-shrink-0">
+                        <button id="edit-btn" onclick="confirmEndSession()" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-lg inline-flex items-center text-sm">
+                            <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" /><path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" /></svg>
+                            <span data-translate-key="edit_btn_text">Editar</span>
+                        </button>
+                        <button id="projection-btn" onclick="toggleProjectionMode()" class="bg-white hover:bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded-lg inline-flex items-center text-sm border border-gray-300">
+                            <svg id="projection-icon-enter" class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5"></path></svg>
+                            <svg id="projection-icon-exit" class="w-4 h-4 mr-2 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 9V4.5M9 9H4.5M9 9L3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9V4.5M15 9h4.5M15 9l5.25-5.25M15 15v4.5M15 15h4.5M15 15l5.25 5.25"></path></svg>
+                            <span data-translate-key="projection_btn_text">Proyectar</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="results-grid grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div id="sharing-info-container" class="lg:col-span-1 space-y-6">
+                        <div class="bg-white/60 p-4 rounded-lg text-center backdrop-blur-sm">
+                            <h3 class="font-bold mb-2 text-gray-700" data-translate-key="scan_qr_label">1. Escanea el QR</h3>
+                            <div id="qrcode-container" class="mx-auto max-w-[200px]"></div>
+                        </div>
+                        <div class="bg-white/60 p-4 rounded-lg text-center backdrop-blur-sm">
+                             <h3 class="font-bold mb-2 text-gray-700" data-translate-key="direct_link_label">2. O comparte el enlace</h3>
+                             <p id="direct-session-link" title="Haz clic para copiar" class="font-mono bg-gray-200 px-2 py-1 rounded text-sm my-1 break-all hover:bg-gray-300 inline-block max-w-full cursor-pointer truncate" onclick="copyText('direct-session-link', 'url_copied_toast')"></p>
+                        </div>
+                        <div class="bg-white/60 p-4 rounded-lg text-center backdrop-blur-sm">
+                            <h3 class="font-bold mb-2 text-gray-700">3. <span data-translate-key="or_go_to">O ve a</span></h3>
+                            <p id="app-url" title="Haz clic para copiar" class="font-mono text-sm my-1 break-all hover:text-gray-900 inline-block max-w-full cursor-pointer hover:bg-gray-200 p-1 rounded" onclick="copyText('app-url', 'url_copied_toast')"></p>
+                            <p class="text-gray-600 text-sm my-2" data-translate-key="and_enter_code">e introduce el código:</p>
+                            <div class="mt-2">
+                                <span id="session-code" onclick="copyCode()"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="results-column" class="lg:col-span-2">
+                        <div id="results-container" class="space-y-6 w-full"></div>
+                        <p class="text-center text-3xl md:text-4xl font-bold mt-12 text-gray-700">
+                            <span data-translate-key="total_votes_label">Votos totales</span>: <span id="total-votes">0</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vista del Participante -->
+        <div id="student-view" class="bg-white p-6 md:p-8 rounded-xl">
+            <div id="join-session-form">
+                <h2 class="text-2xl font-bold mb-4" data-translate-key="join_title">Unirse a una votación</h2>
+                <label for="code-input" class="block text-sm font-medium text-gray-700 mb-1" data-translate-key="session_code_label">Código de la sesión:</label>
+                <input type="text" id="code-input" class="w-full p-2 border uppercase border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500" data-translate-key-placeholder="code_input_placeholder" placeholder="Introduce el código">
+                <button onclick="joinSession()" id="join-button" class="mt-4 w-full themed-bg themed-bg-hover font-bold py-3 px-4 rounded-lg transition duration-300 flex items-center justify-center">
+                    <span id="join-button-text" data-translate-key="join_btn">Unirse</span>
+                    <div id="join-loader" class="loader hidden ml-3"></div>
+                </button>
+                <p id="join-error" class="text-red-500 text-sm mt-2 hidden"></p>
+                <p class="text-center mt-8 role-switch-link">
+                    <a href="#" onclick="event.preventDefault(); switchView('presenter')" class="text-sm text-gray-500 hover:text-green-600" data-translate-key="switch_to_presenter">¿Eres el presentador? Inicia sesión aquí.</a>
+                </p>
+            </div>
+
+            <div id="voting-view" class="hidden">
+                <h2 id="vote-question" class="text-2xl font-bold mb-6"></h2>
+                <div id="vote-options-container" class="space-y-3"></div>
+                <div class="text-center mt-4">
+                    <p id="vote-sending" class="text-gray-500 hidden">
+                        <span data-translate-key="vote_sending">Enviando voto...</span>
+                        <span id="vote-countdown" class="font-semibold"></span>
+                    </p>
+                    <p id="vote-error" class="text-red-500 hidden"></p>
+                </div>
+            </div>
+
+            <div id="voted-view" class="hidden text-center py-8">
+                 <svg class="mx-auto h-16 w-16 themed-info-box-text" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <h2 class="text-2xl font-bold mt-4" data-translate-key="voted_title">¡Gracias por tu voto!</h2>
+                <p class="text-gray-600" data-translate-key="voted_subtitle">Puedes ver los resultados en la pantalla principal.</p>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="text-center py-4 text-sm text-gray-500">
+        <span data-translate-key="footer_created_by">Aplicación creada por</span> <a href="https://bilateria.org" target="_blank" class="underline hover:text-gray-700">Juan José de Haro</a>
+        <br>
+        <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="license" class="underline hover:text-gray-700" data-translate-key="footer_license">Creative Commons Reconocimiento-CompartirIgual 4.0 Internacional</a>
+    </footer>
+
+    <div id="toast" class="fixed bottom-5 right-5 bg-gray-900 text-white px-4 py-2 rounded-lg shadow-lg opacity-0 transition-opacity duration-300"></div>
+
+    <!-- Modal de Confirmación -->
+    <div id="confirm-modal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full">
+            <h3 class="text-lg font-bold mb-4" data-translate-key="confirm_end_title">¿Finalizar sesión?</h3>
+            <p class="text-gray-600 mb-6" data-translate-key="confirm_end_text">Esto terminará la sesión actual para todos los participantes. Deberás compartir un nuevo código para que se unan de nuevo.</p>
+            <div class="flex justify-end gap-4">
+                <button onclick="closeModal()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" data-translate-key="cancel_btn">Cancelar</button>
+                <button onclick="endSessionAndEdit()" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" data-translate-key="end_session_btn">Finalizar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- LÓGICA DE INTERNACIONALIZACIÓN (i18n) ---
+        const translations = {
+            'es': { 'page_title': 'Votación en Tiempo Real', 'create_title': 'Crear una nueva votación', 'question_label': 'Tu pregunta:', 'question_placeholder': 'Ej: ¿Cuál es tu color favorito?', 'theme_color_label': 'Color:', 'options_label': 'Opciones de respuesta:', 'option_1_placeholder': 'Opción 1', 'option_2_placeholder': 'Opción 2', 'add_option_btn': '+ Añadir opción', 'prepare_session_btn': 'Preparar sesión', 'start_session_btn': 'Iniciar Sesión', 'live_session_title': '¡Sesión en vivo! Comparte:', 'scan_qr_label': '1. Escanea el QR', 'direct_link_label': '2. O comparte el enlace', 'or_go_to': 'O ve a', 'and_enter_code': 'e introduce el código:', 'projection_btn_text': 'Proyectar', 'edit_btn_text': 'Editar', 'projection_btn_exit_text': 'Salir del modo proyector', 'total_votes_label': 'Votos totales', 'join_title': 'Unirse a una votación', 'session_code_label': 'Código de la sesión:', 'code_input_placeholder': 'Introduce el código', 'join_btn': 'Unirse', 'voted_title': '¡Gracias por tu voto!', 'voted_subtitle': 'Puedes ver los resultados en la pantalla principal.', 'vote_sending': 'Enviando voto...', 'vote_timeout_error': 'No se recibió respuesta. Por favor, inténtalo de nuevo.', 'copied_toast': 'Código copiado al portapapeles', 'link_copied_toast': 'Enlace copiado al portapapeles', 'url_copied_toast': 'URL copiada al portapapeles', 'alert_no_question': 'Por favor, introduce una pregunta y al menos dos opciones.', 'alert_connection_error': 'Ha ocurrido un error con la conexión. Por favor, recarga la página.', 'join_error_text': 'Error de conexión. Verifica el código o que la persona anfitriona esté conectada.', 'shareable_link_title': 'Enlace de preparación listo. Cópialo y guárdalo para usarlo más tarde:', 'switch_to_presenter': '¿Eres el presentador? Inicia sesión aquí.', 'switch_to_student': '¿Buscas unirte a una sesión? Haz clic aquí.', 'footer_created_by': 'Aplicación creada por', 'footer_license': 'Creative Commons Reconocimiento-CompartirIgual 4.0 Internacional', 'confirm_end_title': '¿Finalizar sesión?', 'confirm_end_text': 'Esto terminará la sesión actual para todos los participantes. Deberás compartir un nuevo código para que se unan de nuevo.', 'cancel_btn': 'Cancelar', 'end_session_btn': 'Finalizar' },
+            'ca': { 'page_title': 'Votació en Temps Real', 'create_title': 'Crear una nova votació', 'question_label': 'La teva pregunta:', 'question_placeholder': 'Ex: Quin és el teu color preferit?', 'theme_color_label': 'Color:', 'options_label': 'Opcions de resposta:', 'option_1_placeholder': 'Opció 1', 'option_2_placeholder': 'Opció 2', 'add_option_btn': '+ Afegir opció', 'prepare_session_btn': 'Preparar sessió', 'start_session_btn': 'Iniciar Sessió', 'live_session_title': 'Sessió en viu! Comparteix:', 'scan_qr_label': '1. Escaneja el QR', 'direct_link_label': '2. O comparteix l\'enllaç', 'or_go_to': 'O ves a', 'and_enter_code': 'i introdueix el codi:', 'projection_btn_text': 'Projectar', 'edit_btn_text': 'Editar', 'projection_btn_exit_text': 'Sortir del mode projector', 'total_votes_label': 'Vots totals', 'join_title': 'Unir-se a una votació', 'session_code_label': 'Codi de la sessió:', 'code_input_placeholder': 'Introdueix el codi', 'join_btn': 'Unir-se', 'voted_title': 'Gràcies pel teu vot!', 'voted_subtitle': 'Pots veure els resultats a la pantalla principal.', 'vote_sending': 'Enviant vot...', 'vote_timeout_error': 'No s\'ha rebut resposta. Si us plau, torna-ho a provar.', 'copied_toast': 'Codi copiat al porta-retalls', 'link_copied_toast': 'Enllaç copiat al porta-retalls', 'url_copied_toast': 'URL copiada al porta-retalls', 'alert_no_question': 'Si us plau, introdueix una pregunta i almenys dues opcions.', 'alert_connection_error': 'Hi ha hagut un error amb la connexió. Si us plau, recarrega la pàgina.', 'join_error_text': 'Error de connexió. Verifica el codi o que la persona amfitriona estigui connectada.', 'shareable_link_title': 'Enllaç de preparació a punt. Copia\'l i desa\'l per a més tard:', 'switch_to_presenter': 'Ets el presentador? Inicia sessió aquí.', 'switch_to_student': 'Busques unir-te a una sessió? Fes clic aquí.', 'footer_created_by': 'Aplicació creada per', 'footer_license': 'Creative Commons Reconeixement-CompartirIgual 4.0 Internacional', 'confirm_end_title': 'Finalitzar la sessió?', 'confirm_end_text': 'Això acabarà la sessió actual per a tots els participants. Hauràs de compartir un nou codi perquè s\'uneixin de nou.', 'cancel_btn': 'Cancel·lar', 'end_session_btn': 'Finalitzar' },
+            'gl': { 'page_title': 'Votación en Tempo Real', 'create_title': 'Crear unha nova votación', 'question_label': 'A túa pregunta:', 'question_placeholder': 'Ex: Cal é a túa cor favorita?', 'theme_color_label': 'Cor:', 'options_label': 'Opcións de resposta:', 'option_1_placeholder': 'Opción 1', 'option_2_placeholder': 'Opción 2', 'add_option_btn': '+ Engadir opción', 'prepare_session_btn': 'Preparar sesión', 'start_session_btn': 'Iniciar Sesión', 'live_session_title': 'Sesión en vivo! Comparte:', 'scan_qr_label': '1. Escanea o QR', 'direct_link_label': '2. Ou comparte a ligazón', 'or_go_to': 'Ou vai a', 'and_enter_code': 'e introduce o código:', 'projection_btn_text': 'Proxectar', 'edit_btn_text': 'Editar', 'projection_btn_exit_text': 'Saír do modo proxector', 'total_votes_label': 'Votos totais', 'join_title': 'Unirse a unha votación', 'session_code_label': 'Código da sesión:', 'code_input_placeholder': 'Introduce o código', 'join_btn': 'Unirse', 'voted_title': 'Grazas polo teu voto!', 'voted_subtitle': 'Podes ver os resultados na pantalla principal.', 'vote_sending': 'Enviando voto...', 'vote_timeout_error': 'Non se recibiu resposta. Por favor, téntao de novo.', 'copied_toast': 'Código copiado ao portapapeis', 'link_copied_toast': 'Ligazón copiada ao portapapeis', 'url_copied_toast': 'URL copiada ao portapapeis', 'alert_no_question': 'Por favor, introduce unha pregunta e polo menos dúas opcións.', 'alert_connection_error': 'Houbo un erro coa conexión. Por favor, recarga a páxina.', 'join_error_text': 'Erro de conexión. Verifica o código ou que a persoa anfitrioa estea conectada.', 'shareable_link_title': 'Ligazón de preparación lista. Cópiaa e gárdaa para usala máis tarde:', 'switch_to_presenter': 'Es o presentador? Inicia sesión aquí.', 'switch_to_student': 'Buscas unirte a unha sesión? Fai clic aquí.', 'footer_created_by': 'Aplicación creada por', 'footer_license': 'Creative Commons Recoñecemento-CompartirIgual 4.0 Internacional', 'confirm_end_title': 'Finalizar a sesión?', 'confirm_end_text': 'Isto rematará a sesión actual para todos os participantes. Deberás compartir un novo código para que se unan de novo.', 'cancel_btn': 'Cancelar', 'end_session_btn': 'Finalizar' },
+            'eu': { 'page_title': 'Bozketa Denbora Errealean', 'create_title': 'Bozketa berria sortu', 'question_label': 'Zure galdera:', 'question_placeholder': 'Adib: Zein da zure kolorerik gogokoena?', 'theme_color_label': 'Kolorea:', 'options_label': 'Erantzun-aukerak:', 'option_1_placeholder': '1. aukera', 'option_2_placeholder': '2. aukera', 'add_option_btn': '+ Gehitu aukera', 'prepare_session_btn': 'Saioa prestatu', 'start_session_btn': 'Saioa Hasi', 'live_session_title': 'Saioa zuzenean! Partekatu:', 'scan_qr_label': '1. Eskaneatu QR-a', 'direct_link_label': '2. Edo partekatu esteka', 'or_go_to': 'Edo joan hona', 'and_enter_code': 'eta sartu kodea:', 'projection_btn_text': 'Proiektatu', 'edit_btn_text': 'Editatu', 'projection_btn_exit_text': 'Proiektagailu modutik irten', 'total_votes_label': 'Botoak guztira', 'join_title': 'Bozketa batean sartu', 'session_code_label': 'Saioaren kodea:', 'code_input_placeholder': 'Sartu kodea', 'join_btn': 'Sartu', 'voted_title': 'Eskerrik asko zure botoagatik!', 'voted_subtitle': 'Emaitzak pantaila nagusian ikus ditzakezu.', 'vote_sending': 'Botoa bidaltzen...', 'vote_timeout_error': 'Ez da erantzunik jaso. Mesedez, saiatu berriro.', 'copied_toast': 'Kodea arbelean kopiatu da', 'link_copied_toast': 'Esteka arbelean kopiatu da', 'url_copied_toast': 'URLa arbelean kopiatu da', 'alert_no_question': 'Mesedez, sartu galdera bat eta gutxienez bi aukera.', 'alert_connection_error': 'Konexioarekin errore bat gertatu da. Mesedez, birkargatu orria.', 'join_error_text': 'Konexio-errorea. Egiaztatu kodea edo antolatzailea konektatuta dagoela.', 'shareable_link_title': 'Prestatzeko esteka prest. Kopiatu eta gorde geroago erabiltzeko:', 'switch_to_presenter': 'Aurkezlea zara? Hasi saioa hemen.', 'switch_to_student': 'Saio batean sartu nahi duzu? Egin klik hemen.', 'footer_created_by': 'Aplikazioa, egilea:', 'footer_license': 'Creative Commons Aitortu-PartekatuBerdin 4.0 Nazioartekoa', 'confirm_end_title': 'Saioa amaitu?', 'confirm_end_text': 'Honek uneko saioa amaituko du parte-hartzaile guztientzat. Kode berri bat partekatu beharko duzu berriro sartzeko.', 'cancel_btn': 'Ezeztatu', 'end_session_btn': 'Amaitu' },
+            'en': { 'page_title': 'Real-time Voting', 'create_title': 'Create a new poll', 'question_label': 'Your question:', 'question_placeholder': 'E.g., What is your favorite color?', 'theme_color_label': 'Color:', 'options_label': 'Answer options:', 'option_1_placeholder': 'Option 1', 'option_2_placeholder': 'Option 2', 'add_option_btn': '+ Add option', 'prepare_session_btn': 'Prepare session', 'start_session_btn': 'Start Session', 'live_session_title': 'Live session! Share:', 'scan_qr_label': '1. Scan the QR code', 'direct_link_label': '2. Or share the link', 'or_go_to': 'Or go to', 'and_enter_code': 'and enter the code:', 'projection_btn_text': 'Project', 'edit_btn_text': 'Edit', 'projection_btn_exit_text': 'Exit projection mode', 'total_votes_label': 'Total votes', 'join_title': 'Join a poll', 'session_code_label': 'Session code:', 'code_input_placeholder': 'Enter code', 'join_btn': 'Join', 'voted_title': 'Thank you for your vote!', 'voted_subtitle': 'You can see the results on the main screen.', 'vote_sending': 'Submitting vote...', 'vote_timeout_error': 'No response received. Please try again.', 'copied_toast': 'Code copied to clipboard', 'link_copied_toast': 'Link copied to clipboard', 'url_copied_toast': 'URL copied to clipboard', 'alert_no_question': 'Please enter a question and at least two options.', 'alert_connection_error': 'A connection error has occurred. Please reload the page.', 'join_error_text': 'Connection error. Check the code or that the host is connected.', 'shareable_link_title': 'Preparation link ready. Copy and save it for later use:', 'switch_to_presenter': 'Are you the presenter? Log in here.', 'switch_to_student': 'Looking to join a session? Click here.', 'footer_created_by': 'Application created by', 'footer_license': 'Creative Commons Attribution-ShareAlike 4.0 International', 'confirm_end_title': 'End session?', 'confirm_end_text': 'This will end the current session for all participants. You will need to share a new code for them to join again.', 'cancel_btn': 'Cancel', 'end_session_btn': 'End Session' }
+        };
+
+        let currentLang = 'es';
+
+        // --- LÓGICA DE TEMA DE COLOR ---
+        function getContrastColor(hexColor) {
+            if (hexColor.startsWith('#')) hexColor = hexColor.slice(1);
+            const r = parseInt(hexColor.substring(0, 2), 16);
+            const g = parseInt(hexColor.substring(2, 4), 16);
+            const b = parseInt(hexColor.substring(4, 6), 16);
+            const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+            return (yiq >= 128) ? '#000000' : '#ffffff';
+        }
+
+        function applyTheme(theme) {
+            const root = document.documentElement;
+            root.style.setProperty('--theme-color-primary', theme.primary);
+            root.style.setProperty('--theme-color-text', theme.text);
+            root.style.setProperty('--theme-color-content-bg', theme.primary + '1A');
+            root.style.setProperty('--theme-color-primary-border', theme.primary + '80');
+            
+            const r = parseInt(theme.primary.substring(1, 3), 16);
+            const g = parseInt(theme.primary.substring(3, 5), 16);
+            const b = parseInt(theme.primary.substring(5, 7), 16);
+            
+            const darken = (c) => Math.max(0, Math.floor(c * 0.7)).toString(16).padStart(2, '0');
+            root.style.setProperty('--theme-color-primary-dark-text', `#${darken(r)}${darken(g)}${darken(b)}`);
+
+            const lighten = (c) => Math.min(255, Math.floor(c + (255 - c) * 0.6)).toString(16).padStart(2, '0');
+            root.style.setProperty('--theme-color-primary-gradient-end', `#${lighten(r)}${lighten(g)}${lighten(b)}`);
+        }
+
+        function setLanguage(lang) {
+            if (!translations[lang]) return;
+            currentLang = lang;
+            localStorage.setItem('preferred_language', lang);
+            document.documentElement.lang = lang;
+            document.getElementById('lang-selector').value = lang;
+
+            document.querySelectorAll('[data-translate-key]').forEach(el => {
+                const key = el.getAttribute('data-translate-key');
+                if (translations[lang] && translations[lang][key]) el.innerText = translations[lang][key];
+            });
+             document.querySelectorAll('[data-translate-key-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-translate-key-placeholder');
+                if (translations[lang] && translations[lang][key]) el.placeholder = translations[lang][key];
+            });
+            document.title = (translations[lang] && translations[lang]['page_title']) || 'Votación en Tiempo Real';
+        }
+
+        // --- LÓGICA DE INICIO ---
+        window.onload = function() {
+            const savedLang = localStorage.getItem('preferred_language');
+            const browserLang = (navigator.language || navigator.userLanguage).split('-')[0];
+            
+            if (savedLang && translations[savedLang]) setLanguage(savedLang);
+            else if (translations[browserLang]) setLanguage(browserLang);
+            else setLanguage('es');
+
+            checkURLParameters();
+
+            document.getElementById('color-picker').addEventListener('input', (event) => {
+                const themeColor = event.target.value;
+                const theme = { primary: themeColor, text: getContrastColor(themeColor) };
+                applyTheme(theme);
+            });
+        };
+
+        function checkURLParameters() {
+            const params = new URLSearchParams(window.location.search);
+            const sessionId = params.get('session');
+            const data = params.get('data');
+
+            if (sessionId) {
+                switchView('student');
+                document.getElementById('code-input').value = sessionId;
+                joinSession();
+            } else if (data) {
+                switchView('presenter');
+                try {
+                    const decodedData = JSON.parse(atob(data));
+                    document.getElementById('question').value = decodedData.question;
+                    if(decodedData.theme && decodedData.theme.primary) {
+                        const colorPicker = document.getElementById('color-picker');
+                        colorPicker.value = decodedData.theme.primary;
+                        applyTheme({ primary: colorPicker.value, text: getContrastColor(colorPicker.value) });
+                    }
+                    const optionsContainer = document.getElementById('options-container');
+                    optionsContainer.innerHTML = '';
+                    decodedData.options.forEach(optionText => {
+                        const newOptionInput = document.createElement('input');
+                        newOptionInput.type = 'text';
+                        newOptionInput.name = 'option';
+                        newOptionInput.className = 'w-full p-2 border border-gray-300 rounded-md shadow-sm';
+                        newOptionInput.value = optionText;
+                        optionsContainer.appendChild(newOptionInput);
+                    });
+                } catch (e) {
+                    console.error("Error al decodificar los datos de la sesión preparada:", e);
+                    switchView('student');
+                }
+            } else {
+                switchView('student');
+            }
+        }
+
+        // --- Variables Globales ---
+        let peer = null;
+        let hostConnection = null;
+        let guestConnections = [];
+        let sessionData = {};
+        let voteTimeout = null;
+        let countdownInterval = null;
+
+        // --- LÓGICA GENERAL DE LA UI ---
+        function switchView(view) {
+            const presenterView = document.getElementById('presenter-view');
+            const studentView = document.getElementById('student-view');
+            const appContainer = document.getElementById('app');
+            appContainer.style.backgroundColor = 'transparent'; // El fondo lo gestionan las vistas internas
+
+            if (view === 'presenter') {
+                presenterView.classList.remove('hidden');
+                studentView.classList.add('hidden');
+                appContainer.classList.remove('max-w-2xl');
+                appContainer.classList.add('max-w-5xl');
+            } else {
+                presenterView.classList.add('hidden');
+                studentView.classList.remove('hidden');
+                appContainer.classList.add('max-w-2xl');
+                appContainer.classList.remove('max-w-5xl');
+            }
+        };
+        
+        function addOption() {
+            const container = document.getElementById('options-container');
+            const optionCount = container.children.length + 1;
+            const newOptionInput = document.createElement('input');
+            newOptionInput.type = 'text';
+            newOptionInput.name = 'option';
+            newOptionInput.className = 'w-full p-2 border border-gray-300 rounded-md shadow-sm';
+            const placeholderKey = 'option_1_placeholder';
+            newOptionInput.placeholder = (translations[currentLang] && translations[currentLang][placeholderKey]) ? translations[currentLang][placeholderKey].replace('1', optionCount) : `Opción ${optionCount}`;
+            container.appendChild(newOptionInput);
+        };
+        function showToast(messageKey) {
+            const toast = document.getElementById('toast');
+            toast.innerText = (translations[currentLang] && translations[currentLang][messageKey]) || messageKey;
+            toast.style.opacity = 1;
+            setTimeout(() => { toast.style.opacity = 0; }, 2000);
+        }
+        function copyCode() {
+            navigator.clipboard.writeText(document.getElementById('session-code').innerText).then(() => showToast('copied_toast'));
+        }
+        function copyText(elementId, toastMessageKey) {
+            const textToCopy = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(textToCopy).then(() => showToast(toastMessageKey));
+        }
+        function generateQRCode(url) {
+            const container = document.getElementById('qrcode-container');
+            container.innerHTML = '';
+            new QRCode(container, { text: url, width: 200, height: 200, colorDark : "#000000", colorLight : "#ffffff", correctLevel : QRCode.CorrectLevel.H });
+        }
+        function toggleProjectionMode() {
+            const isEntering = !document.body.classList.contains('projection-mode');
+            document.body.classList.toggle('projection-mode');
+            const btnText = document.querySelector('#projection-btn span');
+            document.getElementById('projection-icon-enter').classList.toggle('hidden');
+            document.getElementById('projection-icon-exit').classList.toggle('hidden');
+
+            if (isEntering) {
+                btnText.innerText = translations[currentLang]['projection_btn_exit_text'];
+                window.addEventListener('keydown', handleExitProjection);
+                document.getElementById('app').addEventListener('click', handleExitProjection);
+            } else {
+                btnText.innerText = translations[currentLang]['projection_btn_text'];
+                window.removeEventListener('keydown', handleExitProjection);
+                document.getElementById('app').removeEventListener('click', handleExitProjection);
+            }
+        }
+        function handleExitProjection(event) {
+            if ((event.type === 'click' && !event.target.closest('#projection-btn')) || (event.type === 'keydown' && event.key === 'Escape')) {
+                if (document.body.classList.contains('projection-mode')) toggleProjectionMode();
+            }
+        }
+        function confirmEndSession() {
+            document.getElementById('confirm-modal').classList.remove('hidden');
+        }
+        function closeModal() {
+            document.getElementById('confirm-modal').classList.add('hidden');
+        }
+        function endSessionAndEdit() {
+            guestConnections.forEach(conn => conn.close());
+            guestConnections = [];
+            if (peer) {
+                peer.destroy();
+                peer = null;
+            }
+            closeModal();
+            document.getElementById('results-view').classList.add('hidden');
+            document.getElementById('create-session-form').classList.remove('hidden');
+            document.getElementById('lang-selector-container').classList.remove('hidden');
+            document.getElementById('host-button-text').classList.remove('hidden');
+            document.getElementById('host-loader').classList.add('hidden');
+            document.getElementById('prepare-button').removeAttribute('disabled');
+        }
+        function generateShareableLink() {
+            const question = document.getElementById('question').value.trim();
+            const options = Array.from(document.querySelectorAll('#options-container input[name="option"]')).map(i => i.value.trim()).filter(t => t !== '');
+            const themeColor = document.getElementById('color-picker').value;
+
+            if (!question || options.length < 2) {
+                alert(translations[currentLang]['alert_no_question']);
+                return;
+            }
+            const pollData = { question, options, theme: { primary: themeColor, text: getContrastColor(themeColor) } };
+            const shareUrl = window.location.href.split('?')[0] + '?data=' + btoa(JSON.stringify(pollData));
+            
+            document.getElementById('shareable-link-input').value = shareUrl;
+            document.getElementById('shareable-link-container').classList.remove('hidden');
+            navigator.clipboard.writeText(shareUrl).then(() => showToast('link_copied_toast'));
+        }
+        function hostSession() {
+            const question = document.getElementById('question').value.trim();
+            const options = Array.from(document.querySelectorAll('#options-container input[name="option"]')).map(i => i.value.trim()).filter(t => t !== '').map(text => ({ text, votes: 0 }));
+            const themeColor = document.getElementById('color-picker').value;
+
+            if (!question || options.length < 2) {
+                alert(translations[currentLang]['alert_no_question']);
+                return;
+            }
+            
+            document.getElementById('host-button-text').classList.add('hidden');
+            document.getElementById('host-loader').classList.remove('hidden');
+            document.getElementById('prepare-button').setAttribute('disabled', true);
+            const theme = { primary: themeColor, text: getContrastColor(themeColor) };
+            applyTheme(theme);
+            sessionData = { question, options, theme };
+            
+            const sessionId = Math.random().toString(36).substring(2, 8).toUpperCase();
+            peer = new Peer(sessionId); 
+
+            peer.on('open', (id) => {
+                const baseUrl = window.location.href.split('?')[0];
+                const sessionUrl = `${baseUrl}?session=${id}`;
+                
+                generateQRCode(sessionUrl);
+                document.getElementById('session-code').innerText = id;
+                document.getElementById('direct-session-link').innerText = sessionUrl;
+                
+                const appUrlEl = document.getElementById('app-url');
+                if (appUrlEl) {
+                    appUrlEl.innerText = baseUrl.replace(/^https?:\/\//, '');
+                }
+
+                document.getElementById('lang-selector-container').classList.add('hidden');
+                document.getElementById('create-session-form').classList.add('hidden');
+                document.getElementById('results-view').classList.remove('hidden');
+                updateResultsView(sessionData);
+            });
+
+            peer.on('connection', (conn) => {
+                guestConnections.push(conn);
+                conn.on('open', () => conn.send({ type: 'session-data', payload: sessionData }));
+                conn.on('data', (data) => {
+                    if (data.type === 'vote') {
+                        handleVote(data.payload.optionIndex);
+                        conn.send({ type: 'vote-confirmed' });
+                    }
+                });
+                conn.on('close', () => { guestConnections = guestConnections.filter(c => c.peer !== conn.peer); });
+            });
+
+             peer.on('error', (err) => {
+                alert(translations[currentLang]['alert_connection_error']);
+                console.error(err);
+                document.getElementById('host-button-text').classList.remove('hidden');
+                document.getElementById('host-loader').classList.add('hidden');
+                document.getElementById('prepare-button').removeAttribute('disabled');
+            });
+        }
+        function handleVote(optionIndex) {
+            sessionData.options[optionIndex].votes++;
+            updateResultsView(sessionData);
+        }
+        function updateResultsView(data) {
+            document.getElementById('results-question').innerText = data.question;
+            const resultsContainer = document.getElementById('results-container');
+            resultsContainer.innerHTML = '';
+            const totalVotes = data.options.reduce((sum, option) => sum + option.votes, 0);
+            document.getElementById('total-votes').innerText = totalVotes;
+
+            data.options.forEach(option => {
+                const percentage = totalVotes > 0 ? (option.votes / totalVotes) * 100 : 0;
+                resultsContainer.innerHTML += `
+                    <div>
+                        <div class="flex justify-between items-baseline mb-2">
+                            <span class="text-xl text-gray-800 font-medium">${option.text}</span>
+                            <span class="text-xl font-bold text-gray-900">${option.votes} <span class="text-lg text-gray-600 font-medium">(${percentage.toFixed(0)}%)</span></span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-8 md:h-10">
+                            <div class="themed-result-bar h-8 md:h-10 rounded-full bar-transition" style="width: ${percentage}%"></div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+        function joinSession() {
+            const hostId = document.getElementById('code-input').value.trim().toUpperCase();
+            if (!hostId) return;
+            document.getElementById('code-input').value = hostId;
+            document.getElementById('join-button').setAttribute('disabled', true);
+            document.getElementById('join-button-text').classList.add('hidden');
+            document.getElementById('join-loader').classList.remove('hidden');
+            document.getElementById('join-error').classList.add('hidden');
+
+            peer = new Peer();
+            peer.on('open', () => {
+                hostConnection = peer.connect(hostId, { reliable: true });
+                hostConnection.on('open', () => {});
+                hostConnection.on('data', (data) => {
+                    if (data.type === 'session-data') {
+                        if (data.payload.theme) applyTheme(data.payload.theme);
+                        if (localStorage.getItem('voted_in_' + hostConnection.peer)) showVotedView();
+                        else showVotingView(data.payload);
+                    } else if (data.type === 'vote-confirmed') {
+                        clearTimeout(voteTimeout);
+                        clearInterval(countdownInterval);
+                        localStorage.setItem('voted_in_' + hostConnection.peer, 'true');
+                        showVotedView();
+                        setTimeout(() => { if (hostConnection) hostConnection.close(); }, 500);
+                    }
+                });
+                 hostConnection.on('error', (err) => { console.error('Error en la conexión:', err); showJoinError(); });
+                 hostConnection.on('close', () => { if (!localStorage.getItem('voted_in_' + hostConnection.peer)) showJoinError(); });
+            });
+            peer.on('error', (err) => { console.error('Error de PeerJS:', err); showJoinError(); });
+        }
+        function showJoinError() {
+            document.getElementById('join-error').innerText = translations[currentLang]['join_error_text'];
+            document.getElementById('join-error').classList.remove('hidden');
+            document.getElementById('join-button-text').classList.remove('hidden');
+            document.getElementById('join-loader').classList.add('hidden');
+            document.getElementById('join-button').removeAttribute('disabled');
+        }
+        function showVotingView(data) {
+            document.getElementById('join-session-form').classList.add('hidden');
+            document.getElementById('voted-view').classList.add('hidden');
+            document.getElementById('voting-view').classList.remove('hidden');
+            document.getElementById('vote-error').classList.add('hidden');
+            document.getElementById('vote-question').innerText = data.question;
+            const optionsContainer = document.getElementById('vote-options-container');
+            optionsContainer.innerHTML = '';
+            data.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = "w-full text-left p-4 border border-gray-300 rounded-lg themed-vote-hover transition duration-200";
+                button.innerText = option.text;
+                button.onclick = () => castVote(index);
+                optionsContainer.appendChild(button);
+            });
+        }
+        function showVotedView() {
+            clearTimeout(voteTimeout);
+            clearInterval(countdownInterval);
+            document.getElementById('join-session-form').classList.add('hidden');
+            document.getElementById('voting-view').classList.add('hidden');
+            document.getElementById('voted-view').classList.remove('hidden');
+        }
+        function castVote(optionIndex) {
+            if (!hostConnection) return;
+            document.querySelectorAll('#vote-options-container button').forEach(btn => btn.disabled = true);
+            document.getElementById('vote-sending').classList.remove('hidden');
+            
+            let secondsLeft = 10;
+            const countdownSpan = document.getElementById('vote-countdown');
+            countdownSpan.textContent = `(${secondsLeft}s)`;
+            countdownInterval = setInterval(() => {
+                secondsLeft--;
+                countdownSpan.textContent = `(${secondsLeft}s)`;
+                if (secondsLeft <= 0) clearInterval(countdownInterval);
+            }, 1000);
+
+            voteTimeout = setTimeout(() => {
+                clearInterval(countdownInterval);
+                document.querySelectorAll('#vote-options-container button').forEach(btn => btn.disabled = false);
+                document.getElementById('vote-sending').classList.add('hidden');
+                const voteError = document.getElementById('vote-error');
+                voteError.innerText = translations[currentLang]['vote_timeout_error'];
+                voteError.classList.remove('hidden');
+            }, 10000);
+
+            hostConnection.send({ type: 'vote', payload: { optionIndex } });
+        }
+    </script>
+</body>
+</html>

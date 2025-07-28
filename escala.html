@@ -19,14 +19,10 @@
         body { font-family: 'Inter', sans-serif; }
         .loader { border: 4px solid #f3f3f3; border-top: 4px solid var(--theme-color-primary); border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        
-        /* Layout Fixes */
         #results-view-content { display: flex; flex-direction: column; md:flex-direction: row; gap: 2rem; height: 100%; }
         #sharing-info-container { flex: 0 0 280px; }
         #results-column { flex: 1; min-width: 0; display: flex; flex-direction: column; }
         #results-container { flex-grow: 1; }
-        
-        /* Projection Mode */
         body.projection-mode { overflow: hidden; cursor: pointer; }
         body.projection-mode #app { max-width: 100%; width: 100%; height: 100vh; border-radius: 0; padding: 1rem; margin: 0; background-color: var(--theme-color-content-bg); }
         .hide-on-projection { display: flex; }
@@ -35,15 +31,10 @@
         body.projection-mode #results-question { text-align: center; font-size: 2.5rem; margin-bottom: 2rem; }
         body.projection-mode #sharing-info-container { display: none; }
         body.projection-mode #results-view-content { flex-direction: column; }
-
-
-        /* Themed & General Styles */
         .themed-bg { background-color: var(--theme-color-primary); color: var(--theme-color-text); }
         .themed-bg-hover:hover { filter: brightness(90%); }
         .themed-content-bg { background-color: var(--theme-color-content-bg); }
         #session-code { font-family: monospace; font-size: 1.5rem; font-weight: bold; letter-spacing: 0.1em; padding: 0.5rem; border: 2px dashed var(--theme-color-primary); border-radius: 0.5rem; color: var(--theme-color-primary); background-color: #fff; cursor: pointer; }
-
-        /* Results Display Styles */
         .bar-result .bar { background-color: var(--theme-color-primary); transition: width 0.5s ease; }
         .traffic-light-results { display: flex; justify-content: center; align-items: center; gap: 2rem; height: 100%; }
         .light-circle { width: 150px; height: 150px; border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; font-weight: bold; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
@@ -52,8 +43,6 @@
         .light-red { background-color: #ef4444; }
         .light-yellow { background-color: #f59e0b; }
         .light-green { background-color: #22c55e; }
-
-        /* Participant Buttons */
         .vote-btn { border: 2px solid #d1d5db; transition: all 0.2s ease; }
         .vote-btn:hover:not(:disabled) { border-color: var(--theme-color-primary); background-color: var(--theme-color-content-bg); }
         .vote-btn:disabled { opacity: 0.5; cursor: not-allowed; }
@@ -105,6 +94,9 @@
                     </select>
                 </div>
                 
+                <div id="scale-labels-container" class="space-y-2 mb-4">
+                    </div>
+
                 <div id="custom-scale-container" class="hidden space-y-2 mb-4">
                      <label class="block text-sm font-medium text-gray-700" data-translate-key="custom_scale_label"></label>
                      <div id="custom-labels-wrapper"></div>
@@ -213,7 +205,7 @@
     
     <script>
         const translations = {
-            'es': { 'create_title': 'Crear una nueva escala', 'question_label': 'Afirmación o pregunta:', 'question_placeholder': 'Ej: Valora la sesión de hoy', 'theme_color_label': 'Color:', 'scale_type_label': 'Tipo de escala:', 'scale_satisfaction': 'Satisfacción (5 niveles)', 'scale_agreement': 'Acuerdo (5 niveles)', 'scale_frequency': 'Frecuencia (5 niveles)', 'scale_trafficlight': 'Comprensión / Semáforo (3 niveles)', 'scale_numeric': 'Numérica (1-10)', 'scale_custom': 'Personalizada', 'custom_scale_label': 'Etiquetas personalizadas:', 'add_label_btn': '+ Añadir etiqueta', 'prepare_session_btn': 'Preparar', 'start_session_btn': 'Iniciar', 'switch_to_participant': '¿Unirte a una sesión?', 'projection_btn_text': 'Proyectar', 'stop_voting_btn': 'Detener', 'resume_voting_btn': 'Reanudar', 'scan_qr_label': '1. Escanea QR', 'direct_link_label': '2. Comparte enlace', 'or_go_to': 'O ve a', 'and_enter_code': 'e introduce el código:', 'total_votes_label': 'Votos totales', 'join_title': 'Unirse a una valoración', 'session_code_label': 'Código de sesión:', 'code_input_placeholder': 'Introduce el código', 'join_btn': 'Unirse', 'switch_to_presenter': '¿Eres presentador?', 'voted_title': '¡Gracias por tu valoración!', 'voted_subtitle': 'Resultados en la pantalla principal.', 'vote_sending': 'Enviando...', 'voting_paused_title': 'Votación en pausa', 'voting_paused_subtitle': 'El presentador ha detenido las respuestas.', 'alert_no_question': 'Introduce una pregunta.', 'join_error_text': 'Error. Verifica el código.', 'shareable_link_title': 'Enlace de preparación:', 'link_copied_toast': 'Enlace copiado', 'code_copied_toast': 'Código copiado', 'scales': { 'satisfaction': ['😠', '🙁', '😐', '🙂', '😄'], 'agreement': ['Totalmente en desacuerdo', 'En desacuerdo', 'Neutral', 'De acuerdo', 'Totalmente de acuerdo'], 'frequency': ['Nunca', 'Rara vez', 'A veces', 'Frecuentemente', 'Siempre'], 'trafficlight': ['No lo entiendo', 'Tengo dudas', 'Lo entiendo'] } },
+            'es': { 'create_title': 'Crear una nueva escala', 'question_label': 'Afirmación o pregunta:', 'question_placeholder': 'Ej: Valora la sesión de hoy', 'theme_color_label': 'Color:', 'scale_type_label': 'Tipo de escala:', 'scale_satisfaction': 'Satisfacción (5 niveles)', 'scale_agreement': 'Acuerdo (5 niveles)', 'scale_frequency': 'Frecuencia (5 niveles)', 'scale_trafficlight': 'Comprensión / Semáforo (3 niveles)', 'scale_numeric': 'Numérica (1-10)', 'scale_custom': 'Personalizada', 'custom_scale_label': 'Etiquetas personalizadas:', 'add_label_btn': '+ Añadir etiqueta', 'prepare_session_btn': 'Preparar', 'start_session_btn': 'Iniciar', 'switch_to_participant': '¿Unirte a una sesión?', 'projection_btn_text': 'Proyectar', 'stop_voting_btn': 'Detener', 'resume_voting_btn': 'Reanudar', 'scan_qr_label': '1. Escanea QR', 'direct_link_label': '2. Comparte enlace', 'or_go_to': 'O ve a', 'and_enter_code': 'e introduce el código:', 'total_votes_label': 'Votos totales', 'join_title': 'Unirse a una valoración', 'session_code_label': 'Código de sesión:', 'code_input_placeholder': 'Introduce el código', 'join_btn': 'Unirse', 'switch_to_presenter': '¿Eres presentador?', 'voted_title': '¡Gracias por tu valoración!', 'voted_subtitle': 'Resultados en la pantalla principal.', 'vote_sending': 'Enviando...', 'voting_paused_title': 'Votación en pausa', 'voting_paused_subtitle': 'El presentador ha detenido las respuestas.', 'alert_no_question': 'Introduce una pregunta.', 'join_error_text': 'Error. Verifica el código.', 'shareable_link_title': 'Enlace de preparación:', 'link_copied_toast': 'Enlace copiado', 'code_copied_toast': 'Código copiado', 'scales': { 'satisfaction': ['😠', '🙁', '😐', '🙂', '😄'], 'agreement': ['Totalmente en desacuerdo', 'En desacord', 'Neutral', 'D\'acord', 'Totalment d\'acord'], 'frequency': ['Nunca', 'Rara vez', 'A veces', 'Frecuentemente', 'Siempre'], 'trafficlight': ['No lo entiendo', 'Tengo dudas', 'Lo entiendo'] } },
             'ca': { 'create_title': 'Crear una nova escala', 'question_label': 'Afirmació o pregunta:', 'question_placeholder': 'Ex: Valora la sessió d\'avui', 'theme_color_label': 'Color:', 'scale_type_label': 'Tipus d\'escala:', 'scale_satisfaction': 'Satisfacció (5 nivells)', 'scale_agreement': 'Acord (5 nivells)', 'scale_frequency': 'Freqüència (5 nivells)', 'scale_trafficlight': 'Comprensió / Semàfor (3 nivells)', 'scale_numeric': 'Numèrica (1-10)', 'scale_custom': 'Personalitzada', 'custom_scale_label': 'Etiquetes personalitzades:', 'add_label_btn': '+ Afegir etiqueta', 'prepare_session_btn': 'Preparar', 'start_session_btn': 'Iniciar', 'switch_to_participant': 'Unir-se a una sessió?', 'projection_btn_text': 'Projectar', 'stop_voting_btn': 'Aturar', 'resume_voting_btn': 'Reprendre', 'scan_qr_label': '1. Escaneja QR', 'direct_link_label': '2. Comparteix enllaç', 'or_go_to': 'O ves a', 'and_enter_code': 'i introdueix el codi:', 'total_votes_label': 'Vots totals', 'join_title': 'Unir-se a una valoració', 'session_code_label': 'Codi de sessió:', 'code_input_placeholder': 'Introdueix el codi', 'join_btn': 'Unir-se', 'switch_to_presenter': 'Ets presentador?', 'voted_title': 'Gràcies per la teva valoració!', 'voted_subtitle': 'Resultats a la pantalla principal.', 'vote_sending': 'Enviant...', 'voting_paused_title': 'Votació en pausa', 'voting_paused_subtitle': 'El presentador ha aturat les respostes.', 'alert_no_question': 'Introdueix una pregunta.', 'join_error_text': 'Error. Verifica el codi.', 'shareable_link_title': 'Enllaç de preparació:', 'link_copied_toast': 'Enllaç copiat', 'code_copied_toast': 'Codi copiat', 'scales': { 'satisfaction': ['😠', '🙁', '😐', '🙂', '😄'], 'agreement': ['Totalment en desacord', 'En desacord', 'Neutral', 'D\'acord', 'Totalment d\'acord'], 'frequency': ['Mai', 'Poques vegades', 'De vegades', 'Freqüentment', 'Sempre'], 'trafficlight': ['No ho entenc', 'Tinc dubtes', 'Ho entenc'] } },
             'en': { 'create_title': 'Create a new scale', 'question_label': 'Statement or question:', 'question_placeholder': 'E.g., Rate today\'s session', 'theme_color_label': 'Color:', 'scale_type_label': 'Scale type:', 'scale_satisfaction': 'Satisfaction (5 levels)', 'scale_agreement': 'Agreement (5 levels)', 'scale_frequency': 'Frequency (5 levels)', 'scale_trafficlight': 'Understanding / Traffic Light (3 levels)', 'scale_numeric': 'Numeric (1-10)', 'scale_custom': 'Custom', 'custom_scale_label': 'Custom labels:', 'add_label_btn': '+ Add label', 'prepare_session_btn': 'Prepare', 'start_session_btn': 'Start', 'switch_to_participant': 'Joining a session?', 'projection_btn_text': 'Project', 'stop_voting_btn': 'Stop', 'resume_voting_btn': 'Resume', 'scan_qr_label': '1. Scan QR', 'direct_link_label': '2. Share link', 'or_go_to': 'Or go to', 'and_enter_code': 'and enter the code:', 'total_votes_label': 'Total votes', 'join_title': 'Join a rating session', 'session_code_label': 'Session code:', 'code_input_placeholder': 'Enter code', 'join_btn': 'Join', 'switch_to_presenter': 'Are you the presenter?', 'voted_title': 'Thanks for your rating!', 'voted_subtitle': 'Results are on the main screen.', 'vote_sending': 'Sending...', 'voting_paused_title': 'Voting paused', 'voting_paused_subtitle': 'The presenter has paused responses.', 'alert_no_question': 'Please enter a question.', 'join_error_text': 'Error. Check the code.', 'shareable_link_title': 'Preparation link:', 'link_copied_toast': 'Link copied', 'code_copied_toast': 'Code copied', 'scales': { 'satisfaction': ['😠', '🙁', '😐', '🙂', '😄'], 'agreement': ['Strongly Disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly Agree'], 'frequency': ['Never', 'Rarely', 'Sometimes', 'Often', 'Always'], 'trafficlight': ['I don\'t get it', 'I have doubts', 'I get it'] } }
         };
@@ -240,6 +232,7 @@
                 const optionEl = document.querySelector(`#scale-type option[value=${key}]`);
                 if (optionEl) optionEl.innerText = translations[lang][`scale_${key}`] || translations.es[`scale_${key}`];
             });
+            handleScaleTypeChange();
         }
         
         function applyTheme(color) {
@@ -276,9 +269,25 @@
         function handleScaleTypeChange() {
             const type = document.getElementById('scale-type').value;
             const customContainer = document.getElementById('custom-scale-container');
-            customContainer.classList.toggle('hidden', type !== 'custom');
-            if (type === 'custom' && document.getElementById('custom-labels-wrapper').children.length === 0) {
-                addCustomLabel(); addCustomLabel();
+            const labelsContainer = document.getElementById('scale-labels-container');
+            
+            labelsContainer.innerHTML = '';
+            customContainer.classList.add('hidden');
+
+            if (type === 'custom') {
+                customContainer.classList.remove('hidden');
+                if (document.getElementById('custom-labels-wrapper').children.length === 0) {
+                    addCustomLabel(); addCustomLabel();
+                }
+            } else if (type !== 'numeric') {
+                const defaultLabels = translations[currentLang].scales[type] || translations.es.scales[type];
+                defaultLabels.forEach(labelText => {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.value = labelText;
+                    input.className = 'w-full p-2 border border-gray-300 rounded-md shadow-sm mb-2';
+                    labelsContainer.appendChild(input);
+                });
             }
         }
 
@@ -294,23 +303,27 @@
 
         function getScaleOptions() {
             const type = document.getElementById('scale-type').value;
+            let options = [];
+
             if (type === 'numeric') {
-                return Array.from({length: 10}, (_, i) => ({ text: `${i + 1}`, votes: 0 }));
+                options = Array.from({length: 10}, (_, i) => ({ text: `${i + 1}`, votes: 0 }));
+            } else if (type === 'custom') {
+                options = Array.from(document.querySelectorAll('#custom-labels-wrapper input'))
+                    .map(input => ({ text: input.value.trim(), votes: 0 }))
+                    .filter(opt => opt.text);
+            } else {
+                options = Array.from(document.querySelectorAll('#scale-labels-container input'))
+                    .map(input => ({ text: input.value.trim(), votes: 0 }))
+                    .filter(opt => opt.text);
             }
-            if (type === 'custom') {
-                return Array.from(document.querySelectorAll('#custom-labels-wrapper input'))
-                    .map(input => input.value.trim()).filter(text => text)
-                    .map(text => ({ text, votes: 0 }));
-            }
-            const scaleKeys = translations[currentLang].scales[type] || translations.es.scales[type];
-            return scaleKeys.map(text => ({ text, votes: 0 }));
+            return options;
         }
 
         function generateShareableLink() {
             const question = document.getElementById('question').value.trim();
             if (!question) { alert(translations[currentLang].alert_no_question); return; }
             const options = getScaleOptions();
-            if (options.length < 2) { alert('La escala personalizada debe tener al menos 2 opciones.'); return; }
+            if (options.length < 2) { alert('La escala debe tener al menos 2 opciones.'); return; }
 
             const data = {
                 question: question,
@@ -536,10 +549,18 @@
                     applyTheme(decoded.themeColor);
                     document.getElementById('scale-type').value = decoded.scaleType;
                     handleScaleTypeChange();
-                    if(decoded.scaleType === 'custom'){
-                        document.getElementById('custom-labels-wrapper').innerHTML = '';
-                        decoded.customOptions.forEach(opt => addCustomLabel(opt));
-                    }
+
+                    const targetContainer = decoded.scaleType === 'custom' ? '#custom-labels-wrapper' : '#scale-labels-container';
+                    const inputs = document.querySelectorAll(`${targetContainer} input`);
+                    
+                    decoded.customOptions.forEach((opt, index) => {
+                        if (inputs[index]) {
+                            inputs[index].value = opt;
+                        } else if (decoded.scaleType === 'custom') {
+                            addCustomLabel(opt);
+                        }
+                    });
+
                 } catch (e) {
                     console.error("Error decoding URL data:", e);
                     switchView('participant');
@@ -555,6 +576,7 @@
             switchView('participant');
             checkURLParameters();
             document.getElementById('color-picker').addEventListener('input', (e) => applyTheme(e.target.value));
+            handleScaleTypeChange(); 
         };
     </script>
 </body>

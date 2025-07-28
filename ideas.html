@@ -190,6 +190,9 @@
                 <div class="flex justify-between items-start gap-4 mb-4">
                     <h2 id="results-question" class="text-4xl font-extrabold flex-grow text-gray-800"></h2>
                     <div class="flex gap-2 flex-shrink-0 hide-on-projection">
+                         <button id="stop-btn" onclick="toggleSubmissionStatus()" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg">
+                            <span data-translate-key="stop_submission_btn">Detener</span>
+                         </button>
                          <button id="start-voting-btn" onclick="startVotingPhase()" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg" data-translate-key="start_voting_btn">Iniciar Votación</button>
                          <button id="projection-btn" onclick="toggleProjectionMode()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg" data-translate-key="projection_btn_text">Proyectar</button>
                     </div>
@@ -240,6 +243,11 @@
                 <button id="send-idea-btn" onclick="sendIdea()" class="mt-2 themed-bg themed-bg-hover font-bold py-2 px-4 rounded-lg" data-translate-key="send_btn">Enviar Idea</button>
                  <p id="participant-info" class="mt-4 text-green-600"></p>
             </div>
+            
+            <div id="submission-paused-view" class="hidden text-center py-8 bg-white p-6 md:p-8 rounded-xl">
+                 <h2 class="text-2xl font-bold mt-4" data-translate-key="submission_paused_title">Recepción en pausa</h2>
+                 <p class="text-gray-600" data-translate-key="submission_paused_subtitle">El presentador ha detenido el envío de ideas.</p>
+            </div>
 
             <div id="voting-form" class="hidden bg-white p-8 rounded-xl shadow-lg">
                 <h2 id="voting-form-title" class="text-2xl font-bold mb-4" data-translate-key="voting_form_title">Vota por tus ideas favoritas</h2>
@@ -259,11 +267,11 @@
     <script>
         // --- i18n & Config ---
         const translations = {
-            'es': { 'create_title': 'Crear una nueva lista de ideas', 'question_label': 'Título o pregunta:', 'question_placeholder': 'Ej: Ideas para mejorar el patio', 'theme_color_label': 'Color del tema:', 'ideas_per_person_label': 'Ideas por persona:', 'votes_per_person_label': 'Votos por persona:', 'start_session_btn': 'Iniciar Sesión', 'switch_to_participant': '¿Buscas unirte a una sesión? Haz clic aquí.', 'start_voting_btn': 'Iniciar Votación', 'projection_btn_text': 'Proyectar', 'scan_qr_label': '1. Escanea el QR', 'direct_link_label': '2. O comparte el enlace', 'or_go_to': 'O ve a', 'and_enter_code': 'e introduce el código:', 'join_title': 'Unirse a una sesión', 'session_code_label': 'Código de la sesión:', 'code_input_placeholder': 'Introduce el código', 'join_btn': 'Unirse', 'switch_to_presenter': '¿Eres el presentador? Inicia sesión aquí.', 'idea_input_placeholder': 'Escribe tu idea (máx. 200 caracteres)', 'send_btn': 'Enviar Idea', 'voting_form_title': 'Vota por tus ideas favoritas', 'completed_title': '¡Gracias por participar!', 'completed_subtitle': 'Puedes ver los resultados en la pantalla principal.', 'copied_toast': 'Código copiado', 'link_copied_toast': 'Enlace copiado', 'url_copied_toast': 'URL copiada', 'ideas_left_text': 'Te quedan {count} idea(s) por enviar.', 'votes_left_text': 'Puedes votar por {count} idea(s).', 'idea_sent_confirmation': '¡Idea enviada!', 'waiting_for_voting': 'Has enviado todas tus ideas. Esperando que el presentador inicie la votación...' },
-            'ca': { 'create_title': 'Crear una nova llista d\'idees', 'question_label': 'Títol o pregunta:', 'question_placeholder': 'Ex: Idees per millorar el pati', 'theme_color_label': 'Color del tema:', 'ideas_per_person_label': 'Idees per persona:', 'votes_per_person_label': 'Vots per persona:', 'start_session_btn': 'Iniciar Sessió', 'switch_to_participant': 'Busques unir-te a una sessió? Fes clic aquí.', 'start_voting_btn': 'Iniciar Votació', 'projection_btn_text': 'Projectar', 'scan_qr_label': '1. Escaneja el QR', 'direct_link_label': '2. O comparteix l\'enllaç', 'or_go_to': 'O ves a', 'and_enter_code': 'i introdueix el codi:', 'join_title': 'Unir-se a una sessió', 'session_code_label': 'Codi de la sessió:', 'code_input_placeholder': 'Introdueix el codi', 'join_btn': 'Unir-se', 'switch_to_presenter': 'Ets el presentador? Inicia sessió aquí.', 'idea_input_placeholder': 'Escriu la teva idea (màx. 200 caràcters)', 'send_btn': 'Enviar Idea', 'voting_form_title': 'Vota per les teves idees preferides', 'completed_title': 'Gràcies per participar!', 'completed_subtitle': 'Pots veure els resultats a la pantalla principal.', 'copied_toast': 'Codi copiat', 'link_copied_toast': 'Enllaç copiat', 'url_copied_toast': 'URL copiada', 'ideas_left_text': 'Et queden {count} idea(es) per enviar.', 'votes_left_text': 'Pots votar per {count} idea(es).', 'idea_sent_confirmation': 'Idea enviada!', 'waiting_for_voting': 'Has enviat totes les teves idees. Esperant que el presentador iniciï la votació...' },
-            'gl': { 'create_title': 'Crear unha nova lista de ideas', 'question_label': 'Título ou pregunta:', 'question_placeholder': 'Ex: Ideas para mellorar o patio', 'theme_color_label': 'Cor do tema:', 'ideas_per_person_label': 'Ideas por persoa:', 'votes_per_person_label': 'Votos por persoa:', 'start_session_btn': 'Iniciar Sesión', 'switch_to_participant': 'Buscas unirte a unha sesión? Fai clic aquí.', 'start_voting_btn': 'Iniciar Votación', 'projection_btn_text': 'Proxectar', 'scan_qr_label': '1. Escanea o QR', 'direct_link_label': '2. Ou comparte a ligazón', 'or_go_to': 'Ou vai a', 'and_enter_code': 'e introduce o código:', 'join_title': 'Unirse a unha sesión', 'session_code_label': 'Código da sesión:', 'code_input_placeholder': 'Introduce o código', 'join_btn': 'Unirse', 'switch_to_presenter': 'Es o presentador? Inicia sesión aquí.', 'idea_input_placeholder': 'Escribe a túa idea (máx. 200 caracteres)', 'send_btn': 'Enviar Idea', 'voting_form_title': 'Vota polas túas ideas favoritas', 'completed_title': 'Grazas por participar!', 'completed_subtitle': 'Podes ver os resultados na pantalla principal.', 'copied_toast': 'Código copiado', 'link_copied_toast': 'Ligazón copiada', 'url_copied_toast': 'URL copiada', 'ideas_left_text': 'Quédanche {count} idea(s) por enviar.', 'votes_left_text': 'Podes votar por {count} idea(s).', 'idea_sent_confirmation': 'Idea enviada!', 'waiting_for_voting': 'Enviaches todas as túas ideas. Agardando a que o presentador inicie a votación...' },
-            'eu': { 'create_title': 'Ideia zerrenda berria sortu', 'question_label': 'Izenburua edo galdera:', 'question_placeholder': 'Adib: Jolastokia hobetzeko ideiak', 'theme_color_label': 'Gaiaren kolorea:', 'ideas_per_person_label': 'Ideiak pertsonako:', 'votes_per_person_label': 'Botoak pertsonako:', 'start_session_btn': 'Saioa Hasi', 'switch_to_participant': 'Saio batean sartu nahi duzu? Egin klik hemen.', 'start_voting_btn': 'Bozketa Hasi', 'projection_btn_text': 'Proiektatu', 'scan_qr_label': '1. Eskaneatu QR-a', 'direct_link_label': '2. Edo partekatu esteka', 'or_go_to': 'Edo joan hona', 'and_enter_code': 'eta sartu kodea:', 'join_title': 'Saio batean sartu', 'session_code_label': 'Saioaren kodea:', 'code_input_placeholder': 'Sartu kodea', 'join_btn': 'Sartu', 'switch_to_presenter': 'Aurkezlea zara? Hasi saioa hemen.', 'idea_input_placeholder': 'Idatzi zure ideia (gehienez 200 karaktere)', 'send_btn': 'Ideia Bidali', 'voting_form_title': 'Bozkatu zure ideia gogokoenak', 'completed_title': 'Eskerrik asko parte hartzeagatik!', 'completed_subtitle': 'Emaitzak pantaila nagusian ikus ditzakezu.', 'copied_toast': 'Kodea kopiatu da', 'link_copied_toast': 'Esteka kopiatu da', 'url_copied_toast': 'URLa kopiatu da', 'ideas_left_text': '{count} ideia geratzen zaizkizu bidaltzeko.', 'votes_left_text': '{count} ideia bozka ditzakezu.', 'idea_sent_confirmation': 'Ideia bidali da!', 'waiting_for_voting': 'Zure ideia guztiak bidali dituzu. Aurkezleak bozketa hasteko zain...' },
-            'en': { 'create_title': 'Create a new idea list', 'question_label': 'Title or question:', 'question_placeholder': 'E.g., Ideas to improve the schoolyard', 'theme_color_label': 'Theme color:', 'ideas_per_person_label': 'Ideas per person:', 'votes_per_person_label': 'Votes per person:', 'start_session_btn': 'Start Session', 'switch_to_participant': 'Looking to join a session? Click here.', 'start_voting_btn': 'Start Voting', 'projection_btn_text': 'Project', 'scan_qr_label': '1. Scan the QR', 'direct_link_label': '2. Or share the link', 'or_go_to': 'Or go to', 'and_enter_code': 'and enter the code:', 'join_title': 'Join a session', 'session_code_label': 'Session code:', 'code_input_placeholder': 'Enter the code', 'join_btn': 'Join', 'switch_to_presenter': 'Are you the presenter? Log in here.', 'idea_input_placeholder': 'Write your idea (max 200 chars)', 'send_btn': 'Send Idea', 'voting_form_title': 'Vote for your favorite ideas', 'completed_title': 'Thanks for participating!', 'completed_subtitle': 'You can see the results on the main screen.', 'copied_toast': 'Code copied', 'link_copied_toast': 'Link copied', 'url_copied_toast': 'URL copied', 'ideas_left_text': 'You have {count} idea(s) left to send.', 'votes_left_text': 'You can vote for {count} idea(s).', 'idea_sent_confirmation': 'Idea sent!', 'waiting_for_voting': 'You have sent all your ideas. Waiting for the presenter to start the voting...' }
+            'es': { 'create_title': 'Crear una nueva lista de ideas', 'question_label': 'Título o pregunta:', 'question_placeholder': 'Ej: Ideas para mejorar el patio', 'theme_color_label': 'Color del tema:', 'ideas_per_person_label': 'Ideas por persona:', 'votes_per_person_label': 'Votos por persona:', 'start_session_btn': 'Iniciar Sesión', 'switch_to_participant': '¿Buscas unirte a una sesión? Haz clic aquí.', 'start_voting_btn': 'Iniciar Votación', 'projection_btn_text': 'Proyectar', 'scan_qr_label': '1. Escanea el QR', 'direct_link_label': '2. O comparte el enlace', 'or_go_to': 'O ve a', 'and_enter_code': 'e introduce el código:', 'join_title': 'Unirse a una sesión', 'session_code_label': 'Código de la sesión:', 'code_input_placeholder': 'Introduce el código', 'join_btn': 'Unirse', 'switch_to_presenter': '¿Eres el presentador? Inicia sesión aquí.', 'idea_input_placeholder': 'Escribe tu idea (máx. 200 caracteres)', 'send_btn': 'Enviar Idea', 'voting_form_title': 'Vota por tus ideas favoritas', 'completed_title': '¡Gracias por participar!', 'completed_subtitle': 'Puedes ver los resultados en la pantalla principal.', 'copied_toast': 'Código copiado', 'link_copied_toast': 'Enlace copiado', 'url_copied_toast': 'URL copiada', 'ideas_left_text': 'Te quedan {count} idea(s) por enviar.', 'votes_left_text': 'Puedes votar por {count} idea(s).', 'idea_sent_confirmation': '¡Idea enviada!', 'waiting_for_voting': 'Has enviado todas tus ideas. Esperando que el presentador inicie la votación...', 'stop_submission_btn': 'Detener', 'resume_submission_btn': 'Reanudar', 'submission_paused_title': 'Recepción en pausa', 'submission_paused_subtitle': 'El presentador ha detenido el envío de ideas.' },
+            'ca': { 'create_title': 'Crear una nova llista d\'idees', 'question_label': 'Títol o pregunta:', 'question_placeholder': 'Ex: Idees per millorar el pati', 'theme_color_label': 'Color del tema:', 'ideas_per_person_label': 'Idees per persona:', 'votes_per_person_label': 'Vots per persona:', 'start_session_btn': 'Iniciar Sessió', 'switch_to_participant': 'Busques unir-te a una sessió? Fes clic aquí.', 'start_voting_btn': 'Iniciar Votació', 'projection_btn_text': 'Projectar', 'scan_qr_label': '1. Escaneja el QR', 'direct_link_label': '2. O comparteix l\'enllaç', 'or_go_to': 'O ves a', 'and_enter_code': 'i introdueix el codi:', 'join_title': 'Unir-se a una sessió', 'session_code_label': 'Codi de la sessió:', 'code_input_placeholder': 'Introdueix el codi', 'join_btn': 'Unir-se', 'switch_to_presenter': 'Ets el presentador? Inicia sessió aquí.', 'idea_input_placeholder': 'Escriu la teva idea (màx. 200 caràcters)', 'send_btn': 'Enviar Idea', 'voting_form_title': 'Vota per les teves idees preferides', 'completed_title': 'Gràcies per participar!', 'completed_subtitle': 'Pots veure els resultats a la pantalla principal.', 'copied_toast': 'Codi copiat', 'link_copied_toast': 'Enllaç copiat', 'url_copied_toast': 'URL copiada', 'ideas_left_text': 'Et queden {count} idea(es) per enviar.', 'votes_left_text': 'Pots votar per {count} idea(es).', 'idea_sent_confirmation': 'Idea enviada!', 'waiting_for_voting': 'Has enviat totes les teves idees. Esperant que el presentador iniciï la votació...', 'stop_submission_btn': 'Aturar', 'resume_submission_btn': 'Reprendre', 'submission_paused_title': 'Recepció en pausa', 'submission_paused_subtitle': 'El presentador ha aturat l\'enviament d\'idees.' },
+            'gl': { 'create_title': 'Crear unha nova lista de ideas', 'question_label': 'Título ou pregunta:', 'question_placeholder': 'Ex: Ideas para mellorar o patio', 'theme_color_label': 'Cor do tema:', 'ideas_per_person_label': 'Ideas por persoa:', 'votes_per_person_label': 'Votos por persoa:', 'start_session_btn': 'Iniciar Sesión', 'switch_to_participant': 'Buscas unirte a unha sesión? Fai clic aquí.', 'start_voting_btn': 'Iniciar Votación', 'projection_btn_text': 'Proxectar', 'scan_qr_label': '1. Escanea o QR', 'direct_link_label': '2. Ou comparte a ligazón', 'or_go_to': 'Ou vai a', 'and_enter_code': 'e introduce o código:', 'join_title': 'Unirse a unha sesión', 'session_code_label': 'Código da sesión:', 'code_input_placeholder': 'Introduce o código', 'join_btn': 'Unirse', 'switch_to_presenter': 'Es o presentador? Inicia sesión aquí.', 'idea_input_placeholder': 'Escribe a túa idea (máx. 200 caracteres)', 'send_btn': 'Enviar Idea', 'voting_form_title': 'Vota polas túas ideas favoritas', 'completed_title': 'Grazas por participar!', 'completed_subtitle': 'Podes ver os resultados na pantalla principal.', 'copied_toast': 'Código copiado', 'link_copied_toast': 'Ligazón copiada', 'url_copied_toast': 'URL copiada', 'ideas_left_text': 'Quédanche {count} idea(s) por enviar.', 'votes_left_text': 'Podes votar por {count} idea(s).', 'idea_sent_confirmation': 'Idea enviada!', 'waiting_for_voting': 'Enviaches todas as túas ideas. Agardando a que o presentador inicie a votación...', 'stop_submission_btn': 'Deter', 'resume_submission_btn': 'Reanudar', 'submission_paused_title': 'Recepción en pausa', 'submission_paused_subtitle': 'O presentador detivo o envío de ideas.' },
+            'eu': { 'create_title': 'Ideia zerrenda berria sortu', 'question_label': 'Izenburua edo galdera:', 'question_placeholder': 'Adib: Jolastokia hobetzeko ideiak', 'theme_color_label': 'Gaiaren kolorea:', 'ideas_per_person_label': 'Ideiak pertsonako:', 'votes_per_person_label': 'Botoak pertsonako:', 'start_session_btn': 'Saioa Hasi', 'switch_to_participant': 'Saio batean sartu nahi duzu? Egin klik hemen.', 'start_voting_btn': 'Bozketa Hasi', 'projection_btn_text': 'Proiektatu', 'scan_qr_label': '1. Eskaneatu QR-a', 'direct_link_label': '2. Edo partekatu esteka', 'or_go_to': 'Edo joan hona', 'and_enter_code': 'eta sartu kodea:', 'join_title': 'Saio batean sartu', 'session_code_label': 'Saioaren kodea:', 'code_input_placeholder': 'Sartu kodea', 'join_btn': 'Sartu', 'switch_to_presenter': 'Aurkezlea zara? Hasi saioa hemen.', 'idea_input_placeholder': 'Idatzi zure ideia (gehienez 200 karaktere)', 'send_btn': 'Ideia Bidali', 'voting_form_title': 'Bozkatu zure ideia gogokoenak', 'completed_title': 'Eskerrik asko parte hartzeagatik!', 'completed_subtitle': 'Emaitzak pantaila nagusian ikus ditzakezu.', 'copied_toast': 'Kodea kopiatu da', 'link_copied_toast': 'Esteka kopiatu da', 'url_copied_toast': 'URLa kopiatu da', 'ideas_left_text': '{count} ideia geratzen zaizkizu bidaltzeko.', 'votes_left_text': '{count} ideia bozka ditzakezu.', 'idea_sent_confirmation': 'Ideia bidali da!', 'waiting_for_voting': 'Zure ideia guztiak bidali dituzu. Aurkezleak bozketa hasteko zain...', 'stop_submission_btn': 'Gelditu', 'resume_submission_btn': 'Berrekin', 'submission_paused_title': 'Harrera pausatuta', 'submission_paused_subtitle': 'Aurkezleak ideien bidalketa gelditu du.' },
+            'en': { 'create_title': 'Create a new idea list', 'question_label': 'Title or question:', 'question_placeholder': 'E.g., Ideas to improve the schoolyard', 'theme_color_label': 'Theme color:', 'ideas_per_person_label': 'Ideas per person:', 'votes_per_person_label': 'Votes per person:', 'start_session_btn': 'Start Session', 'switch_to_participant': 'Looking to join a session? Click here.', 'start_voting_btn': 'Start Voting', 'projection_btn_text': 'Project', 'scan_qr_label': '1. Scan the QR', 'direct_link_label': '2. Or share the link', 'or_go_to': 'Or go to', 'and_enter_code': 'and enter the code:', 'join_title': 'Join a session', 'session_code_label': 'Session code:', 'code_input_placeholder': 'Enter the code', 'join_btn': 'Join', 'switch_to_presenter': 'Are you the presenter? Log in here.', 'idea_input_placeholder': 'Write your idea (max 200 chars)', 'send_btn': 'Send Idea', 'voting_form_title': 'Vote for your favorite ideas', 'completed_title': 'Thanks for participating!', 'completed_subtitle': 'You can see the results on the main screen.', 'copied_toast': 'Code copied', 'link_copied_toast': 'Link copied', 'url_copied_toast': 'URL copied', 'ideas_left_text': 'You have {count} idea(s) left to send.', 'votes_left_text': 'You can vote for {count} idea(s).', 'idea_sent_confirmation': 'Idea sent!', 'waiting_for_voting': 'You have sent all your ideas. Waiting for the presenter to start the voting...', 'stop_submission_btn': 'Stop', 'resume_submission_btn': 'Resume', 'submission_paused_title': 'Submission paused', 'submission_paused_subtitle': 'The presenter has paused idea submissions.' }
         };
         let currentLang = 'es';
 
@@ -277,7 +285,8 @@
             votesPerPerson: 3,
             themeColor: '#4f46e5',
             ideas: [], // { id, text, votes }
-            phase: 'submission' // 'submission' or 'voting'
+            phase: 'submission', // 'submission' or 'voting'
+            submissionActive: true
         };
         let participantState = { submittedIdeas: 0, castVotes: 0, votes: {} }; // votes: { [ideaId]: count }
         let pendingVotes = {};   // { [ideaId]: 1 | -1 }
@@ -425,7 +434,7 @@
         }
         
         function handleGuestData(conn, data) {
-            if (data.type === 'new-idea') {
+            if (data.type === 'new-idea' && sessionData.submissionActive) {
                 const newIdea = { id: 'idea-' + Date.now() + Math.random(), text: data.payload, votes: 0 };
                 sessionData.ideas.push(newIdea);
             } else if (data.type === 'vote') {
@@ -436,6 +445,20 @@
                     conn.send({ type: 'vote-confirm', payload: { ideaId, delta } });
                 }
             }
+            broadcastUpdate();
+        }
+        
+        function toggleSubmissionStatus() {
+            sessionData.submissionActive = !sessionData.submissionActive;
+            const btn = document.getElementById('stop-btn').querySelector('span');
+            const btnEl = document.getElementById('stop-btn');
+            
+            btn.innerText = translations[currentLang][sessionData.submissionActive ? 'stop_submission_btn' : 'resume_submission_btn'];
+            btnEl.classList.toggle('bg-red-500', sessionData.submissionActive);
+            btnEl.classList.toggle('hover:bg-red-600', sessionData.submissionActive);
+            btnEl.classList.toggle('bg-green-500', !sessionData.submissionActive);
+            btnEl.classList.toggle('hover:bg-green-600', !sessionData.submissionActive);
+            
             broadcastUpdate();
         }
 
@@ -489,13 +512,14 @@
         function startVotingPhase() {
             sessionData.phase = 'voting';
             document.getElementById('start-voting-btn').style.display = 'none';
+            document.getElementById('stop-btn').style.display = 'none';
             broadcastUpdate();
         }
         
         function broadcastUpdate() {
             updateIdeasListView();
             guestConnections.forEach(conn =>
-                conn.send({ type: 'session-data', payload: sessionData })
+                conn.send({ type: 'session-update', payload: sessionData })
             );
         }
 
@@ -508,11 +532,14 @@
             peer.on('open', () => {
                 hostConnection = peer.connect(hostId, { reliable: true });
                 hostConnection.on('data', data => {
-                    if (data.type === 'session-data') {
-                        sessionData = data.payload;
+                    const dataType = data.type;
+                    const payload = data.payload;
+
+                    if (dataType === 'session-data' || dataType === 'session-update') {
+                        sessionData = payload;
                         applyTheme(sessionData.themeColor);
                         updateParticipantView();
-                    } else if (data.type === 'vote-confirm') {
+                    } else if (dataType === 'vote-confirm') {
                         const { ideaId, delta } = data.payload;
 
                         delete pendingVotes[ideaId];
@@ -546,8 +573,14 @@
             document.getElementById('idea-form').classList.add('hidden');
             document.getElementById('voting-form').classList.add('hidden');
             document.getElementById('completed-view').classList.add('hidden');
+            document.getElementById('submission-paused-view').classList.add('hidden');
 
             if (sessionData.phase === 'submission') {
+                if (!sessionData.submissionActive) {
+                    document.getElementById('submission-paused-view').classList.remove('hidden');
+                    return;
+                }
+
                 if (participantState.submittedIdeas < sessionData.ideasPerPerson) {
                     document.getElementById('idea-form').classList.remove('hidden');
                     document.getElementById('idea-form-title').innerText = sessionData.question;
@@ -599,6 +632,7 @@
         }
 
         function sendIdea() {
+            if (!sessionData.submissionActive) return;
             const ideaText = document.getElementById('idea-input').value.trim();
             if (!ideaText) return;
             hostConnection.send({ type: 'new-idea', payload: ideaText });

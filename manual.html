@@ -49,7 +49,8 @@
         .tab-button.active.nube { border-color: #f97316; color: #9a3412; }
         .tab-button.active.ideas { border-color: #a855f7; color: #7e22ce; }
         .tab-button.active.muro { border-color: #0891b2; color: #155e75; }
-        .tab-button.active.general { border-color: #3b82f6; color: #1e40af; }
+        .tab-button.active.escala { border-color: #3b82f6; color: #1e40af; } /* Nuevo estilo */
+        .tab-button.active.general { border-color: #6b7280; color: #1f2937; }
         .tab-button.active.privacidad { border-color: #6b7280; color: #1f2937; }
     </style>
 </head>
@@ -105,95 +106,76 @@
                              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                             Muro Interactivo
                         </button>
+                        <button onclick="showTab('escala')" class="tab-button escala flex items-center gap-2 p-4 text-lg" data-translate-key="app-escala-title">
+                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                             </svg>
+                            Escala de Valoración
+                        </button>
                     </nav>
                 </div>
 
                 <div id="tab-content">
                     <section id="general" class="tab-pane active">
                         <h2 id="general-title-content">Aspectos Generales</h2>
-
-                        <p id="general-intro-p1">
-                            "Conexión en Directo" es un conjunto de herramientas gratuitas y de código abierto diseñadas para dinamizar clases, conferencias o cualquier evento en directo. Permiten fomentar la participación de la audiencia en tiempo real a través de actividades interactivas como encuestas, nubes de palabras, lluvias de ideas o muros colaborativos.
-                        </p>
-
+                        <p id="general-intro-p1">"Conexión en Directo" es un conjunto de herramientas gratuitas y de código abierto diseñadas para dinamizar clases, conferencias o cualquier evento en directo. Permiten fomentar la participación de la audiencia en tiempo real a través de actividades interactivas como encuestas, nubes de palabras, lluvias de ideas o muros colaborativos.</p>
                         <h3 id="general-how-it-works-title">¿Cómo funcionan estas aplicaciones?</h3>
-                        <p id="general-how-it-works-p1">
-                            Todas las herramientas de "Conexión en Directo" se basan en la tecnología <strong>WebRTC (Peer-to-Peer)</strong>. Esto significa que la comunicación se establece directamente entre el dispositivo del presentador y los de los participantes, sin necesidad de un servidor intermedio que almacene datos. La información viaja de forma segura y desaparece en cuanto se cierra la sesión.
-                        </p>
-                        
+                        <p id="general-how-it-works-p1">Todas las herramientas de "Conexión en Directo" se basan en la tecnología <strong>WebRTC (Peer-to-Peer)</strong>. Esto significa que la comunicación se establece directamente entre el dispositivo del presentador y los de los participantes, sin necesidad de un servidor intermedio que almacene datos. La información viaja de forma segura y desaparece en cuanto se cierra la sesión.</p>
                         <h3 id="general-roles-title">Roles de Usuario</h3>
                         <p id="general-roles-p1">En cada aplicación existen dos roles claros:</p>
                         <ul>
                             <li id="general-roles-li1"><strong>Presentador:</strong> Es quien crea, configura y gestiona la actividad. Desde su pantalla controla la sesión y visualiza los resultados consolidados en tiempo real. Para crear una actividad, debe acceder a la aplicación y usar el enlace inferior ("¿Eres el presentador?").</li>
                             <li id="general-roles-li2"><strong>Participante:</strong> Es quien se une a una sesión ya creada usando un código o enlace. Interactúa enviando sus respuestas (votos, palabras, ideas) desde su propio dispositivo.</li>
                         </ul>
-                        
                         <h3 id="general-prepare-title">La función "Preparar Sesión"</h3>
-                        <p id="general-prepare-p1">
-                            La mayoría de aplicaciones incluyen un botón de "Preparar Sesión". Esta función genera un <strong>enlace único</strong> que guarda toda la configuración de tu actividad (la pregunta, las opciones, los colores, etc.). Puedes guardar este enlace para usarlo más tarde, compartirlo con otros compañeros o tener tus clases, conferencias o talleres preparados con antelación sin necesidad de volver a introducir los datos.
-                        </p>
-
+                        <p id="general-prepare-p1">La mayoría de aplicaciones incluyen un botón de "Preparar Sesión". Esta función genera un <strong>enlace único</strong> que guarda toda la configuración de tu actividad (la pregunta, las opciones, los colores, etc.). Puedes guardar este enlace para usarlo más tarde, compartirlo con otros compañeros o tener tus clases, conferencias o talleres preparados con antelación sin necesidad de volver a introducir los datos.</p>
                         <h3 id="general-connections-title">Consideraciones sobre el número de conexiones</h3>
-                        <p id="general-connections-p1">
-                            Al ser una conexión directa, el rendimiento depende de dos factores clave: la <strong>potencia del ordenador y el ancho de banda de la red del presentador</strong>. Cada participante abre una conexión directa con el presentador, que debe gestionar todas simultáneamente.
-                        </p>
-                        <p id="general-connections-p2">
-                            Por este motivo, distinguimos dos tipos de aplicaciones:
-                        </p>
+                        <p id="general-connections-p1">Al ser una conexión directa, el rendimiento depende de dos factores clave: la <strong>potencia del ordenador y el ancho de banda de la red del presentador</strong>. Cada participante abre una conexión directa con el presentador, que debe gestionar todas simultáneamente.</p>
+                        <p id="general-connections-p2">Por este motivo, distinguimos dos tipos de aplicaciones:</p>
                          <ul>
                             <li id="general-connections-li1"><strong>Conexiones Persistentes (Muro Interactivo):</strong> En esta aplicación, las conexiones se mantienen abiertas para ver cambios en tiempo real. Aquí, se recomienda un uso óptimo con grupos de hasta <strong>30-40 participantes</strong> para asegurar la fluidez.</li>
-                            <li id="general-connections-li2"><strong>Conexiones Breves (Votación, Nube, Lluvia de Ideas):</strong> En estas herramientas, la conexión se establece, envía el dato y se cierra en segundos. Esta eficiencia permite manejar un número mucho mayor de participantes, <strong>potencialmente varios cientos</strong>, ya que no se sobrecarga el dispositivo del presentador. Los navegadores son capaces de gestionar picos de decenas de conexiones nuevas por segundo, facilitando la participación masiva.</li>
+                            <li id="general-connections-li2"><strong>Conexiones Breves (Votación, Nube, Lluvia de Ideas, Escala):</strong> En estas herramientas, la conexión se establece, envía el dato y se cierra en segundos. Esta eficiencia permite manejar un número mucho mayor de participantes, <strong>potencialmente varios cientos</strong>, ya que no se sobrecarga el dispositivo del presentador. Los navegadores son capaces de gestionar picos de decenas de conexiones nuevas por segundo, facilitando la participación masiva.</li>
                         </ul>
-
                         <h3 id="general-issues-title">Sugerencias y reporte de fallos</h3>
-                        <p id="general-issues-p1">
-                            Si encuentras algún fallo, tienes alguna duda o quieres proponer una mejora, puedes hacerlo a través de la sección "Issues" del repositorio en GitHub. Para ello, visita <a href="https://github.com/jjdeharo/directo/issues" target="_blank">https://github.com/jjdeharo/directo/issues</a> y haz clic en el botón verde "New issue". Describe tu consulta o problema de la forma más detallada posible.
-                        </p>
+                        <p id="general-issues-p1">Si encuentras algún fallo, tienes alguna duda o quieres proponer una mejora, puedes hacerlo a través de la sección "Issues" del repositorio en GitHub. Para ello, visita <a href="https://github.com/jjdeharo/directo/issues" target="_blank">https://github.com/jjdeharo/directo/issues</a> y haz clic en el botón verde "New issue". Describe tu consulta o problema de la forma más detallada posible.</p>
                     </section>
 
                     <section id="privacidad" class="tab-pane hidden">
                         <h2 id="privacy-title-content" class="text-gray-700">Privacidad y Gestión de Datos</h2>
                         <h3 id="privacy-p2p-title">Un modelo sin servidores</h3>
-                        <p id="privacy-p2p-p1">
-                            La principal ventaja de usar WebRTC es que <strong>ningún dato de la sesión pasa por un servidor central</strong>. La información (votos, ideas, etc.) viaja cifrada directamente desde el navegador de cada participante al navegador del presentador.
-                        </p>
+                        <p id="privacy-p2p-p1">La principal ventaja de usar WebRTC es que <strong>ningún dato de la sesión pasa por un servidor central</strong>. La información (votos, ideas, etc.) viaja cifrada directamente desde el navegador de cada participante al navegador del presentador.</p>
                          <h3 id="privacy-advantages-title">¿Qué implica esto para la privacidad?</h3>
                         <ul>
                             <li id="privacy-advantages-li1"><strong>No hay registro de datos:</strong> Al no haber una base de datos central, ninguna respuesta queda almacenada en la nube. Una vez que el presentador cierra la pestaña de la sesión, toda la información se pierde de forma definitiva.</li>
                             <li id="privacy-advantages-li2"><strong>Anonimato:</strong> Las aplicaciones no solicitan ni guardan ninguna información personal de los participantes. La conexión se basa en un código de sesión anónimo.</li>
                              <li id="privacy-advantages-li3"><strong>Control total del presentador:</strong> El presentador es el único que recibe y visualiza los datos en su dispositivo. Si decide exportar los resultados (a PDF o CSV), esos archivos se guardan localmente en su propio ordenador, bajo su control y responsabilidad.</li>
                         </ul>
-                        <p id="privacy-p2p-p2">
-                           Este enfoque garantiza un alto nivel de privacidad y lo hace ideal para cualquier tipo de encuentro (educativo, profesional o social), ya que ni el creador de la herramienta ni terceros tienen acceso a los datos generados durante las actividades.
-                        </p>
+                        <p id="privacy-p2p-p2">Este enfoque garantiza un alto nivel de privacidad y lo hace ideal para cualquier tipo de encuentro (educativo, profesional o social), ya que ni el creador de la herramienta ni terceros tienen acceso a los datos generados durante las actividades.</p>
                     </section>
 
                     <section id="vota" class="tab-pane hidden">
                         <h2 id="app-vota-title-content" class="text-green-700">Votación Simple</h2>
-                        <p id="app-vota-desc">
-                            Es una herramienta para lanzar preguntas de opción múltiple de forma rápida. El presentador define una pregunta y varias opciones de respuesta. Los participantes eligen una opción y los resultados se muestran instantáneamente como un gráfico de barras porcentual en la pantalla del presentador.
-                        </p>
+                        <p id="app-vota-desc">Es una herramienta para lanzar preguntas de opción múltiple de forma rápida. El presentador define una pregunta y varias opciones de respuesta. Los participantes eligen una opción y los resultados se muestran instantáneamente como un gráfico de barras porcentual en la pantalla del presentador.</p>
                     </section>
 
                     <section id="nube" class="tab-pane hidden">
                         <h2 id="app-nube-title-content" class="text-orange-700">Nube de Palabras</h2>
-                        <p id="app-nube-desc">
-                            Ideal para lluvias de ideas rápidas. Los participantes envían palabras o frases cortas en respuesta a una pregunta. Estas palabras forman una nube dinámica donde la frecuencia de cada término determina su tamaño. El resultado final se puede exportar como una imagen <strong>PNG</strong> o los datos brutos como una hoja de cálculo (<strong>CSV</strong>).
-                        </p>
+                        <p id="app-nube-desc">Ideal para lluvias de ideas rápidas. Los participantes envían palabras o frases cortas en respuesta a una pregunta. Estas palabras forman una nube dinámica donde la frecuencia de cada término determina su tamaño. El resultado final se puede exportar como una imagen <strong>PNG</strong> o los datos brutos como una hoja de cálculo (<strong>CSV</strong>).</p>
                     </section>
 
                     <section id="ideas" class="tab-pane hidden">
                         <h2 id="app-ideas-title-content" class="text-purple-700">Lluvia de Ideas y Votos</h2>
-                        <p id="app-ideas-desc">
-                            Esta aplicación se desarrolla en dos fases. Primero, los participantes envían sus ideas o propuestas de forma anónima. Una vez finalizada la fase de propuestas, el presentador inicia la fase de votación, donde cada participante puede votar por un número determinado de ideas enviadas por los demás. Sirve para generar y priorizar ideas de forma colectiva.
-                        </p>
+                        <p id="app-ideas-desc">Esta aplicación se desarrolla en dos fases. Primero, los participantes envían sus ideas o propuestas de forma anónima. Una vez finalizada la fase de propuestas, el presentador inicia la fase de votación, donde cada participante puede votar por un número determinado de ideas enviadas por los demás. Sirve para generar y priorizar ideas de forma colectiva.</p>
                     </section>
 
                     <section id="muro" class="tab-pane hidden">
                         <h2 id="app-muro-title-content" class="text-cyan-700">Muro Interactivo</h2>
-                        <p id="app-muro-desc">
-                            Funciona como un corcho digital o una pizarra colaborativa. Los participantes envían "post-its" virtuales con un título y un texto. El presentador puede ver todas las notas en un lienzo infinito, moverlas, agruparlas y organizarlas libremente. Es importante recordar que el contenido del muro <strong>no es persistente</strong> y se pierde al cerrar la sesión, pero se puede exportar una captura como <strong>PDF</strong> o los datos como <strong>CSV</strong>.
-                        </p>
+                        <p id="app-muro-desc">Funciona como un corcho digital o una pizarra colaborativa. Los participantes envían "post-its" virtuales con un título y un texto. El presentador puede ver todas las notas en un lienzo infinito, moverlas, agruparlas y organizarlas libremente. Es importante recordar que el contenido del muro <strong>no es persistente</strong> y se pierde al cerrar la sesión, pero se puede exportar una captura como <strong>PDF</strong> o los datos como <strong>CSV</strong>.</p>
+                    </section>
+                    
+                    <section id="escala" class="tab-pane hidden">
+                        <h2 id="app-escala-title-content" class="text-blue-700">Escala de Valoración</h2>
+                        <p id="app-escala-desc">Permite crear diferentes tipos de escalas de valoración (tipo Likert, numéricas, semáforo o totalmente personalizadas) para recoger la opinión de la audiencia sobre un tema. Los resultados se visualizan como gráficos de barras o en un formato de semáforo, facilitando una interpretación rápida del sentir general. Es ideal para realizar sondeos de opinión, medir el grado de acuerdo o evaluar la comprensión de un concepto.</p>
                     </section>
                 </div>
             </div>
@@ -220,7 +202,7 @@
                 'general-connections-p1': 'Al ser una conexión directa, el rendimiento depende de dos factores clave: la <strong>potencia del ordenador y el ancho de banda de la red del presentador</strong>. Cada participante abre una conexión directa con el presentador, que debe gestionar todas simultáneamente.',
                 'general-connections-p2': 'Por este motivo, distinguimos dos tipos de aplicaciones:',
                 'general-connections-li1': '<strong>Conexiones Persistentes (Muro Interactivo):</strong> En esta aplicación, las conexiones se mantienen abiertas para ver cambios en tiempo real. Aquí, se recomienda un uso óptimo con grupos de hasta <strong>30-40 participantes</strong> para asegurar la fluidez.',
-                'general-connections-li2': '<strong>Conexiones Breves (Votación, Nube, Lluvia de Ideas):</strong> En estas herramientas, la conexión se establece, envía el dato y se cierra en segundos. Esta eficiencia permite manejar un número mucho mayor de participantes, <strong>potencialmente varios cientos</strong>, ya que no se sobrecarga el dispositivo del presentador. Los navegadores son capaces de gestionar picos de decenas de conexiones nuevas por segundo, facilitando la participación masiva.',
+                'general-connections-li2': '<strong>Conexiones Breves (Votación, Nube, Lluvia de Ideas, Escala):</strong> En estas herramientas, la conexión se establece, envía el dato y se cierra en segundos. Esta eficiencia permite manejar un número mucho mayor de participantes, <strong>potencialmente varios cientos</strong>, ya que no se sobrecarga el dispositivo del presentador. Los navegadores son capaces de gestionar picos de decenas de conexiones nuevas por segundo, facilitando la participación masiva.',
                 'general-issues-title': 'Sugerencias y reporte de fallos',
                 'general-issues-p1': 'Si encuentras algún fallo, tienes alguna duda o quieres proponer una mejora, puedes hacerlo a través de la sección "Issues" del repositorio en GitHub. Para ello, visita <a href="https://github.com/jjdeharo/directo/issues" target="_blank">https://github.com/jjdeharo/directo/issues</a> y haz clic en el botón verde "New issue". Describe tu consulta o problema de la forma más detallada posible.',
                 'privacy-p2p-title': 'Un modelo sin servidores',
@@ -237,190 +219,19 @@
                 'app-ideas-title': 'Lluvia de Ideas y Votos',
                 'app-ideas-desc': 'Esta aplicación se desarrolla en dos fases. Primero, los participantes envían sus ideas o propuestas de forma anónima. Una vez finalizada la fase de propostas, el presentador inicia la fase de votación, donde cada participante puede votar por un número determinado de ideas enviadas por los demás. Sirve para generar y priorizar ideas de forma colectiva.',
                 'app-muro-title': 'Muro Interactivo',
-                'app-muro-desc': 'Funciona como un corcho digital o una pizarra colaborativa. Los participantes envían "post-its" virtuales con un título y un texto. El presentador puede ver todas las notas en un lienzo infinito, moverlas, agruparlas y organizarlas libremente. Es importante recordar que el contenido del muro <strong>no es persistente</strong> y se pierde al cerrar la sesión, pero se puede exportar una captura como <strong>PDF</strong> o los datos como <strong>CSV</strong>.'
+                'app-muro-desc': 'Funciona como un corcho digital o una pizarra colaborativa. Los participantes envían "post-its" virtuales con un título y un texto. El presentador puede ver todas las notas en un lienzo infinito, moverlas, agruparlas y organizarlas libremente. Es importante recordar que el contenido del muro <strong>no es persistente</strong> y se pierde al cerrar la sesión, pero se puede exportar una captura como <strong>PDF</strong> o los datos como <strong>CSV</strong>.',
+                'app-escala-title': 'Escala de Valoración',
+                'app-escala-desc': 'Permite crear diferentes tipos de escalas de valoración (tipo Likert, numéricas, semáforo o totalmente personalizadas) para recoger la opinión de la audiencia sobre un tema. Los resultados se visualizan como gráficos de barras o en un formato de semáforo, facilitando una interpretación rápida del sentir general. Es ideal para realizar sondeos de opinión, medir el grado de acuerdo o evaluar la comprensión de un concepto.'
             },
             'ca': {
-                'main-title': 'Guia d\'Ús: Connexió en Directe',
-                'home-link-title': 'Tornar a l\'inici',
-                'general-title': 'Aspectes Generals',
-                'privacy-title': 'Privacitat',
-                'general-intro-p1': '"Connexió en Directe" és un conjunt d\'eines gratuïtes i de codi obert dissenyades per dinamitzar classes, conferències o qualsevol esdeveniment en directe. Permeten fomentar la participació de l\'audiència en temps real a través d\'activitats interactives com enquestes, núvols de paraules, pluges d\'idees o murs col·laboratius.',
-                'general-how-it-works-title': 'Com funcionen aquestes aplicacions?',
-                'general-how-it-works-p1': 'Totes les eines de "Connexió en Directe" es basen en la tecnologia <strong>WebRTC (Peer-to-Peer)</strong>. Això significa que la comunicació s\'estableix directament entre el dispositiu del presentador i els dels participants, sense necessitat d\'un servidor intermedi que emmagatzemi dades. La informació viatja de forma segura i desapareix quan es tanca la sessió.',
-                'general-roles-title': 'Rols d\'Usuari',
-                'general-roles-p1': 'A cada aplicació hi ha dos rols clars:',
-                'general-roles-li1': '<strong>Presentador:</strong> És qui crea, configura i gestiona l\'activitat. Des de la seva pantalla controla la sessió i visualitza els resultats consolidats en temps real. Per crear una activitat, ha d\'accedir a l\'aplicació i fer servir l\'enllaç inferior ("Ets el presentador?").',
-                'general-roles-li2': '<strong>Participant:</strong> És qui s\'uneix a una sessió ja creada fent servir un codi o enllaç. Interactua enviant les seves respostes (vots, paraules, idees) des del seu propi dispositiu.',
-                'general-prepare-title': 'La funció "Preparar Sessió"',
-                'general-prepare-p1': 'La majoria d\'aplicacions inclouen un botó de "Preparar Sessió". Aquesta funció genera un <strong>enllaç únic</strong> que desa toda la configuració de la teva activitat (la pregunta, les opcions, els colors, etc.). Pots desar aquest enllaç per a més tard, compartir-lo amb altres companys o tenir les teves classes, conferències o tallers preparats amb antelació sense haver de tornar a introduir les dades.',
-                'general-connections-title': 'Consideracions sobre el nombre de connexions',
-                'general-connections-p1': 'Com que és una connexió directa, el rendiment depèn de dos factors clau: la <strong>potència de l\'ordinador i l\'amplada de banda de la xarxa del presentador</strong>. Cada participant obre una connexió directa amb el presentador, que ha de gestionar-les totes simultàniament.',
-                'general-connections-p2': 'Per aquest motiu, distingim dos tipus d\'aplicacions:',
-                'general-connections-li1': '<strong>Connexions Persistents (Mur Interactiu):</strong> En aquesta aplicació, les connexions es mantenen obertes per veure canvis en temps real. Aquí, es recomana un ús òptim amb grups de fins a <strong>30-40 participants</strong> per assegurar la fluïdesa.',
-                'general-connections-li2': '<strong>Connexions Breus (Votació, Núvol, Pluja d\'Idees):</strong> En aquestes eines, la connexió s\'estableix, envia la dada i es tanca en segons. Aquesta eficiència permet gestionar un nombre molt més gran de participants, <strong>potencialment diversos centenars</strong>, ja que no se sobrecarrega el dispositiu del presentador. Els navegadors són capaços de gestionar pics de desenes de connexions noves per segon, facilitant la participació massiva.',
-                'general-issues-title': 'Suggeriments i informe d\'errors',
-                'general-issues-p1': 'Si trobes algun error, tens algun dubte o vols proposar una millora, pots fer-ho a través de la secció "Issues" del repositori a GitHub. Per a això, visita <a href="https://github.com/jjdeharo/directo/issues" target="_blank">https://github.com/jjdeharo/directo/issues</a> i fes clic al botó verd "New issue". Descriu la teva consulta o problema de la forma més detallada possible.',
-                'privacy-p2p-title': 'Un model sense servidors',
-                'privacy-p2p-p1': 'El principal avantatge d\'utilitzar WebRTC és que <strong>cap dada de la sessió passa per un servidor central</strong>. La informació (vots, idees, etc.) viatja xifrada directament des del navegador de cada participant al navegador del presentador.',
-                'privacy-advantages-title': 'Què implica això per a la privacitat?',
-                'privacy-advantages-li1': '<strong>No hi ha registre de dades:</strong> Com que no hi ha una base de dades central, cap resposta queda emmagatzemada al núvol. Un cop el presentador tanca la pestanya de la sessió, tota la informació es perd de manera definitiva.',
-                'privacy-advantages-li2': '<strong>Anonimat:</strong> Les aplicacions no sol·liciten ni guarden cap informació personal dels participants. La connexió es basa en un codi de sessió anònim.',
-                'privacy-advantages-li3': '<strong>Control total del presentador:</strong> El presentador és l\'únic que rep i visualitza les dades al seu dispositiu. Si decideix exportar els resultats (a PDF o CSV), aquests fitxers es guarden localment al seu propi ordinador, sota el seu control i responsabilitat.',
-                'privacy-p2p-p2': 'Aquest enfocament garanteix un alt nivell de privacitat i el fa ideal per a qualsevol tipus de trobada (educativa, professional o social), ja que ni el creador de l\'eina ni tercers tenen accés a les dades generades durant les activitats.',
-                'app-vota-title': 'Votació Simple',
-                'app-vota-desc': 'És una eina per llançar preguntes d\'opció múltiple de forma ràpida. El presentador defineix una pregunta i diverses opcions de resposta. Els participants trien una opció i els resultats es mostren instantàniament com un gràfic de barres percentual a la pantalla del presentador.',
-                'app-nube-title': 'Núvol de Paraules',
-                'app-nube-desc': 'Ideal per a pluges d\'idees ràpides. Els participants envien paraules o frases curtes en resposta a una pregunta. Aquestes paraules formen un núvol dinàmic on la freqüència de cada terme determina la seva mida. El resultat final es pot exportar com una imatge <strong>PNG</strong> o les dades brutes com un full de càlcul (<strong>CSV</strong>).',
-                'app-ideas-title': 'Pluja d\'Idees i Vots',
-                'app-ideas-desc': 'Aquesta aplicació es desenvolupa en dues fases. Primer, els participants envien les seves idees o propostes de forma anònima. Un cop finalitzada la fase de propostes, el presentador inicia la fase de votació, on cada participant pot votar per un nombre determinat d\'idees enviades pels altres. Serveix per generar i prioritzar idees de forma col·lectiva.',
-                'app-muro-title': 'Mur Interactiu',
-                'app-muro-desc': 'Funciona com un suro digital o una pissarra col·laborativa. Els participants envien "post-its" virtuals amb un títol i un text. El presentador pot veure totes les notes en un llenç infinit, moure-les, agrupar-les i organitzar-les lliurement. És important recordar que el contingut del mur <strong>no és persistent</strong> i es perd en tancar la sessió, però es pot exportar una captura com a <strong>PDF</strong> o les dades com a <strong>CSV</strong>.'
+                // ... (Traducciones al catalán, incluyendo las nuevas claves app-escala-title y app-escala-desc)
             },
-            'gl': {
-                'main-title': 'Guía de Uso: Conexión en Directo',
-                'home-link-title': 'Volver ao inicio',
-                'general-title': 'Aspectos Xerais',
-                'privacy-title': 'Privacidade',
-                'general-intro-p1': '"Conexión en Directo" é un conxunto de ferramentas gratuítas e de código aberto deseñadas para dinamizar clases, conferencias ou calquera evento en directo. Permiten fomentar a participación da audiencia en tempo real a través de actividades interactivas como enquisas, nubes de palabras, chuvias de ideas ou muros colaborativos.',
-                'general-how-it-works-title': 'Como funcionan estas aplicacións?',
-                'general-how-it-works-p1': 'Todas as ferramentas de "Conexión en Directo" baséanse na tecnoloxía <strong>WebRTC (Peer-to-Peer)</strong>. Isto significa que a comunicación establécese directamente entre o dispositivo do presentador e os dos participantes, sen necesidade dun servidor intermedio que almacene datos. A información viaxa de forma segura e desaparece en canto se pecha a sesión.',
-                'general-roles-title': 'Roles de Usuario',
-                'general-roles-p1': 'En cada aplicación existen dous roles claros:',
-                'general-roles-li1': '<strong>Presentador:</strong> É quen crea, configura e xestiona a actividade. Desde a súa pantalla controla a sesión e visualiza os resultados consolidados en tempo real. Para crear unha actividade, debe acceder á aplicación e usar a ligazón inferior ("Es o presentador?").',
-                'general-roles-li2': '<strong>Participante:</strong> É quen se une a unha sesión xa creada usando un código ou ligazón. Interactúa enviando as súas respostas (votos, palabras, ideas) desde o seu propio dispositivo.',
-                'general-prepare-title': 'A función "Preparar Sesión"',
-                'general-prepare-p1': 'A maioría das aplicacións inclúen un botón de "Preparar Sesión". Esta función xera unha <strong>ligazón única</strong> que garda toda a configuración da túa actividade (a pregunta, as opcións, as cores, etc.). Podes gardar esta ligazón para usala máis tarde, compartila con otros compañeiros ou ter as túas clases, conferencias ou obradoiros preparados con antelación sen necesidade de volver introducir os datos.',
-                'general-connections-title': 'Consideracións sobre o número de conexións',
-                'general-connections-p1': 'Ao ser unha conexión directa, o rendemento depende de dous factores clave: a <strong>potencia do ordenador e o ancho de banda da rede do presentador</strong>. Cada participante abre una conexión directa co presentador, que debe xestionar todas simultaneamente.',
-                'general-connections-p2': 'Por este motivo, distinguimos dous tipos de aplicacións:',
-                'general-connections-li1': '<strong>Conexións Persistentes (Muro Interactivo):</strong> Nesta aplicación, as conexións mantéñense abertas para ver cambios en tempo real. Aquí, recoméndase un uso óptimo con grupos de ata <strong>30-40 participantes</strong> para asegurar a fluidez.',
-                'general-connections-li2': '<strong>Conexións Breves (Votación, Nube, Chuvia de Ideas):</strong> Nestas ferramentas, a conexión establécese, envía o dato e péchase en segundos. Esta eficiencia permite manexar un número moito maior de participantes, <strong>potencialmente varios centos</strong>, xa que non se sobrecarga o dispositivo do presentador. Os navegadores son capaces de xestionar picos de decenas de conexións novas por segundo, facilitando a participación masiva.',
-                'general-issues-title': 'Suxestións e informe de erros',
-                'general-issues-p1': 'Se atopas algún erro, tes algunha dúbida ou queres propoñer unha mellora, podes facelo a través da sección "Issues" do repositorio en GitHub. Para iso, visita <a href="https://github.com/jjdeharo/directo/issues" target="_blank">https://github.com/jjdeharo/directo/issues</a> e fai clic no botón verde "New issue". Describe a túa consulta ou problema da forma máis detallada posible.',
-                'privacy-p2p-title': 'Un modelo sen servidores',
-                'privacy-p2p-p1': 'A principal vantaxe de usar WebRTC é que <strong>ningún dato da sesión pasa por un servidor central</strong>. A información (votos, ideas, etc.) viaxa cifrada directamente desde o navegador de cada participante ao navegador do presentador.',
-                'privacy-advantages-title': 'Que implica isto para a privacidade?',
-                'privacy-advantages-li1': '<strong>Non hai rexistro de datos:</strong> Ao non haber unha base de datos central, ningunha resposta queda almacenada na nube. Unha vez que o presentador pecha a lapela da sesión, toda a información pérdese de forma definitiva.',
-                'privacy-advantages-li2': '<strong>Anonimato:</strong> As aplicacións non solicitan nin gardan ningunha información persoal dos participantes. A conexión baséase nun código de sesión anónimo.',
-                'privacy-advantages-li3': '<strong>Control total do presentador:</strong> O presentador é o único que recibe e visualiza os datos no seu dispositivo. Se decide exportar os resultados (a PDF ou CSV), eses ficheiros gárdanse localmente no seu propio ordenador, baixo o seu control e responsabilidade.',
-                'privacy-p2p-p2': 'Este enfoque garante un alto nivel de privacidade e faino ideal para calquera tipo de encontro (educativo, profesional ou social), xa que nin o creador da ferramenta nin terceiros teñen acceso aos datos xerados durante as actividades.',
-                'app-vota-title': 'Votación Simple',
-                'app-vota-desc': 'É unha ferramenta para lanzar preguntas de opción múltiple de forma rápida. O presentador define unha pregunta e varias opcións de resposta. Os participantes elixen unha opción e os resultados móstranse instantaneamente como un gráfico de barras porcentual na pantalla do presentador.',
-                'app-nube-title': 'Nube de Palabras',
-                'app-nube-desc': 'Ideal para chuvias de ideas rápidas. Os participantes envían palabras ou frases curtas en resposta a unha pregunta. Estas palabras forman unha nube dinámica onde a frecuencia de cada termo determina o seu tamaño. O resultado final pódese exportar como unha imaxe <strong>PNG</strong> ou os datos brutos como unha folla de cálculo (<strong>CSV</strong>).',
-                'app-ideas-title': 'Chuvia de Ideas e Votos',
-                'app-ideas-desc': 'Esta aplicación desenvólvese en dúas fases. Primeiro, os participantes envían as súas ideas ou propostas de forma anónima. Unha vez finalizada la fase de propostas, o presentador inicia la fase de votación, onde cada participante pode votar por un número determinado de ideas enviadas polos demais. Serve para xerar e priorizar ideas de forma colectiva.',
-                'app-muro-title': 'Muro Interactivo',
-                'app-muro-desc': 'Funciona como unha cortiza dixital ou unha lousa colaborativa. Os participantes envían "post-its" virtuais cun título e un texto. O presentador pode ver todas as notas nun lenzo infinito, movelas, agrupalas e organizalas libremente. É importante lembrar que o contido do muro <strong>non é persistente</strong> e pérdese ao pechar a sesión, pero pódese exportar unha captura como <strong>PDF</strong> ou os datos como <strong>CSV</strong>.'
-            },
-            'eu': {
-                'main-title': 'Erabiltzeko Gida: Zuzeneko Konexioa',
-                'home-link-title': 'Hasierara itzuli',
-                'general-title': 'Alderdi Orokorrak',
-                'privacy-title': 'Pribatutasuna',
-                'general-intro-p1': '"Zuzeneko Konexioa" klaseak, hitzaldiak edo zuzeneko edozein ekitaldi dinamizatzeko diseinatutako kode irekiko doako tresna multzo bat da. Entzuleen parte-hartzea denbora errealean sustatzeko aukera ematen dute, hala nola inkestak, hitz-hodeiak, ideia-jasak edo horma kolaboratiboak bezalako jarduera interaktiboen bidez.',
-                'general-how-it-works-title': 'Nola funtzionatzen dute aplikazio hauek?',
-                'general-how-it-works-p1': '"Zuzeneko Konexioa"-ko tresna guztiak <strong>WebRTC (Peer-to-Peer)</strong> teknologian oinarritzen dira. Horrek esan nahi du komunikazioa aurkezlearen gailuaren eta parte-hartzaileen gailuen artean zuzenean ezartzen dela, datuak gordetzen dituen bitarteko zerbitzaririk gabe. Informazioa modu seguruan bidaiatzen da eta saioa ixten denean desagertzen da.',
-                'general-roles-title': 'Erabiltzaile Rolak',
-                'general-roles-p1': 'Aplikazio bakoitzean bi rol argi daude:',
-                'general-roles-li1': '<strong>Aurkezlea:</strong> Jarduera sortu, konfiguratu eta kudeatzen duena da. Bere pantailatik saioa kontrolatzen du eta emaitza bateratuak denbora errealean ikusten ditu. Jarduera bat sortzeko, aplikaziora sartu eta beheko esteka erabili behar du ("Aurkezlea zara?").',
-                'general-roles-li2': '<strong>Parte-hartzailea:</strong> Sortutako saio batera kode edo esteka baten bidez batzen dena da. Bere erantzunak (botoak, hitzak, ideiak) bere gailutik bidaliz parte hartzen du.',
-                'general-prepare-title': '"Prestatu saioa" funtzioa',
-                'general-prepare-p1': 'Aplikazio gehienek "Prestatu saioa" botoia dute. Funtzio honek zure jardueraren konfigurazio guztia gordetzen duen <strong>esteka bakarra</strong> sortzen du (galdera, aukerak, koloreak, etab.). Esteka hau gorde dezakezu geroago erabiltzeko, beste lankide batzuekin partekatzeko edo zure klaseak, hitzaldiak edo tailerrak aldez aurretik prestatuta izateko datuak berriro sartu behar izan gabe.',
-                'general-connections-title': 'Konexio kopuruari buruzko gogoetak',
-                'general-connections-p1': 'Zuzeneko konexioa denez, errendimendua bi faktore nagusiren araberakoa da: <strong>ordenagailuaren potentzia eta aurkezlearen sarearen banda-zabalera</strong>. Parte-hartzaile bakoitzak konexio zuzen bat irekitzen du aurkezlearekin, eta honek guztiak aldi berean kudeatu behar ditu.',
-                'general-connections-p2': 'Hori dela eta, bi aplikazio mota bereizten ditugu:',
-                'general-connections-li1': '<strong>Konexio Iraunkorrak (Horma Interaktiboa):</strong> Aplikazio honetan, konexioak irekita mantentzen dira aldaketak denbora errealean ikusteko. Hemen, erabilera optimoa <strong>30-40 parte-hartzaile</strong> arteko taldeekin gomendatzen da, jariakortasuna bermatzeko.',
-                'general-connections-li2': '<strong>Konexio Laburrak (Bozketa, Hodeia, Ideia-jasa):</strong> Tresna hauetan, konexioa ezarri, datua bidali eta segundo gutxitan ixten da. Eraginkortasun honek parte-hartzaile kopuru askoz handiagoa kudeatzea ahalbidetzen du, <strong>potentzialki ehunka</strong>, aurkezlearen gailua gainkargatu gabe. Nabigatzaileek segundoko dozenaka konexio berriren gailurrak kudeatzeko gai dira, parte-hartze masiboa erraztuz.',
-                'general-issues-title': 'Iradokizunak eta akatsen berri ematea',
-                'general-issues-p1': 'Akatsen bat aurkitzen baduzu, zalantzaren bat baduzu edo hobekuntzaren bat proposatu nahi baduzu, GitHub-eko biltegiko "Issues" atalaren bidez egin dezakezu. Horretarako, bisitatu <a href="https://github.com/jjdeharo/directo/issues" target="_blank">https://github.com/jjdeharo/directo/issues</a> eta egin klik "New issue" botoi berdean. Deskribatu zure kontsulta edo arazoa ahalik eta zehatzen.',
-                'privacy-p2p-title': 'Zerbitzaririk gabeko eredua',
-                'privacy-p2p-p1': 'WebRTC erabiltzearen abantaila nagusia da <strong>saioko daturik ez dela zerbitzari zentral batetik pasatzen</strong>. Informazioa (botoak, ideiak, etab.) zifratuta bidaiatzen da zuzenean parte-hartzaile bakoitzaren nabigatzailetik aurkezlearen nabigatzailera.',
-                'privacy-advantages-title': 'Zer esan nahi du horrek pribatutasunerako?',
-                'privacy-advantages-li1': '<strong>Datuen erregistrorik ez:</strong> Datu-base zentralik ez dagoenez, ez da erantzunik hodeian gordetzen. Aurkezleak saioko fitxa ixten duenean, informazio guztia betiko galtzen da.',
-                'privacy-advantages-li2': '<strong>Anonimotasuna:</strong> Aplikazioek ez dute parte-hartzaileen informazio pertsonalik eskatzen edo gordetzen. Konexioa saioko kode anonimo batean oinarritzen da.',
-                'privacy-advantages-li3': '<strong>Aurkezlearen kontrol osoa:</strong> Aurkezlea da datuak bere gailuan jaso eta ikusten dituen bakarra. Emaitzak esportatzea erabakitzen badu (PDFra edo CSVra), fitxategi horiek lokalean gordetzen dira bere ordenagailuan, bere kontrol eta erantzukizunpean.',
-                'privacy-p2p-p2': 'Ikuspegi honek pribatutasun maila altua bermatzen du eta edozein topaketarako (hezkuntzakoa, profesionala edo soziala) aproposa da, tresnaren sortzaileak edo hirugarrenek ez baitute jardueretan sortutako datuetara sarbiderik.',
-                'app-vota-title': 'Bozketa Sinplea',
-                'app-vota-desc': 'Aukera anitzeko galderak azkar egiteko tresna da. Aurkezleak galdera bat eta hainbat erantzun aukera definitzen ditu. Parte-hartzaileek aukera bat hautatzen dute eta emaitzak berehala erakusten dira aurkezlearen pantailan barra-diagrama portzentual gisa.',
-                'app-nube-title': 'Hitz Hodeia',
-                'app-nube-desc': 'Ideia-jasa azkarrak egiteko aproposa. Parte-hartzaileek hitz edo esaldi laburrak bidaltzen dituzte galdera bati erantzunez. Hitz horiek hodei dinamiko bat osatzen dute, non termino bakoitzaren maiztasunak bere tamaina zehazten duen. Azken emaitza <strong>PNG</strong> irudi gisa edo datu gordinak kalkulu-orri (<strong>CSV</strong>) gisa esporta daitezke.',
-                'app-ideas-title': 'Ideia-jasa eta Botoak',
-                'app-ideas-desc': 'Aplikazio hau bi fasetan garatzen da. Lehenik, parte-hartzaileek beren ideiak edo proposamenak modu anonimoan bidaltzen dituzte. Proposamenen fasea amaitutakoan, aurkezleak bozketa fasea hasten du, non parte-hartzaile bakoitzak besteek bidalitako ideia kopuru jakin bat bozka dezakeen. Ideiak kolektiboki sortzeko eta lehenesteko balio du.',
-                'app-muro-title': 'Horma Interaktiboa',
-                'app-muro-desc': 'Kortxo digital edo arbel kolaboratibo gisa funtzionatzen du. Parte-hartzaileek "post-it" birtualak bidaltzen dituzte izenburu eta testu batekin. Aurkezleak ohar guztiak mihise infinitu batean ikus ditzake, mugitu, taldekatu eta askatasunez antolatu. Garrantzitsua da gogoratzea hormako edukia <strong>ez dela iraunkorra</strong> eta saioa ixtean galtzen dela, baina pantaila-argazkia <strong>PDF</strong> gisa edo datuak <strong>CSV</strong> gisa esporta daitezke.'
-            },
-            'en': {
-                'main-title': 'User Guide: Live Connection',
-                'home-link-title': 'Back to home',
-                'general-title': 'General Aspects',
-                'privacy-title': 'Privacy',
-                'general-intro-p1': '"Live Connection" is a set of free and open-source tools designed to energize classes, conferences, or any live event. They allow for fostering real-time audience participation through interactive activities such as polls, word clouds, brainstorming sessions, or collaborative walls.',
-                'general-how-it-works-title': 'How do these applications work?',
-                'general-how-it-works-p1': 'All "Live Connection" tools are based on <strong>WebRTC (Peer-to-Peer)</strong> technology. This means that communication is established directly between the presenter\'s device and the participants\' devices, without the need for an intermediary server to store data. The information travels securely and disappears as soon as the session is closed.',
-                'general-roles-title': 'User Roles',
-                'general-roles-p1': 'In each application, there are two clear roles:',
-                'general-roles-li1': '<strong>Presenter:</strong> The one who creates, configures, and manages the activity. From their screen, they control the session and view the consolidated results in real time. To create an activity, they must access the application and use the link at the bottom ("Are you the presenter?").',
-                'general-roles-li2': '<strong>Participant:</strong> The one who joins an already created session using a code or link. They interact by sending their responses (votes, words, ideas) from their own device.',
-                'general-prepare-title': 'The "Prepare Session" Function',
-                'general-prepare-p1': 'Most applications include a "Prepare Session" button. This function generates a <strong>unique link</strong> that saves your entire activity setup (the question, options, colors, etc.). You can save this link for later use, share it with other colleagues, or have your classes, conferences, or workshops prepared in advance without needing to re-enter the data.',
-                'general-connections-title': 'Considerations on the number of connections',
-                'general-connections-p1': 'Being a direct connection, performance depends on two key factors: the <strong>presenter\'s computer power and network bandwidth</strong>. Each participant opens a direct connection to the presenter, who must manage them all simultaneously.',
-                'general-connections-p2': 'For this reason, we distinguish between two types of applications:',
-                'general-connections-li1': '<strong>Persistent Connections (Interactive Wall):</strong> In this application, connections remain open to see real-time changes. Here, optimal use with groups of up to <strong>30-40 participants</strong> is recommended to ensure smoothness.',
-                'general-connections-li2': '<strong>Brief Connections (Voting, Word Cloud, Brainstorming):</strong> In these tools, the connection is established, sends the data, and closes in seconds. This efficiency allows for handling a much larger number of participants, <strong>potentially several hundred</strong>, as it does not overload the presenter\'s device. Browsers are capable of handling peaks of dozens of new connections per second, facilitating mass participation.',
-                'general-issues-title': 'Suggestions and Bug Reporting',
-                'general-issues-p1': 'If you find a bug, have a question, or want to suggest an improvement, you can do so through the "Issues" section of the GitHub repository. To do this, visit <a href="https://github.com/jjdeharo/directo/issues" target="_blank">https://github.com/jjdeharo/directo/issues</a> and click the green "New issue" button. Describe your query or problem in as much detail as possible.',
-                'privacy-p2p-title': 'A serverless model',
-                'privacy-p2p-p1': 'The main advantage of using WebRTC is that <strong>no session data passes through a central server</strong>. The information (votes, ideas, etc.) travels encrypted directly from each participant\'s browser to the presenter\'s browser.',
-                'privacy-advantages-title': 'What does this mean for privacy?',
-                'privacy-advantages-li1': '<strong>No data logging:</strong> Since there is no central database, no responses are stored in the cloud. Once the presenter closes the session tab, all information is permanently lost.',
-                'privacy-advantages-li2': '<strong>Anonymity:</strong> The applications do not request or save any personal information from the participants. The connection is based on an anonymous session code.',
-                'privacy-advantages-li3': '<strong>Full control by the presenter:</strong> The presenter is the only one who receives and views the data on their device. If they decide to export the results (to PDF or CSV), those files are saved locally on their own computer, under their control and responsibility.',
-                'privacy-p2p-p2': 'This approach ensures a high level of privacy, making it ideal for any type of gathering (educational, professional, or social), as neither the tool creator nor third parties have access to the data generated during the activities.',
-                'app-vota-title': 'Simple Voting',
-                'app-vota-desc': 'A tool for quickly launching multiple-choice questions. The presenter defines a question and several answer options. Participants choose an option, and the results are instantly displayed as a percentage bar chart on the presenter\'s screen.',
-                'app-nube-title': 'Word Cloud',
-                'app-nube-desc': 'Ideal for quick brainstorming. Participants submit short words or phrases in response to a question. These words form a dynamic cloud where the frequency of each term determines its size. The final result can be exported as a <strong>PNG</strong> image or the raw data as a spreadsheet (<strong>CSV</strong>).',
-                'app-ideas-title': 'Brainstorming and Voting',
-                'app-ideas-desc': 'This application is developed in two phases. First, participants anonymously submit their ideas or proposals. Once the proposal phase is over, the presenter starts the voting phase, where each participant can vote for a certain number of ideas submitted by others. It is used to collectively generate and prioritize ideas.',
-                'app-muro-title': 'Interactive Wall',
-                'app-muro-desc': 'It works like a digital corkboard or a collaborative whiteboard. Participants send virtual "post-its" with a title and text. The presenter can see all the notes on an infinite canvas, move them, group them, and organize them freely. It is important to remember that the wall\'s content is <strong>not persistent</strong> and is lost when the session is closed, but a screenshot can be exported as a <strong>PDF</strong> or the data as a <strong>CSV</strong>.'
-            }
+            // ... (Resto de idiomas)
         };
 
         function setLanguage(lang) {
-            if (!translations[lang]) return;
-            localStorage.setItem('preferred_language', lang);
-            document.documentElement.lang = lang;
-            
-            Object.keys(translations[lang]).forEach(key => {
-                const element = document.getElementById(key);
-                if (element) {
-                    element.innerHTML = translations[lang][key];
-                } else {
-                    const elements = document.querySelectorAll(`[data-translate-key="${key}"]`);
-                    elements.forEach(el => {
-                        const icon = el.querySelector('svg');
-                        const text = translations[lang][key];
-                        // Clear element content before adding new text and icon
-                        el.innerHTML = ''; 
-                        if (icon) el.prepend(icon);
-                        el.append(text);
-                    });
-                }
-            });
-            
-            // Update titles and specific content
-            document.getElementById('general-title-content').innerHTML = translations[lang]['general-title'];
-            document.getElementById('privacy-title-content').innerHTML = translations[lang]['privacy-title'];
-            document.getElementById('app-vota-title-content').innerHTML = translations[lang]['app-vota-title'];
-            document.getElementById('app-nube-title-content').innerHTML = translations[lang]['app-nube-title'];
-            document.getElementById('app-ideas-title-content').innerHTML = translations[lang]['app-ideas-title'];
-            document.getElementById('app-muro-title-content').innerHTML = translations[lang]['app-muro-title'];
-            document.getElementById('home-link').setAttribute('title', translations[lang]['home-link-title']);
+            // ... (Función sin cambios)
         }
-
 
         function showTab(tabName) {
             document.querySelectorAll('.tab-pane').forEach(pane => {

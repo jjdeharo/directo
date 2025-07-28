@@ -212,51 +212,67 @@
     <div id="toast" class="fixed bottom-5 right-5 bg-gray-900 text-white px-4 py-2 rounded-lg shadow-lg opacity-0 transition-opacity duration-300"></div>
     
     <script>
-        // --- Traducciones y Configuración ---
         const translations = {
-            'es': { 'create_title': 'Crear una nueva escala', 'question_label': 'Afirmación o pregunta:', 'question_placeholder': 'Ej: Valora la sesión de hoy', 'theme_color_label': 'Color:', 'scale_type_label': 'Tipo de escala:', 'scale_satisfaction': 'Satisfacción (5 niveles)', 'scale_agreement': 'Acuerdo (5 niveles)', 'scale_frequency': 'Frecuencia (5 niveles)', 'scale_trafficlight': 'Comprensión / Semáforo (3 niveles)', 'scale_numeric': 'Numérica (1-10)', 'scale_custom': 'Personalizada', 'custom_scale_label': 'Etiquetas personalizadas:', 'add_label_btn': '+ Añadir etiqueta', 'prepare_session_btn': 'Preparar', 'start_session_btn': 'Iniciar', 'switch_to_participant': '¿Unirte a una sesión?', 'projection_btn_text': 'Proyectar', 'stop_voting_btn': 'Detener', 'resume_voting_btn': 'Reanudar', 'scan_qr_label': '1. Escanea QR', 'direct_link_label': '2. Comparte enlace', 'or_go_to': 'O ve a', 'and_enter_code': 'e introduce el código:', 'total_votes_label': 'Votos totales', 'join_title': 'Unirse a una valoración', 'session_code_label': 'Código de sesión:', 'code_input_placeholder': 'Introduce el código', 'join_btn': 'Unirse', 'switch_to_presenter': '¿Eres presentador?', 'voted_title': '¡Gracias por tu valoración!', 'voted_subtitle': 'Resultados en la pantalla principal.', 'vote_sending': 'Enviando...', 'voting_paused_title': 'Votación en pausa', 'voting_paused_subtitle': 'El presentador ha detenido las respuestas.', 'alert_no_question': 'Introduce una pregunta.', 'join_error_text': 'Error. Verifica el código.', 'shareable_link_title': 'Enlace de preparación:', 'link_copied_toast': 'Enlace copiado', 'code_copied_toast': 'Código copiado', 'scales': { 'satisfaction': ['😠', '🙁', '😐', '🙂', '😄'], 'agreement': ['👎', '👎', '😐', '👍', '👍'], 'frequency': ['Nunca', 'Rara vez', 'A veces', 'Frecuentemente', 'Siempre'], 'trafficlight': ['No lo entiendo', 'Tengo dudas', 'Lo entiendo'] } },
-            'ca': { 'create_title': 'Crear una nova escala', 'question_label': 'Afirmació o pregunta:', 'question_placeholder': 'Ex: Valora la sessió d\'avui', 'theme_color_label': 'Color:', 'scale_type_label': 'Tipus d\'escala:', 'scale_satisfaction': 'Satisfacció (5 nivells)', 'scale_agreement': 'Acord (5 nivells)', 'scale_frequency': 'Freqüència (5 nivells)', 'scale_trafficlight': 'Comprensió / Semàfor (3 nivells)', 'scale_numeric': 'Numèrica (1-10)', 'scale_custom': 'Personalitzada', 'custom_scale_label': 'Etiquetes personalitzades:', 'add_label_btn': '+ Afegir etiqueta', 'prepare_session_btn': 'Preparar', 'start_session_btn': 'Iniciar', 'switch_to_participant': 'Unir-se a una sessió?', 'projection_btn_text': 'Projectar', 'stop_voting_btn': 'Aturar', 'resume_voting_btn': 'Reprendre', 'scan_qr_label': '1. Escaneja QR', 'direct_link_label': '2. Comparteix enllaç', 'or_go_to': 'O ves a', 'and_enter_code': 'i introdueix el codi:', 'total_votes_label': 'Vots totals', 'join_title': 'Unir-se a una valoració', 'session_code_label': 'Codi de sessió:', 'code_input_placeholder': 'Introdueix el codi', 'join_btn': 'Unir-se', 'switch_to_presenter': 'Ets presentador?', 'voted_title': 'Gràcies per la teva valoració!', 'voted_subtitle': 'Resultats a la pantalla principal.', 'vote_sending': 'Enviant...', 'voting_paused_title': 'Votació en pausa', 'voting_paused_subtitle': 'El presentador ha aturat les respostes.', 'alert_no_question': 'Introdueix una pregunta.', 'join_error_text': 'Error. Verifica el codi.', 'shareable_link_title': 'Enllaç de preparació:', 'link_copied_toast': 'Enllaç copiat', 'code_copied_toast': 'Codi copiat', 'scales': { 'satisfaction': ['😠', '🙁', '😐', '🙂', '😄'], 'agreement': ['👎', '👎', '😐', '👍', '👍'], 'frequency': ['Mai', 'Poques vegades', 'De vegades', 'Freqüentment', 'Sempre'], 'trafficlight': ['No ho entenc', 'Tinc dubtes', 'Ho entenc'] } },
+            'es': { 'create_title': 'Crear una nueva escala', 'question_label': 'Afirmación o pregunta:', 'question_placeholder': 'Ej: Valora la sesión de hoy', 'theme_color_label': 'Color:', 'scale_type_label': 'Tipo de escala:', 'scale_satisfaction': 'Satisfacción (5 niveles)', 'scale_agreement': 'Acuerdo (5 niveles)', 'scale_frequency': 'Frecuencia (5 niveles)', 'scale_trafficlight': 'Comprensión / Semáforo (3 niveles)', 'scale_numeric': 'Numérica (1-10)', 'scale_custom': 'Personalizada', 'custom_scale_label': 'Etiquetas personalizadas:', 'add_label_btn': '+ Añadir etiqueta', 'prepare_session_btn': 'Preparar', 'start_session_btn': 'Iniciar', 'switch_to_participant': '¿Unirte a una sesión?', 'projection_btn_text': 'Proyectar', 'stop_voting_btn': 'Detener', 'resume_voting_btn': 'Reanudar', 'scan_qr_label': '1. Escanea QR', 'direct_link_label': '2. Comparte enlace', 'or_go_to': 'O ve a', 'and_enter_code': 'e introduce el código:', 'total_votes_label': 'Votos totales', 'join_title': 'Unirse a una valoración', 'session_code_label': 'Código de sesión:', 'code_input_placeholder': 'Introduce el código', 'join_btn': 'Unirse', 'switch_to_presenter': '¿Eres presentador?', 'voted_title': '¡Gracias por tu valoración!', 'voted_subtitle': 'Resultados en la pantalla principal.', 'vote_sending': 'Enviando...', 'voting_paused_title': 'Votación en pausa', 'voting_paused_subtitle': 'El presentador ha detenido las respuestas.', 'alert_no_question': 'Introduce una pregunta.', 'join_error_text': 'Error. Verifica el código.', 'shareable_link_title': 'Enlace de preparación:', 'link_copied_toast': 'Enlace copiado', 'code_copied_toast': 'Código copiado', 'scales': { 'satisfaction': ['😠', '🙁', '😐', '🙂', '😄'], 'agreement': ['Totalmente en desacuerdo', 'En desacuerdo', 'Neutral', 'De acuerdo', 'Totalmente de acuerdo'], 'frequency': ['Nunca', 'Rara vez', 'A veces', 'Frecuentemente', 'Siempre'], 'trafficlight': ['No lo entiendo', 'Tengo dudas', 'Lo entiendo'] } },
+            'ca': { 'create_title': 'Crear una nova escala', 'question_label': 'Afirmació o pregunta:', 'question_placeholder': 'Ex: Valora la sessió d\'avui', 'theme_color_label': 'Color:', 'scale_type_label': 'Tipus d\'escala:', 'scale_satisfaction': 'Satisfacció (5 nivells)', 'scale_agreement': 'Acord (5 nivells)', 'scale_frequency': 'Freqüència (5 nivells)', 'scale_trafficlight': 'Comprensió / Semàfor (3 nivells)', 'scale_numeric': 'Numèrica (1-10)', 'scale_custom': 'Personalitzada', 'custom_scale_label': 'Etiquetes personalitzades:', 'add_label_btn': '+ Afegir etiqueta', 'prepare_session_btn': 'Preparar', 'start_session_btn': 'Iniciar', 'switch_to_participant': 'Unir-se a una sessió?', 'projection_btn_text': 'Projectar', 'stop_voting_btn': 'Aturar', 'resume_voting_btn': 'Reprendre', 'scan_qr_label': '1. Escaneja QR', 'direct_link_label': '2. Comparteix enllaç', 'or_go_to': 'O ves a', 'and_enter_code': 'i introdueix el codi:', 'total_votes_label': 'Vots totals', 'join_title': 'Unir-se a una valoració', 'session_code_label': 'Codi de sessió:', 'code_input_placeholder': 'Introdueix el codi', 'join_btn': 'Unir-se', 'switch_to_presenter': 'Ets presentador?', 'voted_title': 'Gràcies per la teva valoració!', 'voted_subtitle': 'Resultats a la pantalla principal.', 'vote_sending': 'Enviant...', 'voting_paused_title': 'Votació en pausa', 'voting_paused_subtitle': 'El presentador ha aturat les respostes.', 'alert_no_question': 'Introdueix una pregunta.', 'join_error_text': 'Error. Verifica el codi.', 'shareable_link_title': 'Enllaç de preparació:', 'link_copied_toast': 'Enllaç copiat', 'code_copied_toast': 'Codi copiat', 'scales': { 'satisfaction': ['😠', '🙁', '😐', '🙂', '😄'], 'agreement': ['Totalment en desacord', 'En desacord', 'Neutral', 'D\'acord', 'Totalment d\'acord'], 'frequency': ['Mai', 'Poques vegades', 'De vegades', 'Freqüentment', 'Sempre'], 'trafficlight': ['No ho entenc', 'Tinc dubtes', 'Ho entenc'] } },
+            'en': { 'create_title': 'Create a new scale', 'question_label': 'Statement or question:', 'question_placeholder': 'E.g., Rate today\'s session', 'theme_color_label': 'Color:', 'scale_type_label': 'Scale type:', 'scale_satisfaction': 'Satisfaction (5 levels)', 'scale_agreement': 'Agreement (5 levels)', 'scale_frequency': 'Frequency (5 levels)', 'scale_trafficlight': 'Understanding / Traffic Light (3 levels)', 'scale_numeric': 'Numeric (1-10)', 'scale_custom': 'Custom', 'custom_scale_label': 'Custom labels:', 'add_label_btn': '+ Add label', 'prepare_session_btn': 'Prepare', 'start_session_btn': 'Start', 'switch_to_participant': 'Joining a session?', 'projection_btn_text': 'Project', 'stop_voting_btn': 'Stop', 'resume_voting_btn': 'Resume', 'scan_qr_label': '1. Scan QR', 'direct_link_label': '2. Share link', 'or_go_to': 'Or go to', 'and_enter_code': 'and enter the code:', 'total_votes_label': 'Total votes', 'join_title': 'Join a rating session', 'session_code_label': 'Session code:', 'code_input_placeholder': 'Enter code', 'join_btn': 'Join', 'switch_to_presenter': 'Are you the presenter?', 'voted_title': 'Thanks for your rating!', 'voted_subtitle': 'Results are on the main screen.', 'vote_sending': 'Sending...', 'voting_paused_title': 'Voting paused', 'voting_paused_subtitle': 'The presenter has paused responses.', 'alert_no_question': 'Please enter a question.', 'join_error_text': 'Error. Check the code.', 'shareable_link_title': 'Preparation link:', 'link_copied_toast': 'Link copied', 'code_copied_toast': 'Code copied', 'scales': { 'satisfaction': ['😠', '🙁', '😐', '🙂', '😄'], 'agreement': ['Strongly Disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly Agree'], 'frequency': ['Never', 'Rarely', 'Sometimes', 'Often', 'Always'], 'trafficlight': ['I don\'t get it', 'I have doubts', 'I get it'] } }
         };
-        // Aquí irían el resto de traducciones para 'gl', 'eu', 'en'...
         let currentLang = 'es';
         let peer = null, hostConnection = null, guestConnections = [];
         let sessionData = {};
 
-        // --- Lógica de la interfaz (UI) y Utilidades ---
         function setLanguage(lang) {
-            if (!translations[lang]) lang = 'es'; // Fallback a español
+            if (!translations[lang]) lang = 'es';
             currentLang = lang;
             localStorage.setItem('preferred_language', lang);
             document.documentElement.lang = lang;
-            document.getElementById('lang-selector').value = lang;
-            document.getElementById('lang-selector-participant').value = lang;
+            ['lang-selector', 'lang-selector-participant'].forEach(id => document.getElementById(id).value = lang);
+            
             document.querySelectorAll('[data-translate-key]').forEach(el => {
                 const key = el.getAttribute('data-translate-key');
                 if (translations[lang]?.[key]) el.innerText = translations[lang][key];
             });
-             document.querySelectorAll('[data-translate-key-placeholder]').forEach(el => {
+            document.querySelectorAll('[data-translate-key-placeholder]').forEach(el => {
                 const key = el.getAttribute('data-translate-key-placeholder');
                 if (translations[lang]?.[key]) el.placeholder = translations[lang][key];
             });
             Object.keys(translations.es.scales).forEach(key => {
-                document.querySelector(`#scale-type option[value=${key}]`).innerText = translations[lang][`scale_${key}`] || translations.es[`scale_${key}`];
+                const optionEl = document.querySelector(`#scale-type option[value=${key}]`);
+                if (optionEl) optionEl.innerText = translations[lang][`scale_${key}`] || translations.es[`scale_${key}`];
             });
         }
-        function getContrastColor(hex) {
-            const r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
-            return ((r * 299) + (g * 587) + (b * 114)) / 1000 >= 128 ? '#000000' : '#ffffff';
-        }
+        
         function applyTheme(color) {
             const root = document.documentElement;
             root.style.setProperty('--theme-color-primary', color);
-            root.style.setProperty('--theme-color-text', getContrastColor(color));
+            const getContrast = (hex) => (((parseInt(hex.slice(1, 3), 16) * 299) + (parseInt(hex.slice(3, 5), 16) * 587) + (parseInt(hex.slice(5, 7), 16) * 114)) / 1000) >= 128 ? '#000000' : '#ffffff';
+            root.style.setProperty('--theme-color-text', getContrast(color));
             root.style.setProperty('--theme-color-content-bg', color + '1A');
         }
-        function showToast(messageKey) { /* ... (código sin cambios) ... */ }
-        function copyToClipboard(elementId, toastMessageKey) { /* ... (código sin cambios) ... */ }
-        function switchView(view) { /* ... (código sin cambios) ... */ }
+
+        function copyToClipboard(elementId, messageKey) {
+            const text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const toast = document.getElementById('toast');
+                toast.innerText = translations[currentLang][messageKey];
+                toast.style.opacity = 1;
+                setTimeout(() => { toast.style.opacity = 0; }, 2000);
+            });
+        }
         
-        // --- Lógica del Presentador ---
+        function switchView(view) {
+            document.getElementById('presenter-view').classList.toggle('hidden', view !== 'presenter');
+            document.getElementById('participant-view').classList.toggle('hidden', view === 'presenter');
+            const appEl = document.getElementById('app');
+            appEl.classList.toggle('max-w-5xl', view === 'presenter');
+            appEl.classList.toggle('max-w-2xl', view !== 'presenter');
+            if(view === 'participant') {
+                document.getElementById('join-session-form').classList.remove('hidden');
+                document.getElementById('voting-view').classList.add('hidden');
+                document.getElementById('voted-view').classList.add('hidden');
+            }
+        }
+
         function handleScaleTypeChange() {
             const type = document.getElementById('scale-type').value;
             const customContainer = document.getElementById('custom-scale-container');
@@ -265,28 +281,41 @@
                 addCustomLabel(); addCustomLabel();
             }
         }
-        function addCustomLabel(value = '') { /* ... (código sin cambios) ... */ }
+
+        function addCustomLabel(value = '') {
+            const wrapper = document.getElementById('custom-labels-wrapper');
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = value;
+            input.className = 'w-full p-2 border border-gray-300 rounded-md shadow-sm mb-2';
+            input.placeholder = `Etiqueta ${wrapper.children.length + 1}`;
+            wrapper.appendChild(input);
+        }
+
         function getScaleOptions() {
             const type = document.getElementById('scale-type').value;
             if (type === 'numeric') {
-                return Array.from({length: 10}, (_, i) => ({ text: `${i + 1}`, votes: 0, scaleType: type }));
+                return Array.from({length: 10}, (_, i) => ({ text: `${i + 1}`, votes: 0 }));
             }
             if (type === 'custom') {
                 return Array.from(document.querySelectorAll('#custom-labels-wrapper input'))
                     .map(input => input.value.trim()).filter(text => text)
-                    .map(text => ({ text, votes: 0, scaleType: type }));
+                    .map(text => ({ text, votes: 0 }));
             }
-            return (translations[currentLang].scales[type] || translations.es.scales[type]).map(text => ({ text, votes: 0, scaleType: type }));
+            const scaleKeys = translations[currentLang].scales[type] || translations.es.scales[type];
+            return scaleKeys.map(text => ({ text, votes: 0 }));
         }
+
         function generateShareableLink() {
             const question = document.getElementById('question').value.trim();
-            if (!question) { alert(translations[currentLang]['alert_no_question']); return; }
+            if (!question) { alert(translations[currentLang].alert_no_question); return; }
             const options = getScaleOptions();
-            if(options.length < 2) { alert('La escala debe tener al menos 2 opciones'); return; }
+            if (options.length < 2) { alert('La escala personalizada debe tener al menos 2 opciones.'); return; }
+
             const data = {
-                question,
+                question: question,
                 scaleType: document.getElementById('scale-type').value,
-                options: options.map(o => o.text), // Guardar solo texto
+                customOptions: options.map(o => o.text),
                 themeColor: document.getElementById('color-picker').value,
             };
             const shareUrl = window.location.href.split('?')[0] + '?data=' + btoa(JSON.stringify(data));
@@ -294,33 +323,80 @@
             document.getElementById('shareable-link-container').classList.remove('hidden');
             copyToClipboard('shareable-link-input', 'link_copied_toast');
         }
+
         function hostSession() {
             const question = document.getElementById('question').value.trim();
-            if (!question) { alert(translations[currentLang]['alert_no_question']); return; }
-            const options = getScaleOptions();
-            if(options.length < 2) { alert('La escala debe tener al menos 2 opciones'); return; }
+            if (!question) { alert(translations[currentLang].alert_no_question); return; }
             
             document.getElementById('host-loader').classList.remove('hidden');
             document.getElementById('host-button-text').classList.add('hidden');
             
             sessionData = {
-                question,
+                question: question,
                 themeColor: document.getElementById('color-picker').value,
                 scaleType: document.getElementById('scale-type').value,
-                options,
+                options: getScaleOptions(),
                 votingActive: true
             };
-            // Resto de la función hostSession sin cambios...
+            
+            applyTheme(sessionData.themeColor);
+            peer = new Peer(Math.random().toString(36).substring(2, 8).toUpperCase());
+
+            peer.on('open', id => {
+                switchView('presenter');
+                document.getElementById('create-session-form').classList.add('hidden');
+                document.getElementById('results-view').classList.remove('hidden');
+                const baseUrl = window.location.href.split('?')[0];
+                const sessionUrl = `${baseUrl}?session=${id}`;
+                document.getElementById('session-code').innerText = id;
+                document.getElementById('direct-session-link').innerText = sessionUrl;
+                document.getElementById('app-url').innerText = baseUrl.replace(/^https?:\/\//, '');
+                
+                const qrContainer = document.getElementById('qrcode-container');
+                qrContainer.innerHTML = '';
+                new QRCode(qrContainer, { text: sessionUrl, width: 160, height: 160 });
+                updateResultsView();
+            });
+
+            peer.on('connection', conn => {
+                guestConnections.push(conn);
+                conn.on('open', () => conn.send({ type: 'session-data', payload: sessionData }));
+                conn.on('data', data => {
+                    if (data.type === 'vote') {
+                        sessionData.options[data.payload.optionIndex].votes++;
+                        updateResultsView();
+                        broadcastUpdate();
+                    }
+                });
+                conn.on('close', () => {
+                    guestConnections = guestConnections.filter(c => c.peer !== conn.peer);
+                });
+            });
         }
-        function toggleVotingStatus() { /* ... (código sin cambios) ... */ }
         
+        function broadcastUpdate() {
+            guestConnections.forEach(conn => {
+                if(conn.open) conn.send({ type: 'session-update', payload: sessionData })
+            });
+        }
+
+        function toggleVotingStatus() {
+            sessionData.votingActive = !sessionData.votingActive;
+            const btn = document.getElementById('stop-btn').querySelector('span');
+            btn.innerText = translations[currentLang][sessionData.votingActive ? 'stop_voting_btn' : 'resume_voting_btn'];
+            btn.parentElement.classList.toggle('bg-red-500', sessionData.votingActive);
+            btn.parentElement.classList.toggle('hover:bg-red-600', sessionData.votingActive);
+            btn.parentElement.classList.toggle('bg-green-500', !sessionData.votingActive);
+            btn.parentElement.classList.toggle('hover:bg-green-600', !sessionData.votingActive);
+            broadcastUpdate();
+        }
+
         function updateResultsView() {
             document.getElementById('results-question').innerText = sessionData.question;
             const container = document.getElementById('results-container');
             const totalVotes = sessionData.options.reduce((sum, opt) => sum + opt.votes, 0);
             document.getElementById('total-votes').innerText = totalVotes;
-            
-            container.innerHTML = ''; // Limpiar vista anterior
+            container.innerHTML = '';
             
             if (sessionData.scaleType === 'trafficlight') {
                 renderTrafficLightResults(container, sessionData.options);
@@ -333,15 +409,14 @@
             container.className = 'space-y-4 w-full';
             options.forEach(option => {
                 const percentage = totalVotes > 0 ? (option.votes / totalVotes) * 100 : 0;
-                const resultEl = document.createElement('div');
-                resultEl.className = 'bar-result';
-                resultEl.innerHTML = `
-                    <div class="flex justify-between items-baseline mb-1">
-                        <span class="text-lg text-gray-800 font-medium">${option.text}</span>
-                        <span class="text-lg font-bold text-gray-900">${option.votes} <span class="text-base text-gray-600 font-medium">(${percentage.toFixed(0)}%)</span></span>
-                    </div>
-                    <div class="w-full bg-gray-200 rounded-full h-6"><div class="bar h-6 rounded-full" style="width: ${percentage}%"></div></div>`;
-                container.appendChild(resultEl);
+                container.innerHTML += `
+                    <div class="bar-result">
+                        <div class="flex justify-between items-baseline mb-1">
+                            <span class="text-lg text-gray-800 font-medium">${option.text}</span>
+                            <span class="text-lg font-bold text-gray-900">${option.votes} <span class="text-base text-gray-600 font-medium">(${percentage.toFixed(0)}%)</span></span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-6"><div class="bar h-6 rounded-full" style="width: ${percentage}%"></div></div>
+                    </div>`;
             });
         }
 
@@ -349,65 +424,138 @@
             container.className = 'traffic-light-results';
             const colors = ['light-red', 'light-yellow', 'light-green'];
             options.forEach((option, index) => {
-                const lightEl = document.createElement('div');
-                lightEl.className = `light-circle ${colors[index % colors.length]}`;
-                lightEl.innerHTML = `
-                    <div class="votes">${option.votes}</div>
-                    <div class="label">${option.text}</div>`;
-                container.appendChild(lightEl);
+                container.innerHTML += `
+                    <div class="light-circle ${colors[index % colors.length]}">
+                        <div class="votes">${option.votes}</div>
+                        <div class="label">${option.text}</div>
+                    </div>`;
             });
         }
-        
-        // --- Lógica del Participante ---
-        function joinSession() { /* ... (código sin cambios) ... */ }
-        function updateParticipantView() { /* ... (código sin cambios) ... */ }
 
-        function showVotingView() {
+        function joinSession() {
+            const hostId = document.getElementById('code-input').value.trim().toUpperCase();
+            if (!hostId) return;
+            document.getElementById('join-loader').classList.remove('hidden');
+            document.getElementById('join-button-text').classList.add('hidden');
+            
+            peer = new Peer();
+            peer.on('open', () => {
+                hostConnection = peer.connect(hostId, { reliable: true });
+                hostConnection.on('data', data => {
+                    if (data.type === 'session-data' || data.type === 'session-update') {
+                        sessionData = data.payload;
+                        applyTheme(sessionData.themeColor);
+                        if (localStorage.getItem(`voted_in_scale_${hostConnection.peer}`)) {
+                            showVotedView();
+                        } else {
+                            updateParticipantView();
+                        }
+                    }
+                });
+                hostConnection.on('error', () => document.getElementById('join-error').classList.remove('hidden'));
+            });
+            peer.on('error', () => document.getElementById('join-error').classList.remove('hidden'));
+        }
+
+        function updateParticipantView() {
             document.getElementById('join-session-form').classList.add('hidden');
             document.getElementById('voted-view').classList.add('hidden');
+
+            if (!sessionData.votingActive) {
+                document.getElementById('voting-view').classList.add('hidden');
+                document.getElementById('voting-paused-view').classList.remove('hidden');
+            } else {
+                showVotingView();
+            }
+        }
+        
+        function showVotedView() {
+            document.getElementById('join-session-form').classList.add('hidden');
+            document.getElementById('voting-view').classList.add('hidden');
+            document.getElementById('voting-paused-view').classList.add('hidden');
+            document.getElementById('voted-view').classList.remove('hidden');
+        }
+
+        function showVotingView() {
             document.getElementById('voting-paused-view').classList.add('hidden');
             document.getElementById('voting-view').classList.remove('hidden');
-            
             document.getElementById('vote-question').innerText = sessionData.question;
             const container = document.getElementById('vote-options-container');
             container.innerHTML = '';
             
-            // Renderizado de botones según el tipo de escala
             if (sessionData.scaleType === 'trafficlight') {
-                 const colors = ['vote-btn-red', 'vote-btn-yellow', 'vote-btn-green'];
-                 sessionData.options.forEach((option, index) => {
-                    const button = document.createElement('button');
-                    button.className = `vote-btn vote-btn-circle ${colors[index % colors.length]}`;
-                    button.onclick = () => castVote(index);
-                    container.appendChild(button);
-                 });
+                const colors = ['vote-btn-red', 'vote-btn-yellow', 'vote-btn-green'];
+                sessionData.options.forEach((option, index) => {
+                    container.innerHTML += `<button class="vote-btn vote-btn-circle ${colors[index % colors.length]}" onclick="castVote(${index})"></button>`;
+                });
             } else {
-                 sessionData.options.forEach((option, index) => {
-                    const button = document.createElement('button');
-                    const isIcon = ['satisfaction', 'agreement'].includes(sessionData.scaleType);
-                    button.className = `vote-btn p-3 rounded-lg flex-grow text-center ${isIcon ? 'text-4xl' : 'text-lg'}`;
-                    button.innerText = option.text;
-                    button.onclick = () => castVote(index);
-                    container.appendChild(button);
+                sessionData.options.forEach((option, index) => {
+                    const isIcon = ['satisfaction'].includes(sessionData.scaleType);
+                    container.innerHTML += `<button class="vote-btn p-3 rounded-lg flex-grow text-center ${isIcon ? 'text-4xl' : 'text-lg'}" onclick="castVote(${index})">${option.text}</button>`;
                 });
             }
         }
-        
-        // --- Lógica de Arranque e Inicialización ---
+
+        function castVote(optionIndex) {
+            hostConnection.send({ type: 'vote', payload: { optionIndex } });
+            localStorage.setItem(`voted_in_scale_${hostConnection.peer}`, 'true');
+            showVotedView();
+        }
+
+        function toggleProjectionMode() {
+            document.body.classList.toggle('projection-mode');
+            window.addEventListener('keydown', handleExitProjection);
+            document.getElementById('app').addEventListener('click', handleExitProjection);
+        }
+
         function handleExitProjection(event) {
             if (event.key === 'Escape' || (event.type === 'click' && !event.target.closest('button'))) {
                 if (document.body.classList.contains('projection-mode')) {
-                    toggleProjectionMode();
+                    document.body.classList.remove('projection-mode');
+                    window.removeEventListener('keydown', handleExitProjection);
+                    document.getElementById('app').removeEventListener('click', handleExitProjection);
                 }
             }
         }
-        function toggleProjectionMode() { /* ... (código sin cambios) ... */ }
-        function checkURLParameters() {
-            // ... (lógica modificada para leer 'scaleType' y 'options' del enlace preparado)
-        }
         
-        // --- Lógica completa de las funciones sin cambios y el window.onload ---
-        // ... (resto del script que no ha cambiado)
+        function checkURLParameters() {
+            const params = new URLSearchParams(window.location.search);
+            const sessionId = params.get('session');
+            const data = params.get('data');
+
+            if (sessionId) {
+                switchView('participant');
+                document.getElementById('code-input').value = sessionId;
+                joinSession();
+            } else if (data) {
+                switchView('presenter');
+                try {
+                    const decoded = JSON.parse(atob(data));
+                    document.getElementById('question').value = decoded.question;
+                    document.getElementById('color-picker').value = decoded.themeColor;
+                    applyTheme(decoded.themeColor);
+                    document.getElementById('scale-type').value = decoded.scaleType;
+                    handleScaleTypeChange();
+                    if(decoded.scaleType === 'custom'){
+                        document.getElementById('custom-labels-wrapper').innerHTML = '';
+                        decoded.customOptions.forEach(opt => addCustomLabel(opt));
+                    }
+                } catch (e) {
+                    console.error("Error decoding URL data:", e);
+                    switchView('participant');
+                }
+            } else {
+                switchView('participant'); 
+            }
+        }
+
+        window.onload = () => {
+            const savedLang = localStorage.getItem('preferred_language') || (navigator.language || navigator.userLanguage).split('-')[0];
+            setLanguage(savedLang);
+            switchView('participant');
+            checkURLParameters();
+            document.getElementById('color-picker').addEventListener('input', (e) => applyTheme(e.target.value));
+        };
     </script>
 </body>
 </html>

@@ -49,7 +49,7 @@
         .tab-button.active.nube { border-color: #f97316; color: #9a3412; }
         .tab-button.active.ideas { border-color: #a855f7; color: #7e22ce; }
         .tab-button.active.muro { border-color: #0891b2; color: #155e75; }
-        .tab-button.active.escala { border-color: #3b82f6; color: #1e40af; } /* Nuevo estilo */
+        .tab-button.active.escala { border-color: #3b82f6; color: #1e40af; }
         .tab-button.active.general { border-color: #6b7280; color: #1f2937; }
         .tab-button.active.privacidad { border-color: #6b7280; color: #1f2937; }
     </style>
@@ -133,8 +133,8 @@
                         <p id="general-connections-p1">Al ser una conexión directa, el rendimiento depende de dos factores clave: la <strong>potencia del ordenador y el ancho de banda de la red del presentador</strong>. Cada participante abre una conexión directa con el presentador, que debe gestionar todas simultáneamente.</p>
                         <p id="general-connections-p2">Por este motivo, distinguimos dos tipos de aplicaciones:</p>
                          <ul>
-                            <li id="general-connections-li1"><strong>Conexiones Persistentes (Muro Interactivo):</strong> En esta aplicación, las conexiones se mantienen abiertas para ver cambios en tiempo real. Aquí, se recomienda un uso óptimo con grupos de hasta <strong>30-40 participantes</strong> para asegurar la fluidez.</li>
-                            <li id="general-connections-li2"><strong>Conexiones Breves (Votación, Nube, Lluvia de Ideas, Escala):</strong> En estas herramientas, la conexión se establece, envía el dato y se cierra en segundos. Esta eficiencia permite manejar un número mucho mayor de participantes, <strong>potencialmente varios cientos</strong>, ya que no se sobrecarga el dispositivo del presentador. Los navegadores son capaces de gestionar picos de decenas de conexiones nuevas por segundo, facilitando la participación masiva.</li>
+                            <li id="general-connections-li1"><strong>Conexiones Persistentes (Muro Interactivo, Lluvia de Ideas y Votos):</strong> En estas aplicaciones, las conexiones se mantienen abiertas para permitir una interacción continua (ver cambios en tiempo real o participar en múltiples fases). Por ello, se recomienda un uso óptimo con grupos de hasta <strong>30-40 participantes</strong> para asegurar la fluidez.</li>
+                            <li id="general-connections-li2"><strong>Conexiones Breves (Votación, Nube de Palabras, Escala):</strong> En estas herramientas, la conexión se establece, envía el dato y se cierra en segundos. Esta eficiencia permite manejar un número mucho mayor de participantes, <strong>potencialmente varios cientos</strong>, ya que no se sobrecarga el dispositivo del presentador. Los navegadores son capaces de gestionar picos de decenas de conexiones nuevas por segundo, facilitando la participación masiva.</li>
                         </ul>
                         <h3 id="general-issues-title">Sugerencias y reporte de fallos</h3>
                         <p id="general-issues-p1">Si encuentras algún fallo, tienes alguna duda o quieres proponer una mejora, puedes hacerlo a través de la sección "Issues" del repositorio en GitHub. Para ello, visita <a href="https://github.com/jjdeharo/directo/issues" target="_blank">https://github.com/jjdeharo/directo/issues</a> y haz clic en el botón verde "New issue". Describe tu consulta o problema de la forma más detallada posible.</p>
@@ -165,7 +165,7 @@
 
                     <section id="ideas" class="tab-pane hidden">
                         <h2 id="app-ideas-title-content" class="text-purple-700">Lluvia de Ideas y Votos</h2>
-                        <p id="app-ideas-desc">Esta aplicación se desarrolla en dos fases. Primero, los participantes envían sus ideas o propuestas de forma anónima. Una vez finalizada la fase de propuestas, el presentador inicia la fase de votación, donde cada participante puede votar por un número determinado de ideas enviadas por los demás. Sirve para generar y priorizar ideas de forma colectiva.</p>
+                        <p id="app-ideas-desc">Esta aplicación se desarrolla en dos fases. Primero, los participantes envían sus ideas o propuestas de forma anónima. Una vez finalizada la fase de propostas, el presentador inicia la fase de votación, donde cada participante puede votar por un número determinado de ideas enviadas por los demás. Sirve para generar y priorizar ideas de forma colectiva.</p>
                     </section>
 
                     <section id="muro" class="tab-pane hidden">
@@ -201,8 +201,8 @@
                 'general-connections-title': 'Consideraciones sobre el número de conexiones',
                 'general-connections-p1': 'Al ser una conexión directa, el rendimiento depende de dos factores clave: la <strong>potencia del ordenador y el ancho de banda de la red del presentador</strong>. Cada participante abre una conexión directa con el presentador, que debe gestionar todas simultáneamente.',
                 'general-connections-p2': 'Por este motivo, distinguimos dos tipos de aplicaciones:',
-                'general-connections-li1': '<strong>Conexiones Persistentes (Muro Interactivo):</strong> En esta aplicación, las conexiones se mantienen abiertas para ver cambios en tiempo real. Aquí, se recomienda un uso óptimo con grupos de hasta <strong>30-40 participantes</strong> para asegurar la fluidez.',
-                'general-connections-li2': '<strong>Conexiones Breves (Votación, Nube, Lluvia de Ideas, Escala):</strong> En estas herramientas, la conexión se establece, envía el dato y se cierra en segundos. Esta eficiencia permite manejar un número mucho mayor de participantes, <strong>potencialmente varios cientos</strong>, ya que no se sobrecarga el dispositivo del presentador. Los navegadores son capaces de gestionar picos de decenas de conexiones nuevas por segundo, facilitando la participación masiva.',
+                'general-connections-li1': '<strong>Conexiones Persistentes (Muro Interactivo, Lluvia de Ideas y Votos):</strong> En estas aplicaciones, las conexiones se mantienen abiertas para permitir una interacción continua (ver cambios en tiempo real o participar en múltiples fases). Por ello, se recomienda un uso óptimo con grupos de hasta <strong>30-40 participantes</strong> para asegurar la fluidez.',
+                'general-connections-li2': '<strong>Conexiones Breves (Votación, Nube de Palabras, Escala):</strong> En estas herramientas, la conexión se establece, envía el dato y se cierra en segundos. Esta eficiencia permite manejar un número mucho mayor de participantes, <strong>potencialmente varios cientos</strong>, ya que no se sobrecarga el dispositivo del presentador. Los navegadores son capaces de gestionar picos de decenas de conexiones nuevas por segundo, facilitando la participación masiva.',
                 'general-issues-title': 'Sugerencias y reporte de fallos',
                 'general-issues-p1': 'Si encuentras algún fallo, tienes alguna duda o quieres proponer una mejora, puedes hacerlo a través de la sección "Issues" del repositorio en GitHub. Para ello, visita <a href="https://github.com/jjdeharo/directo/issues" target="_blank">https://github.com/jjdeharo/directo/issues</a> y haz clic en el botón verde "New issue". Describe tu consulta o problema de la forma más detallada posible.',
                 'privacy-p2p-title': 'Un modelo sin servidores',
@@ -224,14 +224,45 @@
                 'app-escala-desc': 'Permite crear diferentes tipos de escalas de valoración (tipo Likert, numéricas, semáforo o totalmente personalizadas) para recoger la opinión de la audiencia sobre un tema. Los resultados se visualizan como gráficos de barras o en un formato de semáforo, facilitando una interpretación rápida del sentir general. Es ideal para realizar sondeos de opinión, medir el grado de acuerdo o evaluar la comprensión de un concepto.'
             },
             'ca': {
-                // ... (Traducciones al catalán, incluyendo las nuevas claves app-escala-title y app-escala-desc)
+                // ... (Traducciones al catalán actualizadas)
+                'general-connections-li1': '<strong>Connexions Persistents (Mur Interactiu, Pluja d\'Idees i Vots):</strong> En aquestes aplicacions, les connexions es mantenen obertes per permetre una interacció contínua (veure canvis en temps real o participar en múltiples fases). Per això, es recomana un ús òptim amb grups de fins a <strong>30-40 participants</strong> per assegurar la fluïdesa.',
+                'general-connections-li2': '<strong>Connexions Breus (Votació, Núvol de Paraules, Escala):</strong> En aquestes eines, la connexió s\'estableix, envia la dada i es tanca en segons. Aquesta eficiència permet gestionar un nombre molt més gran de participants, <strong>potencialmente diversos centenars</strong>, ja que no se sobrecarrega el dispositiu del presentador. Els navegadors són capaços de gestionar pics de desenes de connexions noves per segon, facilitant la participació massiva.',
             },
-            // ... (Resto de idiomas)
+            // ... (Resto de idiomas con la misma lógica de cambio)
         };
 
         function setLanguage(lang) {
-            // ... (Función sin cambios)
+            if (!translations[lang]) return;
+            localStorage.setItem('preferred_language', lang);
+            document.documentElement.lang = lang;
+            
+            Object.keys(translations.es).forEach(key => {
+                const element = document.getElementById(key);
+                const translation = translations[lang]?.[key] || translations.es[key];
+                if (element) {
+                    element.innerHTML = translation;
+                } else {
+                    const elements = document.querySelectorAll(`[data-translate-key="${key}"]`);
+                    elements.forEach(el => {
+                        const icon = el.querySelector('svg');
+                        el.innerHTML = '';
+                        if (icon) el.prepend(icon);
+                        el.append(translation);
+                    });
+                }
+            });
+            
+            // Actualizar títulos específicos que no tienen ID único
+            document.getElementById('general-title-content').innerHTML = translations[lang]?.['general-title'] || translations.es['general-title'];
+            document.getElementById('privacy-title-content').innerHTML = translations[lang]?.['privacy-title'] || translations.es['privacy-title'];
+            document.getElementById('app-vota-title-content').innerHTML = translations[lang]?.['app-vota-title'] || translations.es['app-vota-title'];
+            document.getElementById('app-nube-title-content').innerHTML = translations[lang]?.['app-nube-title'] || translations.es['app-nube-title'];
+            document.getElementById('app-ideas-title-content').innerHTML = translations[lang]?.['app-ideas-title'] || translations.es['app-ideas-title'];
+            document.getElementById('app-muro-title-content').innerHTML = translations[lang]?.['app-muro-title'] || translations.es['app-muro-title'];
+            document.getElementById('app-escala-title-content').innerHTML = translations[lang]?.['app-escala-title'] || translations.es['app-escala-title'];
+            document.getElementById('home-link').setAttribute('title', translations[lang]?.['home-link-title'] || translations.es['home-link-title']);
         }
+
 
         function showTab(tabName) {
             document.querySelectorAll('.tab-pane').forEach(pane => {

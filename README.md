@@ -8,6 +8,7 @@
 
 * **Sin servidor (Serverless)**: La comunicación es directa P2P (Peer-to-Peer) entre el presentador y los participantes. Ningún dato viaja a un servidor central.
 * **Privacidad por diseño**: No se requiere registro de usuarios y no se almacena ninguna información de la sesión en la nube. Cuando el presentador cierra la pestaña, los datos se pierden.
+* **Preparar sesión**: Todas las aplicaciones cuentan con una función para generar un enlace que guarda la configuración de una actividad (pregunta, opciones, colores, etc.), permitiendo prepararla con antelación y reutilizarla fácilmente.
 * **Código abierto**: Todo el proyecto está disponible bajo una licencia Creative Commons que permite su uso, modificación y distribución.
 * **Soporte multilingüe**: La interfaz está disponible en español, catalán, gallego, euskera e inglés.
 
@@ -21,6 +22,7 @@ Este proyecto incluye varias herramientas interactivas:
 2.  **Nube de palabras**: Recopila palabras o frases cortas de la audiencia para formar una nube de palabras visual. El tamaño de cada palabra es proporcional a su frecuencia. Se puede exportar como imagen (PNG) o datos (CSV).
 3.  **Lluvia de ideas y votos**: Una herramienta en dos fases. Primero, los participantes envían sus ideas de forma anónima. Después, en la fase de votación, pueden votar por las propuestas de los demás para priorizarlas.
 4.  **Muro interactivo**: Un lienzo digital colaborativo donde los participantes envían "post-its" virtuales. El presentador puede organizar las notas libremente. El resultado se puede exportar como PDF o CSV.
+5.  **Escala de valoración**: Permite crear diferentes tipos de escalas (Likert, numéricas, semáforo, personalizadas) para recoger opiniones de forma visual e inmediata. Es ideal para medir el grado de acuerdo o la comprensión de un tema.
 
 ---
 

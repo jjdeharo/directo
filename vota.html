@@ -4,13 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Votación en Tiempo Real con WebRTC</title>
-    <!-- Tailwind CSS para un diseño rápido y moderno -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- PeerJS para la conexión WebRTC -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.4.7/peerjs.min.js"></script>
-    <!-- Librería para generar Códigos QR -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <!-- Google Fonts para una mejor tipografía -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
@@ -125,7 +121,6 @@
 
     <div id="app" class="w-full max-w-2xl mx-auto rounded-xl shadow-lg transition-all duration-300 relative">
 
-        <!-- Selector de Idioma -->
         <div id="lang-selector-container" class="absolute top-4 right-4 z-10">
             <select id="lang-selector" onchange="setLanguage(this.value)" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2">
                 <option value="es">Español</option>
@@ -136,7 +131,6 @@
             </select>
         </div>
 
-        <!-- Vista del Presentador -->
         <div id="presenter-view" class="hidden">
             <div id="create-session-form" class="themed-content-bg p-6 md:p-8 rounded-xl">
                 <h2 class="text-2xl font-bold mb-6" data-translate-key="create_title">Crear una nueva votación</h2>
@@ -182,6 +176,9 @@
                 <div class="flex justify-between items-start gap-4 mb-8">
                     <h2 id="results-question" class="text-4xl md:text-5xl font-extrabold flex-grow text-gray-800"></h2>
                     <div class="flex gap-2 flex-shrink-0">
+                        <button id="stop-btn" onclick="toggleVotingStatus()" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg inline-flex items-center text-sm">
+                            <span data-translate-key="stop_voting_btn">Detener</span>
+                        </button>
                         <button id="edit-btn" onclick="confirmEndSession()" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-lg inline-flex items-center text-sm">
                             <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" /><path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" /></svg>
                             <span data-translate-key="edit_btn_text">Editar</span>
@@ -222,7 +219,6 @@
             </div>
         </div>
 
-        <!-- Vista del Participante -->
         <div id="student-view" class="bg-white p-6 md:p-8 rounded-xl">
             <div id="join-session-form">
                 <h2 class="text-2xl font-bold mb-4" data-translate-key="join_title">Unirse a una votación</h2>
@@ -249,6 +245,14 @@
                     <p id="vote-error" class="text-red-500 hidden"></p>
                 </div>
             </div>
+            
+            <div id="voting-paused-view" class="hidden text-center py-8">
+                 <svg class="mx-auto h-16 w-16 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.25 9v6m-4.5 0V9M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+                <h2 class="text-2xl font-bold mt-4" data-translate-key="voting_paused_title">Votación en pausa</h2>
+                <p class="text-gray-600" data-translate-key="voting_paused_subtitle">El presentador ha detenido las respuestas temporalmente.</p>
+            </div>
 
             <div id="voted-view" class="hidden text-center py-8">
                  <svg class="mx-auto h-16 w-16 themed-info-box-text" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -268,7 +272,6 @@
 
     <div id="toast" class="fixed bottom-5 right-5 bg-gray-900 text-white px-4 py-2 rounded-lg shadow-lg opacity-0 transition-opacity duration-300"></div>
 
-    <!-- Modal de Confirmación -->
     <div id="confirm-modal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50 hidden">
         <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full">
             <h3 class="text-lg font-bold mb-4" data-translate-key="confirm_end_title">¿Finalizar sesión?</h3>
@@ -283,11 +286,11 @@
     <script>
         // --- LÓGICA DE INTERNACIONALIZACIÓN (i18n) ---
         const translations = {
-            'es': { 'page_title': 'Votación en Tiempo Real', 'create_title': 'Crear una nueva votación', 'question_label': 'Tu pregunta:', 'question_placeholder': 'Ej: ¿Cuál es tu color favorito?', 'theme_color_label': 'Color:', 'options_label': 'Opciones de respuesta:', 'option_1_placeholder': 'Opción 1', 'option_2_placeholder': 'Opción 2', 'add_option_btn': '+ Añadir opción', 'prepare_session_btn': 'Preparar sesión', 'start_session_btn': 'Iniciar Sesión', 'live_session_title': '¡Sesión en vivo! Comparte:', 'scan_qr_label': '1. Escanea el QR', 'direct_link_label': '2. O comparte el enlace', 'or_go_to': 'O ve a', 'and_enter_code': 'e introduce el código:', 'projection_btn_text': 'Proyectar', 'edit_btn_text': 'Editar', 'projection_btn_exit_text': 'Salir del modo proyector', 'total_votes_label': 'Votos totales', 'join_title': 'Unirse a una votación', 'session_code_label': 'Código de la sesión:', 'code_input_placeholder': 'Introduce el código', 'join_btn': 'Unirse', 'voted_title': '¡Gracias por tu voto!', 'voted_subtitle': 'Puedes ver los resultados en la pantalla principal.', 'vote_sending': 'Enviando voto...', 'vote_timeout_error': 'No se recibió respuesta. Por favor, inténtalo de nuevo.', 'copied_toast': 'Código copiado al portapapeles', 'link_copied_toast': 'Enlace copiado al portapapeles', 'url_copied_toast': 'URL copiada al portapapeles', 'alert_no_question': 'Por favor, introduce una pregunta y al menos dos opciones.', 'alert_connection_error': 'Ha ocurrido un error con la conexión. Por favor, recarga la página.', 'join_error_text': 'Error de conexión. Verifica el código o que la persona anfitriona esté conectada.', 'shareable_link_title': 'Enlace de preparación listo. Cópialo y guárdalo para usarlo más tarde:', 'switch_to_presenter': '¿Eres el presentador? Inicia sesión aquí.', 'switch_to_student': '¿Buscas unirte a una sesión? Haz clic aquí.', 'footer_created_by': 'Aplicación creada por', 'footer_license': 'Creative Commons Reconocimiento-CompartirIgual 4.0 Internacional', 'confirm_end_title': '¿Finalizar sesión?', 'confirm_end_text': 'Esto terminará la sesión actual para todos los participantes. Deberás compartir un nuevo código para que se unan de nuevo.', 'cancel_btn': 'Cancelar', 'end_session_btn': 'Finalizar' },
-            'ca': { 'page_title': 'Votació en Temps Real', 'create_title': 'Crear una nova votació', 'question_label': 'La teva pregunta:', 'question_placeholder': 'Ex: Quin és el teu color preferit?', 'theme_color_label': 'Color:', 'options_label': 'Opcions de resposta:', 'option_1_placeholder': 'Opció 1', 'option_2_placeholder': 'Opció 2', 'add_option_btn': '+ Afegir opció', 'prepare_session_btn': 'Preparar sessió', 'start_session_btn': 'Iniciar Sessió', 'live_session_title': 'Sessió en viu! Comparteix:', 'scan_qr_label': '1. Escaneja el QR', 'direct_link_label': '2. O comparteix l\'enllaç', 'or_go_to': 'O ves a', 'and_enter_code': 'i introdueix el codi:', 'projection_btn_text': 'Projectar', 'edit_btn_text': 'Editar', 'projection_btn_exit_text': 'Sortir del mode projector', 'total_votes_label': 'Vots totals', 'join_title': 'Unir-se a una votació', 'session_code_label': 'Codi de la sessió:', 'code_input_placeholder': 'Introdueix el codi', 'join_btn': 'Unir-se', 'voted_title': 'Gràcies pel teu vot!', 'voted_subtitle': 'Pots veure els resultats a la pantalla principal.', 'vote_sending': 'Enviant vot...', 'vote_timeout_error': 'No s\'ha rebut resposta. Si us plau, torna-ho a provar.', 'copied_toast': 'Codi copiat al porta-retalls', 'link_copied_toast': 'Enllaç copiat al porta-retalls', 'url_copied_toast': 'URL copiada al porta-retalls', 'alert_no_question': 'Si us plau, introdueix una pregunta i almenys dues opcions.', 'alert_connection_error': 'Hi ha hagut un error amb la connexió. Si us plau, recarrega la pàgina.', 'join_error_text': 'Error de connexió. Verifica el codi o que la persona amfitriona estigui connectada.', 'shareable_link_title': 'Enllaç de preparació a punt. Copia\'l i desa\'l per a més tard:', 'switch_to_presenter': 'Ets el presentador? Inicia sessió aquí.', 'switch_to_student': 'Busques unir-te a una sessió? Fes clic aquí.', 'footer_created_by': 'Aplicació creada per', 'footer_license': 'Creative Commons Reconeixement-CompartirIgual 4.0 Internacional', 'confirm_end_title': 'Finalitzar la sessió?', 'confirm_end_text': 'Això acabarà la sessió actual per a tots els participants. Hauràs de compartir un nou codi perquè s\'uneixin de nou.', 'cancel_btn': 'Cancel·lar', 'end_session_btn': 'Finalitzar' },
-            'gl': { 'page_title': 'Votación en Tempo Real', 'create_title': 'Crear unha nova votación', 'question_label': 'A túa pregunta:', 'question_placeholder': 'Ex: Cal é a túa cor favorita?', 'theme_color_label': 'Cor:', 'options_label': 'Opcións de resposta:', 'option_1_placeholder': 'Opción 1', 'option_2_placeholder': 'Opción 2', 'add_option_btn': '+ Engadir opción', 'prepare_session_btn': 'Preparar sesión', 'start_session_btn': 'Iniciar Sesión', 'live_session_title': 'Sesión en vivo! Comparte:', 'scan_qr_label': '1. Escanea o QR', 'direct_link_label': '2. Ou comparte a ligazón', 'or_go_to': 'Ou vai a', 'and_enter_code': 'e introduce o código:', 'projection_btn_text': 'Proxectar', 'edit_btn_text': 'Editar', 'projection_btn_exit_text': 'Saír do modo proxector', 'total_votes_label': 'Votos totais', 'join_title': 'Unirse a unha votación', 'session_code_label': 'Código da sesión:', 'code_input_placeholder': 'Introduce o código', 'join_btn': 'Unirse', 'voted_title': 'Grazas polo teu voto!', 'voted_subtitle': 'Podes ver os resultados na pantalla principal.', 'vote_sending': 'Enviando voto...', 'vote_timeout_error': 'Non se recibiu resposta. Por favor, téntao de novo.', 'copied_toast': 'Código copiado ao portapapeis', 'link_copied_toast': 'Ligazón copiada ao portapapeis', 'url_copied_toast': 'URL copiada ao portapapeis', 'alert_no_question': 'Por favor, introduce unha pregunta e polo menos dúas opcións.', 'alert_connection_error': 'Houbo un erro coa conexión. Por favor, recarga a páxina.', 'join_error_text': 'Erro de conexión. Verifica o código ou que a persoa anfitrioa estea conectada.', 'shareable_link_title': 'Ligazón de preparación lista. Cópiaa e gárdaa para usala máis tarde:', 'switch_to_presenter': 'Es o presentador? Inicia sesión aquí.', 'switch_to_student': 'Buscas unirte a unha sesión? Fai clic aquí.', 'footer_created_by': 'Aplicación creada por', 'footer_license': 'Creative Commons Recoñecemento-CompartirIgual 4.0 Internacional', 'confirm_end_title': 'Finalizar a sesión?', 'confirm_end_text': 'Isto rematará a sesión actual para todos os participantes. Deberás compartir un novo código para que se unan de novo.', 'cancel_btn': 'Cancelar', 'end_session_btn': 'Finalizar' },
-            'eu': { 'page_title': 'Bozketa Denbora Errealean', 'create_title': 'Bozketa berria sortu', 'question_label': 'Zure galdera:', 'question_placeholder': 'Adib: Zein da zure kolorerik gogokoena?', 'theme_color_label': 'Kolorea:', 'options_label': 'Erantzun-aukerak:', 'option_1_placeholder': '1. aukera', 'option_2_placeholder': '2. aukera', 'add_option_btn': '+ Gehitu aukera', 'prepare_session_btn': 'Saioa prestatu', 'start_session_btn': 'Saioa Hasi', 'live_session_title': 'Saioa zuzenean! Partekatu:', 'scan_qr_label': '1. Eskaneatu QR-a', 'direct_link_label': '2. Edo partekatu esteka', 'or_go_to': 'Edo joan hona', 'and_enter_code': 'eta sartu kodea:', 'projection_btn_text': 'Proiektatu', 'edit_btn_text': 'Editatu', 'projection_btn_exit_text': 'Proiektagailu modutik irten', 'total_votes_label': 'Botoak guztira', 'join_title': 'Bozketa batean sartu', 'session_code_label': 'Saioaren kodea:', 'code_input_placeholder': 'Sartu kodea', 'join_btn': 'Sartu', 'voted_title': 'Eskerrik asko zure botoagatik!', 'voted_subtitle': 'Emaitzak pantaila nagusian ikus ditzakezu.', 'vote_sending': 'Botoa bidaltzen...', 'vote_timeout_error': 'Ez da erantzunik jaso. Mesedez, saiatu berriro.', 'copied_toast': 'Kodea arbelean kopiatu da', 'link_copied_toast': 'Esteka arbelean kopiatu da', 'url_copied_toast': 'URLa arbelean kopiatu da', 'alert_no_question': 'Mesedez, sartu galdera bat eta gutxienez bi aukera.', 'alert_connection_error': 'Konexioarekin errore bat gertatu da. Mesedez, birkargatu orria.', 'join_error_text': 'Konexio-errorea. Egiaztatu kodea edo antolatzailea konektatuta dagoela.', 'shareable_link_title': 'Prestatzeko esteka prest. Kopiatu eta gorde geroago erabiltzeko:', 'switch_to_presenter': 'Aurkezlea zara? Hasi saioa hemen.', 'switch_to_student': 'Saio batean sartu nahi duzu? Egin klik hemen.', 'footer_created_by': 'Aplikazioa, egilea:', 'footer_license': 'Creative Commons Aitortu-PartekatuBerdin 4.0 Nazioartekoa', 'confirm_end_title': 'Saioa amaitu?', 'confirm_end_text': 'Honek uneko saioa amaituko du parte-hartzaile guztientzat. Kode berri bat partekatu beharko duzu berriro sartzeko.', 'cancel_btn': 'Ezeztatu', 'end_session_btn': 'Amaitu' },
-            'en': { 'page_title': 'Real-time Voting', 'create_title': 'Create a new poll', 'question_label': 'Your question:', 'question_placeholder': 'E.g., What is your favorite color?', 'theme_color_label': 'Color:', 'options_label': 'Answer options:', 'option_1_placeholder': 'Option 1', 'option_2_placeholder': 'Option 2', 'add_option_btn': '+ Add option', 'prepare_session_btn': 'Prepare session', 'start_session_btn': 'Start Session', 'live_session_title': 'Live session! Share:', 'scan_qr_label': '1. Scan the QR code', 'direct_link_label': '2. Or share the link', 'or_go_to': 'Or go to', 'and_enter_code': 'and enter the code:', 'projection_btn_text': 'Project', 'edit_btn_text': 'Edit', 'projection_btn_exit_text': 'Exit projection mode', 'total_votes_label': 'Total votes', 'join_title': 'Join a poll', 'session_code_label': 'Session code:', 'code_input_placeholder': 'Enter code', 'join_btn': 'Join', 'voted_title': 'Thank you for your vote!', 'voted_subtitle': 'You can see the results on the main screen.', 'vote_sending': 'Submitting vote...', 'vote_timeout_error': 'No response received. Please try again.', 'copied_toast': 'Code copied to clipboard', 'link_copied_toast': 'Link copied to clipboard', 'url_copied_toast': 'URL copied to clipboard', 'alert_no_question': 'Please enter a question and at least two options.', 'alert_connection_error': 'A connection error has occurred. Please reload the page.', 'join_error_text': 'Connection error. Check the code or that the host is connected.', 'shareable_link_title': 'Preparation link ready. Copy and save it for later use:', 'switch_to_presenter': 'Are you the presenter? Log in here.', 'switch_to_student': 'Looking to join a session? Click here.', 'footer_created_by': 'Application created by', 'footer_license': 'Creative Commons Attribution-ShareAlike 4.0 International', 'confirm_end_title': 'End session?', 'confirm_end_text': 'This will end the current session for all participants. You will need to share a new code for them to join again.', 'cancel_btn': 'Cancel', 'end_session_btn': 'End Session' }
+            'es': { 'page_title': 'Votación en Tiempo Real', 'create_title': 'Crear una nueva votación', 'question_label': 'Tu pregunta:', 'question_placeholder': 'Ej: ¿Cuál es tu color favorito?', 'theme_color_label': 'Color:', 'options_label': 'Opciones de respuesta:', 'option_1_placeholder': 'Opción 1', 'option_2_placeholder': 'Opción 2', 'add_option_btn': '+ Añadir opción', 'prepare_session_btn': 'Preparar sesión', 'start_session_btn': 'Iniciar Sesión', 'live_session_title': '¡Sesión en vivo! Comparte:', 'scan_qr_label': '1. Escanea el QR', 'direct_link_label': '2. O comparte el enlace', 'or_go_to': 'O ve a', 'and_enter_code': 'e introduce el código:', 'projection_btn_text': 'Proyectar', 'edit_btn_text': 'Editar', 'projection_btn_exit_text': 'Salir del modo proyector', 'total_votes_label': 'Votos totales', 'join_title': 'Unirse a una votación', 'session_code_label': 'Código de la sesión:', 'code_input_placeholder': 'Introduce el código', 'join_btn': 'Unirse', 'voted_title': '¡Gracias por tu voto!', 'voted_subtitle': 'Puedes ver los resultados en la pantalla principal.', 'vote_sending': 'Enviando voto...', 'vote_timeout_error': 'No se recibió respuesta. Por favor, inténtalo de nuevo.', 'copied_toast': 'Código copiado al portapapeles', 'link_copied_toast': 'Enlace copiado al portapapeles', 'url_copied_toast': 'URL copiada al portapapeles', 'alert_no_question': 'Por favor, introduce una pregunta y al menos dos opciones.', 'alert_connection_error': 'Ha ocurrido un error con la conexión. Por favor, recarga la página.', 'join_error_text': 'Error de conexión. Verifica el código o que la persona anfitriona esté conectada.', 'shareable_link_title': 'Enlace de preparación listo. Cópialo y guárdalo para usarlo más tarde:', 'switch_to_presenter': '¿Eres el presentador? Inicia sesión aquí.', 'switch_to_student': '¿Buscas unirte a una sesión? Haz clic aquí.', 'footer_created_by': 'Aplicación creada por', 'footer_license': 'Creative Commons Reconocimiento-CompartirIgual 4.0 Internacional', 'confirm_end_title': '¿Finalizar sesión?', 'confirm_end_text': 'Esto terminará la sesión actual para todos los participantes. Deberás compartir un nuevo código para que se unan de nuevo.', 'cancel_btn': 'Cancelar', 'end_session_btn': 'Finalizar', 'stop_voting_btn': 'Detener', 'resume_voting_btn': 'Reanudar', 'voting_paused_title': 'Votación en pausa', 'voting_paused_subtitle': 'El presentador ha detenido las respuestas temporalmente.' },
+            'ca': { 'page_title': 'Votació en Temps Real', 'create_title': 'Crear una nova votació', 'question_label': 'La teva pregunta:', 'question_placeholder': 'Ex: Quin és el teu color preferit?', 'theme_color_label': 'Color:', 'options_label': 'Opcions de resposta:', 'option_1_placeholder': 'Opció 1', 'option_2_placeholder': 'Opció 2', 'add_option_btn': '+ Afegir opció', 'prepare_session_btn': 'Preparar sessió', 'start_session_btn': 'Iniciar Sessió', 'live_session_title': 'Sessió en viu! Comparteix:', 'scan_qr_label': '1. Escaneja el QR', 'direct_link_label': '2. O comparteix l\'enllaç', 'or_go_to': 'O ves a', 'and_enter_code': 'i introdueix el codi:', 'projection_btn_text': 'Projectar', 'edit_btn_text': 'Editar', 'projection_btn_exit_text': 'Sortir del mode projector', 'total_votes_label': 'Vots totals', 'join_title': 'Unir-se a una votació', 'session_code_label': 'Codi de la sessió:', 'code_input_placeholder': 'Introdueix el codi', 'join_btn': 'Unir-se', 'voted_title': 'Gràcies pel teu vot!', 'voted_subtitle': 'Pots veure els resultats a la pantalla principal.', 'vote_sending': 'Enviant vot...', 'vote_timeout_error': 'No s\'ha rebut resposta. Si us plau, torna-ho a provar.', 'copied_toast': 'Codi copiat al porta-retalls', 'link_copied_toast': 'Enllaç copiat al porta-retalls', 'url_copied_toast': 'URL copiada al porta-retalls', 'alert_no_question': 'Si us plau, introdueix una pregunta i almenys dues opcions.', 'alert_connection_error': 'Hi ha hagut un error amb la connexió. Si us plau, recarrega la pàgina.', 'join_error_text': 'Error de connexió. Verifica el codi o que la persona amfitriona estigui connectada.', 'shareable_link_title': 'Enllaç de preparació a punt. Copia\'l i desa\'l per a més tard:', 'switch_to_presenter': 'Ets el presentador? Inicia sessió aquí.', 'switch_to_student': 'Busques unir-te a una sessió? Fes clic aquí.', 'footer_created_by': 'Aplicació creada per', 'footer_license': 'Creative Commons Reconeixement-CompartirIgual 4.0 Internacional', 'confirm_end_title': 'Finalitzar la sessió?', 'confirm_end_text': 'Això acabarà la sessió actual per a tots els participants. Hauràs de compartir un nou codi perquè s\'uneixin de nou.', 'cancel_btn': 'Cancel·lar', 'end_session_btn': 'Finalitzar', 'stop_voting_btn': 'Aturar', 'resume_voting_btn': 'Reprendre', 'voting_paused_title': 'Votació en pausa', 'voting_paused_subtitle': 'El presentador ha aturat les respostes temporalment.' },
+            'gl': { 'page_title': 'Votación en Tempo Real', 'create_title': 'Crear unha nova votación', 'question_label': 'A túa pregunta:', 'question_placeholder': 'Ex: Cal é a túa cor favorita?', 'theme_color_label': 'Cor:', 'options_label': 'Opcións de resposta:', 'option_1_placeholder': 'Opción 1', 'option_2_placeholder': 'Opción 2', 'add_option_btn': '+ Engadir opción', 'prepare_session_btn': 'Preparar sesión', 'start_session_btn': 'Iniciar Sesión', 'live_session_title': 'Sesión en vivo! Comparte:', 'scan_qr_label': '1. Escanea o QR', 'direct_link_label': '2. Ou comparte a ligazón', 'or_go_to': 'Ou vai a', 'and_enter_code': 'e introduce o código:', 'projection_btn_text': 'Proxectar', 'edit_btn_text': 'Editar', 'projection_btn_exit_text': 'Saír do modo proxector', 'total_votes_label': 'Votos totais', 'join_title': 'Unirse a unha votación', 'session_code_label': 'Código da sesión:', 'code_input_placeholder': 'Introduce o código', 'join_btn': 'Unirse', 'voted_title': 'Grazas polo teu voto!', 'voted_subtitle': 'Podes ver os resultados na pantalla principal.', 'vote_sending': 'Enviando voto...', 'vote_timeout_error': 'Non se recibiu resposta. Por favor, téntao de novo.', 'copied_toast': 'Código copiado ao portapapeis', 'link_copied_toast': 'Ligazón copiada ao portapapeis', 'url_copied_toast': 'URL copiada ao portapapeis', 'alert_no_question': 'Por favor, introduce unha pregunta e polo menos dúas opcións.', 'alert_connection_error': 'Houbo un erro coa conexión. Por favor, recarga a páxina.', 'join_error_text': 'Erro de conexión. Verifica o código ou que a persoa anfitrioa estea conectada.', 'shareable_link_title': 'Ligazón de preparación lista. Cópiaa e gárdaa para usala máis tarde:', 'switch_to_presenter': 'Es o presentador? Inicia sesión aquí.', 'switch_to_student': 'Buscas unirte a unha sesión? Fai clic aquí.', 'footer_created_by': 'Aplicación creada por', 'footer_license': 'Creative Commons Recoñecemento-CompartirIgual 4.0 Internacional', 'confirm_end_title': 'Finalizar a sesión?', 'confirm_end_text': 'Isto rematará a sesión actual para todos os participantes. Deberás compartir un novo código para que se unan de novo.', 'cancel_btn': 'Cancelar', 'end_session_btn': 'Finalizar', 'stop_voting_btn': 'Deter', 'resume_voting_btn': 'Reanudar', 'voting_paused_title': 'Votación en pausa', 'voting_paused_subtitle': 'O presentador detivo as respostas temporalmente.' },
+            'eu': { 'page_title': 'Bozketa Denbora Errealean', 'create_title': 'Bozketa berria sortu', 'question_label': 'Zure galdera:', 'question_placeholder': 'Adib: Zein da zure kolorerik gogokoena?', 'theme_color_label': 'Kolorea:', 'options_label': 'Erantzun-aukerak:', 'option_1_placeholder': '1. aukera', 'option_2_placeholder': '2. aukera', 'add_option_btn': '+ Gehitu aukera', 'prepare_session_btn': 'Saioa prestatu', 'start_session_btn': 'Saioa Hasi', 'live_session_title': 'Saioa zuzenean! Partekatu:', 'scan_qr_label': '1. Eskaneatu QR-a', 'direct_link_label': '2. Edo partekatu esteka', 'or_go_to': 'Edo joan hona', 'and_enter_code': 'eta sartu kodea:', 'projection_btn_text': 'Proiektatu', 'edit_btn_text': 'Editatu', 'projection_btn_exit_text': 'Proiektagailu modutik irten', 'total_votes_label': 'Botoak guztira', 'join_title': 'Bozketa batean sartu', 'session_code_label': 'Saioaren kodea:', 'code_input_placeholder': 'Sartu kodea', 'join_btn': 'Sartu', 'voted_title': 'Eskerrik asko zure botoagatik!', 'voted_subtitle': 'Emaitzak pantaila nagusian ikus ditzakezu.', 'vote_sending': 'Botoa bidaltzen...', 'vote_timeout_error': 'Ez da erantzunik jaso. Mesedez, saiatu berriro.', 'copied_toast': 'Kodea arbelean kopiatu da', 'link_copied_toast': 'Esteka arbelean kopiatu da', 'url_copied_toast': 'URLa arbelean kopiatu da', 'alert_no_question': 'Mesedez, sartu galdera bat eta gutxienez bi aukera.', 'alert_connection_error': 'Konexioarekin errore bat gertatu da. Mesedez, birkargatu orria.', 'join_error_text': 'Konexio-errorea. Egiaztatu kodea edo antolatzailea konektatuta dagoela.', 'shareable_link_title': 'Prestatzeko esteka prest. Kopiatu eta gorde geroago erabiltzeko:', 'switch_to_presenter': 'Aurkezlea zara? Hasi saioa hemen.', 'switch_to_student': 'Saio batean sartu nahi duzu? Egin klik hemen.', 'footer_created_by': 'Aplikazioa, egilea:', 'footer_license': 'Creative Commons Aitortu-PartekatuBerdin 4.0 Nazioartekoa', 'confirm_end_title': 'Saioa amaitu?', 'confirm_end_text': 'Honek uneko saioa amaituko du parte-hartzaile guztientzat. Kode berri bat partekatu beharko duzu berriro sartzeko.', 'cancel_btn': 'Ezeztatu', 'end_session_btn': 'Amaitu', 'stop_voting_btn': 'Gelditu', 'resume_voting_btn': 'Berrekin', 'voting_paused_title': 'Bozketa pausatuta', 'voting_paused_subtitle': 'Aurkezleak erantzunak aldi baterako gelditu ditu.' },
+            'en': { 'page_title': 'Real-time Voting', 'create_title': 'Create a new poll', 'question_label': 'Your question:', 'question_placeholder': 'E.g., What is your favorite color?', 'theme_color_label': 'Color:', 'options_label': 'Answer options:', 'option_1_placeholder': 'Option 1', 'option_2_placeholder': 'Option 2', 'add_option_btn': '+ Add option', 'prepare_session_btn': 'Prepare session', 'start_session_btn': 'Start Session', 'live_session_title': 'Live session! Share:', 'scan_qr_label': '1. Scan the QR code', 'direct_link_label': '2. Or share the link', 'or_go_to': 'Or go to', 'and_enter_code': 'and enter the code:', 'projection_btn_text': 'Project', 'edit_btn_text': 'Edit', 'projection_btn_exit_text': 'Exit projection mode', 'total_votes_label': 'Total votes', 'join_title': 'Join a poll', 'session_code_label': 'Session code:', 'code_input_placeholder': 'Enter code', 'join_btn': 'Join', 'voted_title': 'Thank you for your vote!', 'voted_subtitle': 'You can see the results on the main screen.', 'vote_sending': 'Submitting vote...', 'vote_timeout_error': 'No response received. Please try again.', 'copied_toast': 'Code copied to clipboard', 'link_copied_toast': 'Link copied to clipboard', 'url_copied_toast': 'URL copied to clipboard', 'alert_no_question': 'Please enter a question and at least two options.', 'alert_connection_error': 'A connection error has occurred. Please reload the page.', 'join_error_text': 'Connection error. Check the code or that the host is connected.', 'shareable_link_title': 'Preparation link ready. Copy and save it for later use:', 'switch_to_presenter': 'Are you the presenter? Log in here.', 'switch_to_student': 'Looking to join a session? Click here.', 'footer_created_by': 'Application created by', 'footer_license': 'Creative Commons Attribution-ShareAlike 4.0 International', 'confirm_end_title': 'End session?', 'confirm_end_text': 'This will end the current session for all participants. You will need to share a new code for them to join again.', 'cancel_btn': 'Cancel', 'end_session_btn': 'End Session', 'stop_voting_btn': 'Stop', 'resume_voting_btn': 'Resume', 'voting_paused_title': 'Voting paused', 'voting_paused_subtitle': 'The presenter has temporarily paused responses.' }
         };
 
         let currentLang = 'es';
@@ -525,7 +528,7 @@
             document.getElementById('prepare-button').setAttribute('disabled', true);
             const theme = { primary: themeColor, text: getContrastColor(themeColor) };
             applyTheme(theme);
-            sessionData = { question, options, theme };
+            sessionData = { question, options, theme, votingActive: true };
             
             const sessionId = Math.random().toString(36).substring(2, 8).toUpperCase();
             peer = new Peer(sessionId); 
@@ -553,7 +556,7 @@
                 guestConnections.push(conn);
                 conn.on('open', () => conn.send({ type: 'session-data', payload: sessionData }));
                 conn.on('data', (data) => {
-                    if (data.type === 'vote') {
+                    if (data.type === 'vote' && sessionData.votingActive) {
                         handleVote(data.payload.optionIndex);
                         conn.send({ type: 'vote-confirmed' });
                     }
@@ -569,6 +572,27 @@
                 document.getElementById('prepare-button').removeAttribute('disabled');
             });
         }
+
+        function toggleVotingStatus() {
+            sessionData.votingActive = !sessionData.votingActive;
+            const btn = document.getElementById('stop-btn').querySelector('span');
+            const btnEl = document.getElementById('stop-btn');
+            
+            btn.innerText = translations[currentLang][sessionData.votingActive ? 'stop_voting_btn' : 'resume_voting_btn'];
+            btnEl.classList.toggle('bg-red-500', sessionData.votingActive);
+            btnEl.classList.toggle('hover:bg-red-600', sessionData.votingActive);
+            btnEl.classList.toggle('bg-green-500', !sessionData.votingActive);
+            btnEl.classList.toggle('hover:bg-green-600', !sessionData.votingActive);
+            
+            broadcastUpdate();
+        }
+
+        function broadcastUpdate() {
+             guestConnections.forEach(conn => {
+                if(conn.open) conn.send({ type: 'session-update', payload: sessionData })
+            });
+        }
+
         function handleVote(optionIndex) {
             sessionData.options[optionIndex].votes++;
             updateResultsView(sessionData);
@@ -609,11 +633,19 @@
                 hostConnection = peer.connect(hostId, { reliable: true });
                 hostConnection.on('open', () => {});
                 hostConnection.on('data', (data) => {
-                    if (data.type === 'session-data') {
-                        if (data.payload.theme) applyTheme(data.payload.theme);
-                        if (localStorage.getItem('voted_in_' + hostConnection.peer)) showVotedView();
-                        else showVotingView(data.payload);
-                    } else if (data.type === 'vote-confirmed') {
+                    const dataType = data.type;
+                    const payload = data.payload;
+
+                    if (dataType === 'session-data' || dataType === 'session-update') {
+                        sessionData = payload;
+                        if (payload.theme) applyTheme(payload.theme);
+                        
+                        if (localStorage.getItem('voted_in_' + hostConnection.peer)) {
+                            showVotedView();
+                        } else {
+                           updateParticipantView();
+                        }
+                    } else if (dataType === 'vote-confirmed') {
                         clearTimeout(voteTimeout);
                         clearInterval(countdownInterval);
                         localStorage.setItem('voted_in_' + hostConnection.peer, 'true');
@@ -626,6 +658,20 @@
             });
             peer.on('error', (err) => { console.error('Error de PeerJS:', err); showJoinError(); });
         }
+        
+        function updateParticipantView() {
+            document.getElementById('join-session-form').classList.add('hidden');
+            document.getElementById('voted-view').classList.add('hidden');
+            document.getElementById('voting-view').classList.add('hidden');
+            document.getElementById('voting-paused-view').classList.add('hidden');
+
+            if (!sessionData.votingActive) {
+                document.getElementById('voting-paused-view').classList.remove('hidden');
+            } else {
+                showVotingView(sessionData);
+            }
+        }
+
         function showJoinError() {
             document.getElementById('join-error').innerText = translations[currentLang]['join_error_text'];
             document.getElementById('join-error').classList.remove('hidden');
@@ -636,6 +682,7 @@
         function showVotingView(data) {
             document.getElementById('join-session-form').classList.add('hidden');
             document.getElementById('voted-view').classList.add('hidden');
+            document.getElementById('voting-paused-view').classList.add('hidden');
             document.getElementById('voting-view').classList.remove('hidden');
             document.getElementById('vote-error').classList.add('hidden');
             document.getElementById('vote-question').innerText = data.question;
@@ -654,10 +701,11 @@
             clearInterval(countdownInterval);
             document.getElementById('join-session-form').classList.add('hidden');
             document.getElementById('voting-view').classList.add('hidden');
+            document.getElementById('voting-paused-view').classList.add('hidden');
             document.getElementById('voted-view').classList.remove('hidden');
         }
         function castVote(optionIndex) {
-            if (!hostConnection) return;
+            if (!hostConnection || !sessionData.votingActive) return;
             document.querySelectorAll('#vote-options-container button').forEach(btn => btn.disabled = true);
             document.getElementById('vote-sending').classList.remove('hidden');
             

@@ -10,6 +10,7 @@
 * **Privacidad por diseño**: No se requiere registro de usuarios y no se almacena ninguna información de la sesión en la nube. Cuando el presentador cierra la pestaña, los datos se pierden.
 * **Personalización**: Todas las aplicaciones permiten al presentador unificar la estética de la actividad eligiendo un color base. Este color se aplica a los botones, fondos y otros elementos visuales, creando una experiencia coherente.
 * **Preparar sesión**: Todas las aplicaciones cuentan con una función para generar un enlace que guarda la configuración de una actividad (pregunta, opciones, colores, etc.), permitiendo prepararla con antelación y reutilizarla fácilmente.
+* **Control de la participación**: Todas las aplicaciones incluyen una opción para que el presentador pueda detener y reanudar la recepción de respuestas en cualquier momento, permitiendo gestionar el ritmo de la actividad.
 * **Código abierto**: Todo el proyecto está disponible bajo una licencia Creative Commons que permite su uso, modificación y distribución.
 * **Soporte multilingüe**: La interfaz está disponible en español, catalán, gallego, euskera e inglés.
 

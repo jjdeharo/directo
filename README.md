@@ -8,6 +8,7 @@
 
 * **Sin servidor (Serverless)**: La comunicación es directa P2P (Peer-to-Peer) entre el presentador y los participantes. Ningún dato viaja a un servidor central.
 * **Privacidad por diseño**: No se requiere registro de usuarios y no se almacena ninguna información de la sesión en la nube. Cuando el presentador cierra la pestaña, los datos se pierden.
+* **Personalización**: Todas las aplicaciones permiten al presentador unificar la estética de la actividad eligiendo un color base. Este color se aplica a los botones, fondos y otros elementos visuales, creando una experiencia coherente.
 * **Preparar sesión**: Todas las aplicaciones cuentan con una función para generar un enlace que guarda la configuración de una actividad (pregunta, opciones, colores, etc.), permitiendo prepararla con antelación y reutilizarla fácilmente.
 * **Código abierto**: Todo el proyecto está disponible bajo una licencia Creative Commons que permite su uso, modificación y distribución.
 * **Soporte multilingüe**: La interfaz está disponible en español, catalán, gallego, euskera e inglés.
@@ -40,10 +41,13 @@ No se necesita instalación ni servidor. Simplemente abre el fichero `index.html
 
 ### Para los participantes
 
-1.  Abre la URL de la aplicación proporcionada.
-2.  Introduce el código de la sesión que te ha dado el presentador.
-3.  Haz clic en **"Unirse"**.
-4.  Interactúa enviando tus respuestas (votos, ideas, etc.).
+Una vez que el presentador ha iniciado una actividad, los participantes tienen tres formas sencillas de conectarse:
+
+* **Código QR**: La forma más rápida. Simplemente escaneando con la cámara del móvil el código QR que se muestra en la pantalla del presentador.
+* **Enlace directo**: El presentador puede compartir un enlace único. Al hacer clic, el participante entra directamente a la sesión.
+* **Código manual**: El participante puede abrir la página principal de la aplicación e introducir el código corto (normalmente de 6 caracteres) que se muestra en la pantalla del presentador.
+
+Una vez dentro, simplemente interactúan enviando sus respuestas (votos, ideas, etc.).
 
 ---
 

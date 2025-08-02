@@ -50,6 +50,7 @@
         .tab-button.active.ideas { border-color: #a855f7; color: #7e22ce; }
         .tab-button.active.muro { border-color: #0891b2; color: #155e75; }
         .tab-button.active.escala { border-color: #3b82f6; color: #1e40af; }
+        .tab-button.active.qplay { border-color: #facc15; color: #b45309; }
         .tab-button.active.general { border-color: #6b7280; color: #1f2937; }
         .tab-button.active.privacidad { border-color: #6b7280; color: #1f2937; }
     </style>
@@ -112,6 +113,12 @@
                              </svg>
                             Escala de Valoración
                         </button>
+                        <button onclick="showTab('qplay')" class="tab-button qplay flex items-center gap-2 p-4 text-lg" data-translate-key="app-qplay-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                               <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                            </svg>
+                           QPlay
+                       </button>
                     </nav>
                 </div>
 
@@ -193,6 +200,10 @@
                         <h2 id="app-escala-title-content" class="text-blue-700">Escala de Valoración</h2>
                         <p id="app-escala-desc">Permite crear diferentes tipos de escalas de valoración (tipo Likert, numéricas, semáforo o totalmente personalizadas) para recoger la opinión de la audiencia sobre un tema. Los resultados se visualizan como gráficos de barras o en un formato de semáforo, facilitando una interpretación rápida del sentir general. Es ideal para realizar sondeos de opinión, medir el grado de acuerdo o evaluar la comprensión de un concepto.</p>
                     </section>
+                    <section id="qplay" class="tab-pane hidden">
+                        <h2 id="app-qplay-title-content" class="text-yellow-700">QPlay: Concurso Interactivo</h2>
+                        <p id="app-qplay-desc">Una herramienta para gamificar el aula. El profesor carga un cuestionario y los alumnos compiten en tiempo real desde sus dispositivos para liderar la clasificación.</p>
+                    </section>
                 </div>
             </div>
         </article>
@@ -246,7 +257,9 @@
                 'app-muro-title': 'Muro Interactivo',
                 'app-muro-desc': 'Funciona como un corcho digital o una pizarra colaborativa. Los participantes envían "post-its" virtuales con un título y un texto. El presentador puede ver todas las notas en un lienzo infinito, moverlas, agruparlas y organizarlas libremente. Es importante recordar que el contenido del muro <strong>no es persistente</strong> y se pierde al cerrar la sesión, pero se puede exportar una captura como <strong>PDF</strong> o los datos como <strong>CSV</strong>.',
                 'app-escala-title': 'Escala de Valoración',
-                'app-escala-desc': 'Permite crear diferentes tipos de escalas de valoración (tipo Likert, numéricas, semáforo o totalmente personalizadas) para recoger la opinión de la audiencia sobre un tema. Los resultados se visualizan como gráficos de barras o en un formato de semáforo, facilitando una interpretación rápida del sentir general. Es ideal para realizar sondeos de opinión, medir el grado de acuerdo o evaluar la comprensión de un concepto.'
+                'app-escala-desc': 'Permite crear diferentes tipos de escalas de valoración (tipo Likert, numéricas, semáforo o totalmente personalizadas) para recoger la opinión de la audiencia sobre un tema. Los resultados se visualizan como gráficos de barras o en un formato de semáforo, facilitando una interpretación rápida del sentir general. Es ideal para realizar sondeos de opinión, medir el grado de acuerdo o evaluar la comprensión de un concepto.',
+                'app-qplay-title': 'QPlay: Concurso Interactivo',
+                'app-qplay-desc': 'Una herramienta para gamificar el aula. El profesor carga un cuestionario y los alumnos compiten en tiempo real desde sus dispositivos para liderar la clasificación.'
             },
             'ca': {
                 'main-title': 'Guia d\'Ús: Connexió en Directe',
@@ -294,7 +307,9 @@
                 'app-muro-title': 'Mur Interactiu',
                 'app-muro-desc': 'Funciona com un suro digital o una pissarra col·laborativa. Els participants envien "post-its" virtuals amb un títol i un text. El presentador pot veure totes les notes en un llenç infinit, moure-les, agrupar-les i organitzar-les lliurement. És important recordar que el contingut del mur <strong>no és persistent</strong> i es perd en tancar la sessió, però es pot exportar una captura com a <strong>PDF</strong> o les dades com a <strong>CSV</strong>.',
                 'app-escala-title': 'Escala de Valoració',
-                'app-escala-desc': 'Permet crear diferents tipus d\'escales de valoració (tipus Likert, numèriques, semàfor o totalment personalitzades) per recollir l\'opinió de l\'audiència sobre un tema. Els resultats es visualitzen com a gràfics de barres o en un format de semàfor, facilitant una interpretació ràpida del sentiment general. És ideal per a realitzar sondejos d\'opinió, mesurar el grau d\'acord o avaluar la comprensió d\'un concepte.'
+                'app-escala-desc': 'Permet crear diferents tipus d\'escales de valoració (tipus Likert, numèriques, semàfor o totalment personalitzades) per recollir l\'opinió de l\'audiència sobre un tema. Els resultats es visualitzen com a gràfics de barres o en un format de semàfor, facilitant una interpretació ràpida del sentiment general. És ideal per a realitzar sondejos d\'opinió, mesurar el grau d\'acord o avaluar la comprensió d\'un concepte.',
+                'app-qplay-title': 'QPlay: Concurs Interactiu',
+                'app-qplay-desc': 'Una eina per gamificar l\'aula. El professor carrega un qüestionari i els alumnes competeixen en temps real des dels seus dispositius per liderar la classificació.'
             },
             'gl': {
                 'main-title': 'Guía de Uso: Conexión en Directo',
@@ -342,7 +357,9 @@
                 'app-muro-title': 'Muro Interactivo',
                 'app-muro-desc': 'Funciona como una cortiza dixital ou una lousa colaborativa. Os participantes envían "post-its" virtuais cun título e un texto. O presentador pode ver todas as notas nun lenzo infinito, movelas, agrupalas e organizalas libremente. É importante lembrar que o contido do muro <strong>non é persistente</strong> e pérdese ao pechar a sesión, pero pódese exportar una captura como <strong>PDF</strong> ou os datos como <strong>CSV</strong>.',
                 'app-escala-title': 'Escala de Valoración',
-                'app-escala-desc': 'Permite crear diferentes tipos de escalas de valoración (tipo Likert, numéricas, semáforo ou totalmente personalizadas) para recoller a opinión da audiencia sobre un tema. Os resultados visualízanse como gráficos de barras ou nun formato de semáforo, facilitando una interpretación rápida do sentir xeral. É ideal para realizar sondeos de opinión, medir o grao de acordo ou avaliar a comprensión dun concepto.'
+                'app-escala-desc': 'Permite crear diferentes tipos de escalas de valoración (tipo Likert, numéricas, semáforo ou totalmente personalizadas) para recoller a opinión da audiencia sobre un tema. Os resultados visualízanse como gráficos de barras ou nun formato de semáforo, facilitando una interpretación rápida do sentir xeral. É ideal para realizar sondeos de opinión, medir o grao de acordo ou avaliar a comprensión dun concepto.',
+                'app-qplay-title': 'QPlay: Concurso Interactivo',
+                'app-qplay-desc': 'Unha ferramenta para gamificar a aula. O profesor carga un cuestionario e os alumnos compiten en tempo real desde os seus dispositivos para liderar a clasificación.'
             },
             'eu': {
                 'main-title': 'Erabiltzeko Gida: Zuzeneko Konexioa',
@@ -390,7 +407,9 @@
                 'app-muro-title': 'Horma Interaktiboa',
                 'app-muro-desc': 'Kortxo digital edo arbel kolaboratibo gisa funtzionatzen du. Parte-hartzaileek "post-it" birtualak bidaltzen dituzte izenburu eta testu batekin. Aurkezleak ohar guztiak mihise infinitu batean ikus ditzake, mugitu, taldekatu eta askatasunez antolatu. Garrantzitsua da gogoratzea hormako edukia <strong>ez dela iraunkorra</strong> eta saioa ixtean galtzen dela, baina pantaila-argazkia <strong>PDF</strong> gisa edo datuak <strong>CSV</strong> gisa esporta daitezke.',
                 'app-escala-title': 'Balorazio Eskala',
-                'app-escala-desc': 'Balorazio-eskala mota desberdinak sortzea ahalbidetzen du (Likert motakoa, zenbakizkoa, semaforoa edo erabat pertsonalizatua) entzuleen iritzia gai bati buruz jasotzeko. Emaitzak barra-diagrama gisa edo semaforo formatuan bistaratzen dira, sentimendu orokorraren interpretazio azkarra erraztuz. Iritzi-zundaketak egiteko, adostasun-maila neurtzeko edo kontzeptu baten ulermena ebaluatzeko aproposa da.'
+                'app-escala-desc': 'Balorazio-eskala mota desberdinak sortzea ahalbidetzen du (Likert motakoa, zenbakizkoa, semaforoa edo erabat pertsonalizatua) entzuleen iritzia gai bati buruz jasotzeko. Emaitzak barra-diagrama gisa edo semaforo formatuan bistaratzen dira, sentimendu orokorraren interpretazio azkarra erraztuz. Iritzi-zundaketak egiteko, adostasun-maila neurtzeko edo kontzeptu baten ulermena ebaluatzeko aproposa da.',
+                'app-qplay-title': 'QPlay: Lehiaketa Interaktiboa',
+                'app-qplay-desc': 'Ikasgela gamifikatzeko tresna. Irakasleak galdetegi bat kargatzen du eta ikasleek denbora errealean lehiatzen dute beren gailuetatik sailkapenaren buru izateko.'
             },
             'en': {
                 'main-title': 'User Guide: Live Connection',
@@ -438,7 +457,9 @@
                 'app-muro-title': 'Interactive Wall',
                 'app-muro-desc': 'It works like a digital corkboard or a collaborative whiteboard. Participants send virtual "post-its" with a title and text. The presenter can see all the notes on an infinite canvas, move them, group them, and organize them freely. It is important to remember that the wall\'s content is <strong>not persistent</strong> and is lost when the session is closed, but a screenshot can be exported as a <strong>PDF</strong> or the data as a <strong>CSV</strong>.',
                 'app-escala-title': 'Rating Scale',
-                'app-escala-desc': 'Allows creating different types of rating scales (Likert-type, numeric, traffic light, or fully custom) to gather audience opinion on a topic. Results are visualized as bar charts or in a traffic light format, facilitating a quick interpretation of the general sentiment. It is ideal for conducting opinion polls, measuring the degree of agreement, or evaluating the understanding of a concept.'
+                'app-escala-desc': 'Allows creating different types of rating scales (Likert-type, numeric, traffic light, or fully custom) to gather audience opinion on a topic. Results are visualized as bar charts or in a traffic light format, facilitating a quick interpretation of the general sentiment. It is ideal for conducting opinion polls, measuring the degree of agreement, or evaluating the understanding of a concept.',
+                'app-qplay-title': 'QPlay: Interactive Contest',
+                'app-qplay-desc': 'A tool to gamify the classroom. The teacher loads a quiz and students compete in real time from their devices to lead the leaderboard.'
             }
         };
 
@@ -471,6 +492,7 @@
             document.getElementById('app-ideas-title-content').innerHTML = translations[lang]?.['app-ideas-title'] || translations.es['app-ideas-title'];
             document.getElementById('app-muro-title-content').innerHTML = translations[lang]?.['app-muro-title'] || translations.es['app-muro-title'];
             document.getElementById('app-escala-title-content').innerHTML = translations[lang]?.['app-escala-title'] || translations.es['app-escala-title'];
+            document.getElementById('app-qplay-title-content').innerHTML = translations[lang]?.['app-qplay-title'] || translations.es['app-qplay-title'];
             document.getElementById('home-link').setAttribute('title', translations[lang]?.['home-link-title'] || translations.es['home-link-title']);
         }
 

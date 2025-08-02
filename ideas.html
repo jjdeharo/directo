@@ -291,6 +291,30 @@
         let participantState = { submittedIdeas: 0, castVotes: 0, votes: {} }; // votes: { [ideaId]: count }
         let pendingVotes = {};   // { [ideaId]: 1 | -1 }
         
+        const peerConfig = {
+            host: '0.peerjs.com',
+            port: 443,
+            path: '/',
+            secure: true,
+            debug: 2,
+            config: {
+                iceServers: [
+                  { urls: 'stun:stun.relay.metered.ca:80' },
+                  { 
+                    urls: 'turn:standard.relay.metered.ca:80', 
+                    username: '9745e21b303bdaea589c29bc', 
+                    credential: 'UgG56tBqCEGNjzLY' 
+                  },
+                  { 
+                    urls: 'turn:standard.relay.metered.ca:443?transport=tcp', 
+                    username: '9745e21b303bdaea589c29bc', 
+                    credential: 'UgG56tBqCEGNjzLY' 
+                  }
+                ],
+                iceTransportPolicy: 'all'
+            }
+        };
+
         // --- Storage Functions & Utils ---
         function saveVotesToStorage() {
           const sessionId = hostConnection ? hostConnection.peer : null;
@@ -406,7 +430,7 @@
             applyTheme(sessionData.themeColor);
 
             const sessionId = Math.random().toString(36).substring(2, 8).toUpperCase();
-            peer = new Peer(sessionId);
+            peer = new Peer(sessionId, peerConfig);
 
             peer.on('open', id => {
                 document.getElementById('create-session-form').classList.add('hidden');
@@ -528,7 +552,7 @@
             const hostId = document.getElementById('code-input').value.trim().toUpperCase();
             if (!hostId) return;
             loadVotesFromStorage(hostId); // Load state before connecting
-            peer = new Peer();
+            peer = new Peer(null, peerConfig);
             peer.on('open', () => {
                 hostConnection = peer.connect(hostId, { reliable: true });
                 hostConnection.on('data', data => {

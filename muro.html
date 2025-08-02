@@ -243,6 +243,30 @@
         let peer = null, hostConnection = null, guestConnections = [];
         let sessionData = { question: '', cardsPerPerson: 1, themeColor: '#0891b2', cards: [], pan: {x: 0, y: 0}, receivingActive: true };
         
+        const peerConfig = {
+            host: '0.peerjs.com',
+            port: 443,
+            path: '/',
+            secure: true,
+            debug: 2,
+            config: {
+                iceServers: [
+                  { urls: 'stun:stun.relay.metered.ca:80' },
+                  { 
+                    urls: 'turn:standard.relay.metered.ca:80', 
+                    username: '9745e21b303bdaea589c29bc', 
+                    credential: 'UgG56tBqCEGNjzLY' 
+                  },
+                  { 
+                    urls: 'turn:standard.relay.metered.ca:443?transport=tcp', 
+                    username: '9745e21b303bdaea589c29bc', 
+                    credential: 'UgG56tBqCEGNjzLY' 
+                  }
+                ],
+                iceTransportPolicy: 'all'
+            }
+        };
+
         function getParticipantState(sessionId) {
             const state = localStorage.getItem(`muro_state_${sessionId}`);
             return state ? JSON.parse(state) : { submittedCards: 0 };
@@ -334,7 +358,7 @@
             applyTheme(sessionData.themeColor);
             document.getElementById('host-loader').classList.remove('hidden');
             document.getElementById('host-button').setAttribute('disabled', true);
-            peer = new Peer(Math.random().toString(36).substring(2, 8).toUpperCase());
+            peer = new Peer(Math.random().toString(36).substring(2, 8).toUpperCase(), peerConfig);
             peer.on('open', id => {
                 document.getElementById('lang-selector-container').classList.add('hidden');
                 document.getElementById('create-session-form').classList.add('hidden');
@@ -480,7 +504,7 @@
         function joinSession() {
             const hostId = document.getElementById('code-input').value.trim().toUpperCase();
             if (!hostId) return;
-            peer = new Peer();
+            peer = new Peer(null, peerConfig);
             peer.on('open', () => {
                 hostConnection = peer.connect(hostId, { reliable: true });
                 hostConnection.on('data', data => {

@@ -437,6 +437,30 @@
         let shouldShowConnectionMsg = false;
         let finishedPeers = new Set();
         
+        const peerConfig = {
+            host: '0.peerjs.com',
+            port: 443,
+            path: '/',
+            secure: true,
+            debug: 2,
+            config: {
+                iceServers: [
+                  { urls: 'stun:stun.relay.metered.ca:80' },
+                  { 
+                    urls: 'turn:standard.relay.metered.ca:80', 
+                    username: '9745e21b303bdaea589c29bc', 
+                    credential: 'UgG56tBqCEGNjzLY' 
+                  },
+                  { 
+                    urls: 'turn:standard.relay.metered.ca:443?transport=tcp', 
+                    username: '9745e21b303bdaea589c29bc', 
+                    credential: 'UgG56tBqCEGNjzLY' 
+                  }
+                ],
+                iceTransportPolicy: 'all'
+            }
+        };
+
         function normalizeWord(input, { preserveEnye = true } = {}) {
             let s = (input || '').trim().toLowerCase();
             if (!s) return '';
@@ -701,7 +725,7 @@
             currentLayout = document.getElementById('layout-selector').value;
             
             const sessionId = Math.random().toString(36).substring(2, 8).toUpperCase();
-            peer = new Peer(sessionId);
+            peer = new Peer(sessionId, peerConfig);
 
             peer.on('open', (id) => {
                 const baseUrl = window.location.href.split('?')[0];
@@ -822,7 +846,7 @@
             document.getElementById('join-loader').classList.remove('hidden');
             document.getElementById('join-error').classList.add('hidden');
 
-            peer = new Peer();
+            peer = new Peer(null, peerConfig);
             peer.on('open', () => {
                 hostConnection = peer.connect(hostId, { reliable: true });
                 hostConnection.on('open', () => {});

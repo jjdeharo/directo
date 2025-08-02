@@ -213,6 +213,30 @@
         let peer = null, hostConnection = null, guestConnections = [];
         let sessionData = {};
 
+        const peerConfig = {
+            host: '0.peerjs.com',
+            port: 443,
+            path: '/',
+            secure: true,
+            debug: 2,
+            config: {
+                iceServers: [
+                  { urls: 'stun:stun.relay.metered.ca:80' },
+                  { 
+                    urls: 'turn:standard.relay.metered.ca:80', 
+                    username: '9745e21b303bdaea589c29bc', 
+                    credential: 'UgG56tBqCEGNjzLY' 
+                  },
+                  { 
+                    urls: 'turn:standard.relay.metered.ca:443?transport=tcp', 
+                    username: '9745e21b303bdaea589c29bc', 
+                    credential: 'UgG56tBqCEGNjzLY' 
+                  }
+                ],
+                iceTransportPolicy: 'all'
+            }
+        };
+
         function setLanguage(lang) {
             if (!translations[lang]) lang = 'es';
             currentLang = lang;
@@ -353,7 +377,7 @@
             };
             
             applyTheme(sessionData.themeColor);
-            peer = new Peer(Math.random().toString(36).substring(2, 8).toUpperCase());
+            peer = new Peer(Math.random().toString(36).substring(2, 8).toUpperCase(), peerConfig);
 
             peer.on('open', id => {
                 switchView('presenter');
@@ -451,7 +475,7 @@
             document.getElementById('join-loader').classList.remove('hidden');
             document.getElementById('join-button-text').classList.add('hidden');
             
-            peer = new Peer();
+            peer = new Peer(null, peerConfig);
             peer.on('open', () => {
                 hostConnection = peer.connect(hostId, { reliable: true });
                 hostConnection.on('data', data => {

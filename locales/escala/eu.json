@@ -1,0 +1,69 @@
+{
+  "create_title": "Eskala berri bat sortu",
+  "question_label": "Adierazpena edo galdera:",
+  "question_placeholder": "Adib: Baloratu gaurko saioa",
+  "theme_color_label": "Kolorea:",
+  "scale_type_label": "Eskala mota:",
+  "scale_satisfaction": "Gogobetetasuna (5 maila)",
+  "scale_agreement": "Adostasuna (5 maila)",
+  "scale_frequency": "Maiztasuna (5 maila)",
+  "scale_trafficlight": "Ulermena / Semaforoa (3 maila)",
+  "scale_numeric": "Zenbakizkoa (1-10)",
+  "scale_custom": "Pertsonalizatua",
+  "custom_scale_label": "Etiketa pertsonalizatuak:",
+  "add_label_btn": "+ Gehitu etiketa",
+  "prepare_session_btn": "Saioa prestatu",
+  "start_session_btn": "Saioa Hasi",
+  "switch_to_participant": "Saio batean sartu nahi duzu?",
+  "projection_btn_text": "Proiektatu",
+  "stop_voting_btn": "Gelditu",
+  "resume_voting_btn": "Berrekin",
+  "scan_qr_label": "1. Eskaneatu QR-a",
+  "direct_link_label": "2. Edo partekatu esteka",
+  "or_go_to": "Edo joan hona",
+  "and_enter_code": "eta sartu kodea:",
+  "total_votes_label": "Botoak guztira",
+  "join_title": "Balorazio batean sartu",
+  "session_code_label": "Saioaren kodea:",
+  "code_input_placeholder": "Sartu kodea",
+  "join_btn": "Sartu",
+  "switch_to_presenter": "Aurkezlea zara?",
+  "voted_title": "Eskerrik asko zure balorazioagatik!",
+  "voted_subtitle": "Emaitzak pantaila nagusian.",
+  "vote_sending": "Bidaltzen...",
+  "voting_paused_title": "Balorazioa pausatuta",
+  "voting_paused_subtitle": "Aurkezleak erantzunak aldi baterako gelditu ditu.",
+  "alert_no_question": "Sartu galdera bat.",
+  "join_error_text": "Errorea. Egiaztatu kodea.",
+  "shareable_link_title": "Prestatzeko esteka:",
+  "link_copied_toast": "Esteka kopiatu da",
+  "code_copied_toast": "Kodea kopiatu da",
+  "scales": {
+    "satisfaction": [
+      "😠",
+      "🙁",
+      "😐",
+      "🙂",
+      "😄"
+    ],
+    "agreement": [
+      "Guztiz ados ez",
+      "Ados ez",
+      "Neutrala",
+      "Ados",
+      "Guztiz ados"
+    ],
+    "frequency": [
+      "Inoiz ez",
+      "Gutxitan",
+      "Batzuetan",
+      "Maiz",
+      "Beti"
+    ],
+    "trafficlight": [
+      "Ez dut ulertzen",
+      "Zalantzak ditut",
+      "Ulertzen dut"
+    ]
+  }
+}

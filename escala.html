@@ -67,6 +67,7 @@
                             <option value="gl">Galego</option>
                             <option value="eu">Euskara</option>
                             <option value="en">English</option>
+                            <option value="de">Deutsch</option>
                         </select>
                     </div>
                 </div>
@@ -168,6 +169,7 @@
                             <option value="gl">Galego</option>
                             <option value="eu">Euskara</option>
                             <option value="en">English</option>
+                            <option value="de">Deutsch</option>
                         </select>
                     </div>
                 </div>
@@ -204,11 +206,43 @@
     <div id="toast" class="fixed bottom-5 right-5 bg-gray-900 text-white px-4 py-2 rounded-lg shadow-lg opacity-0 transition-opacity duration-300"></div>
     
     <script>
-        const translations = {
-            'es': { 'create_title': 'Crear una nueva escala', 'question_label': 'Afirmación o pregunta:', 'question_placeholder': 'Ej: Valora la sesión de hoy', 'theme_color_label': 'Color:', 'scale_type_label': 'Tipo de escala:', 'scale_satisfaction': 'Satisfacción (5 niveles)', 'scale_agreement': 'Acuerdo (5 niveles)', 'scale_frequency': 'Frecuencia (5 niveles)', 'scale_trafficlight': 'Comprensión / Semáforo (3 niveles)', 'scale_numeric': 'Numérica (1-10)', 'scale_custom': 'Personalizada', 'custom_scale_label': 'Etiquetas personalizadas:', 'add_label_btn': '+ Añadir etiqueta', 'prepare_session_btn': 'Preparar', 'start_session_btn': 'Iniciar', 'switch_to_participant': '¿Unirte a una sesión?', 'projection_btn_text': 'Proyectar', 'stop_voting_btn': 'Detener', 'resume_voting_btn': 'Reanudar', 'scan_qr_label': '1. Escanea QR', 'direct_link_label': '2. Comparte enlace', 'or_go_to': 'O ve a', 'and_enter_code': 'e introduce el código:', 'total_votes_label': 'Votos totales', 'join_title': 'Unirse a una valoración', 'session_code_label': 'Código de sesión:', 'code_input_placeholder': 'Introduce el código', 'join_btn': 'Unirse', 'switch_to_presenter': '¿Eres presentador?', 'voted_title': '¡Gracias por tu valoración!', 'voted_subtitle': 'Resultados en la pantalla principal.', 'vote_sending': 'Enviando...', 'voting_paused_title': 'Votación en pausa', 'voting_paused_subtitle': 'El presentador ha detenido las respuestas.', 'alert_no_question': 'Introduce una pregunta.', 'join_error_text': 'Error. Verifica el código.', 'shareable_link_title': 'Enlace de preparación:', 'link_copied_toast': 'Enlace copiado', 'code_copied_toast': 'Código copiado', 'scales': { 'satisfaction': ['😠', '🙁', '😐', '🙂', '😄'], 'agreement': ['Totalmente en desacuerdo', 'En desacord', 'Neutral', 'D\'acord', 'Totalment d\'acord'], 'frequency': ['Nunca', 'Rara vez', 'A veces', 'Frecuentemente', 'Siempre'], 'trafficlight': ['No lo entiendo', 'Tengo dudas', 'Lo entiendo'] } },
-            'ca': { 'create_title': 'Crear una nova escala', 'question_label': 'Afirmació o pregunta:', 'question_placeholder': 'Ex: Valora la sessió d\'avui', 'theme_color_label': 'Color:', 'scale_type_label': 'Tipus d\'escala:', 'scale_satisfaction': 'Satisfacció (5 nivells)', 'scale_agreement': 'Acord (5 nivells)', 'scale_frequency': 'Freqüència (5 nivells)', 'scale_trafficlight': 'Comprensió / Semàfor (3 nivells)', 'scale_numeric': 'Numèrica (1-10)', 'scale_custom': 'Personalitzada', 'custom_scale_label': 'Etiquetes personalitzades:', 'add_label_btn': '+ Afegir etiqueta', 'prepare_session_btn': 'Preparar', 'start_session_btn': 'Iniciar', 'switch_to_participant': 'Unir-se a una sessió?', 'projection_btn_text': 'Projectar', 'stop_voting_btn': 'Aturar', 'resume_voting_btn': 'Reprendre', 'scan_qr_label': '1. Escaneja QR', 'direct_link_label': '2. Comparteix enllaç', 'or_go_to': 'O ves a', 'and_enter_code': 'i introdueix el codi:', 'total_votes_label': 'Vots totals', 'join_title': 'Unir-se a una valoració', 'session_code_label': 'Codi de sessió:', 'code_input_placeholder': 'Introdueix el codi', 'join_btn': 'Unir-se', 'switch_to_presenter': 'Ets presentador?', 'voted_title': 'Gràcies per la teva valoració!', 'voted_subtitle': 'Resultats a la pantalla principal.', 'vote_sending': 'Enviant...', 'voting_paused_title': 'Votació en pausa', 'voting_paused_subtitle': 'El presentador ha aturat les respostes.', 'alert_no_question': 'Introdueix una pregunta.', 'join_error_text': 'Error. Verifica el codi.', 'shareable_link_title': 'Enllaç de preparació:', 'link_copied_toast': 'Enllaç copiat', 'code_copied_toast': 'Codi copiat', 'scales': { 'satisfaction': ['😠', '🙁', '😐', '🙂', '😄'], 'agreement': ['Totalment en desacord', 'En desacord', 'Neutral', 'D\'acord', 'Totalment d\'acord'], 'frequency': ['Mai', 'Poques vegades', 'De vegades', 'Freqüentment', 'Sempre'], 'trafficlight': ['No ho entenc', 'Tinc dubtes', 'Ho entenc'] } },
-            'en': { 'create_title': 'Create a new scale', 'question_label': 'Statement or question:', 'question_placeholder': 'E.g., Rate today\'s session', 'theme_color_label': 'Color:', 'scale_type_label': 'Scale type:', 'scale_satisfaction': 'Satisfaction (5 levels)', 'scale_agreement': 'Agreement (5 levels)', 'scale_frequency': 'Frequency (5 levels)', 'scale_trafficlight': 'Understanding / Traffic Light (3 levels)', 'scale_numeric': 'Numeric (1-10)', 'scale_custom': 'Custom', 'custom_scale_label': 'Custom labels:', 'add_label_btn': '+ Add label', 'prepare_session_btn': 'Prepare', 'start_session_btn': 'Start', 'switch_to_participant': 'Joining a session?', 'projection_btn_text': 'Project', 'stop_voting_btn': 'Stop', 'resume_voting_btn': 'Resume', 'scan_qr_label': '1. Scan QR', 'direct_link_label': '2. Share link', 'or_go_to': 'Or go to', 'and_enter_code': 'and enter the code:', 'total_votes_label': 'Total votes', 'join_title': 'Join a rating session', 'session_code_label': 'Session code:', 'code_input_placeholder': 'Enter code', 'join_btn': 'Join', 'switch_to_presenter': 'Are you the presenter?', 'voted_title': 'Thanks for your rating!', 'voted_subtitle': 'Results are on the main screen.', 'vote_sending': 'Sending...', 'voting_paused_title': 'Voting paused', 'voting_paused_subtitle': 'The presenter has paused responses.', 'alert_no_question': 'Please enter a question.', 'join_error_text': 'Error. Check the code.', 'shareable_link_title': 'Preparation link:', 'link_copied_toast': 'Link copied', 'code_copied_toast': 'Code copied', 'scales': { 'satisfaction': ['😠', '🙁', '😐', '🙂', '😄'], 'agreement': ['Strongly Disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly Agree'], 'frequency': ['Never', 'Rarely', 'Sometimes', 'Often', 'Always'], 'trafficlight': ['I don\'t get it', 'I have doubts', 'I get it'] } }
-        };
+                                                                const APP_ID = 'escala';
+                                let translations = {};
+                                
+                                async function loadTranslations() {
+                                    const response = await fetch('locales/index.json', { cache: 'no-store' });
+                                    if (!response.ok) {
+                                        throw new Error('No se pudo cargar locales/index.json');
+                                    }
+                                    const languages = await response.json();
+                                    const selectorIds = ['lang-selector', 'lang-selector-participant'];
+                                    selectorIds.forEach((id) => {
+                                        const select = document.getElementById(id);
+                                        if (!select) return;
+                                        select.innerHTML = '';
+                                        languages.forEach((lang) => {
+                                            const option = document.createElement('option');
+                                            option.value = lang.code;
+                                            option.textContent = lang.name;
+                                            select.appendChild(option);
+                                        });
+                                    });
+                                
+                                    const entries = await Promise.all(languages.map(async (lang) => {
+                                        const langResp = await fetch(`locales/${APP_ID}/${lang.code}.json`, { cache: 'no-store' });
+                                        if (!langResp.ok) return [lang.code, null];
+                                        const json = await langResp.json();
+                                        return [lang.code, json];
+                                    }));
+                                    translations = Object.fromEntries(entries);
+                                    if (!translations.es) {
+                                        throw new Error(`Falta locales/${APP_ID}/es.json`);
+                                    }
+                                    Object.keys(translations).forEach((code) => {
+                                        if (!translations[code]) translations[code] = translations.es;
+                                    });
+                                    return translations;
+                                }
         let currentLang = 'es';
         let peer = null, hostConnection = null, guestConnections = [];
         let sessionData = {};
@@ -594,7 +628,12 @@
             }
         }
 
-        window.onload = () => {
+        window.onload = async () => {
+            try {
+                await loadTranslations();
+            } catch (error) {
+                console.error(error);
+            }
             const savedLang = localStorage.getItem('preferred_language') || (navigator.language || navigator.userLanguage).split('-')[0];
             setLanguage(savedLang);
             switchView('participant');

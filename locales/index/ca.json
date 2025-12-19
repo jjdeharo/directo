@@ -1,0 +1,19 @@
+{
+  "main-title": "Connexió en Directe",
+  "main-subtitle": "Eines per fomentar la participació simultània a l'aula.",
+  "instructions-title": "Com crear una activitat?",
+  "instructions-body": "Per iniciar una activitat com a presentador, obre l'aplicació que vulguis fer servir i prem a l'enllaç que trobaràs a la part inferior de la pantalla.",
+  "manual-link-title": "Manual d'Usuari",
+  "app-vota-title": "Votació simple",
+  "app-vota-desc": "Crea votacions d'opció múltiple. Els participants s'uneixen amb un codi i voten des dels seus dispositius, veient els resultats en gràfics de barres que s'actualitzen al moment.",
+  "app-nube-title": "Núvol de paraules",
+  "app-nube-desc": "Recull idees i visualitza-les com un núvol dinàmic. Pots descarregar el núvol com a imatge PNG o les dades en un full de càlcul (CSV).",
+  "app-ideas-title": "Pluja d'idees i vots",
+  "app-ideas-desc": "Una eina en dues fases: primer, els participants proposen idees de forma anònima. Després, tothom vota les propostes per prioritzar les més populars.",
+  "app-muro-title": "Mur interactiu",
+  "app-muro-desc": "Permet als participants enviar \"post-its\" virtuals. El contingut no és persistent, però pots exportar el mur a PDF o les dades a un full de càlcul (CSV).",
+  "app-escala-title": "Escala de valoració",
+  "app-escala-desc": "Crea escales de tipus Likert, numèriques o de semàfor per recollir opinions de forma ràpida i visual. Ideal per a valoracions o mesurar la comprensió.",
+  "app-qplay-title": "QPlay: Concurs interactiu",
+  "app-qplay-desc": "Una eina per gamificar l'aula. El professor carrega un qüestionari i els alumnes competeixen en temps real des dels seus dispositius per liderar la classificació."
+}

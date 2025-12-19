@@ -151,6 +151,7 @@
                 <option value="gl">Galego</option>
                 <option value="eu">Euskara</option>
                 <option value="en">English</option>
+                <option value="de">Deutsch</option>
             </select>
         </div>
 
@@ -266,13 +267,43 @@
 
     <script>
         // --- i18n & Config ---
-        const translations = {
-            'es': { 'create_title': 'Crear una nueva lista de ideas', 'question_label': 'Título o pregunta:', 'question_placeholder': 'Ej: Ideas para mejorar el patio', 'theme_color_label': 'Color del tema:', 'ideas_per_person_label': 'Ideas por persona:', 'votes_per_person_label': 'Votos por persona:', 'start_session_btn': 'Iniciar Sesión', 'switch_to_participant': '¿Buscas unirte a una sesión? Haz clic aquí.', 'start_voting_btn': 'Iniciar Votación', 'projection_btn_text': 'Proyectar', 'scan_qr_label': '1. Escanea el QR', 'direct_link_label': '2. O comparte el enlace', 'or_go_to': 'O ve a', 'and_enter_code': 'e introduce el código:', 'join_title': 'Unirse a una sesión', 'session_code_label': 'Código de la sesión:', 'code_input_placeholder': 'Introduce el código', 'join_btn': 'Unirse', 'switch_to_presenter': '¿Eres el presentador? Inicia sesión aquí.', 'idea_input_placeholder': 'Escribe tu idea (máx. 200 caracteres)', 'send_btn': 'Enviar Idea', 'voting_form_title': 'Vota por tus ideas favoritas', 'completed_title': '¡Gracias por participar!', 'completed_subtitle': 'Puedes ver los resultados en la pantalla principal.', 'copied_toast': 'Código copiado', 'link_copied_toast': 'Enlace copiado', 'url_copied_toast': 'URL copiada', 'ideas_left_text': 'Te quedan {count} idea(s) por enviar.', 'votes_left_text': 'Puedes votar por {count} idea(s).', 'idea_sent_confirmation': '¡Idea enviada!', 'waiting_for_voting': 'Has enviado todas tus ideas. Esperando que el presentador inicie la votación...', 'stop_submission_btn': 'Detener', 'resume_submission_btn': 'Reanudar', 'submission_paused_title': 'Recepción en pausa', 'submission_paused_subtitle': 'El presentador ha detenido el envío de ideas.' },
-            'ca': { 'create_title': 'Crear una nova llista d\'idees', 'question_label': 'Títol o pregunta:', 'question_placeholder': 'Ex: Idees per millorar el pati', 'theme_color_label': 'Color del tema:', 'ideas_per_person_label': 'Idees per persona:', 'votes_per_person_label': 'Vots per persona:', 'start_session_btn': 'Iniciar Sessió', 'switch_to_participant': 'Busques unir-te a una sessió? Fes clic aquí.', 'start_voting_btn': 'Iniciar Votació', 'projection_btn_text': 'Projectar', 'scan_qr_label': '1. Escaneja el QR', 'direct_link_label': '2. O comparteix l\'enllaç', 'or_go_to': 'O ves a', 'and_enter_code': 'i introdueix el codi:', 'join_title': 'Unir-se a una sessió', 'session_code_label': 'Codi de la sessió:', 'code_input_placeholder': 'Introdueix el codi', 'join_btn': 'Unir-se', 'switch_to_presenter': 'Ets el presentador? Inicia sessió aquí.', 'idea_input_placeholder': 'Escriu la teva idea (màx. 200 caràcters)', 'send_btn': 'Enviar Idea', 'voting_form_title': 'Vota per les teves idees preferides', 'completed_title': 'Gràcies per participar!', 'completed_subtitle': 'Pots veure els resultats a la pantalla principal.', 'copied_toast': 'Codi copiat', 'link_copied_toast': 'Enllaç copiat', 'url_copied_toast': 'URL copiada', 'ideas_left_text': 'Et queden {count} idea(es) per enviar.', 'votes_left_text': 'Pots votar per {count} idea(es).', 'idea_sent_confirmation': 'Idea enviada!', 'waiting_for_voting': 'Has enviat totes les teves idees. Esperant que el presentador iniciï la votació...', 'stop_submission_btn': 'Aturar', 'resume_submission_btn': 'Reprendre', 'submission_paused_title': 'Recepció en pausa', 'submission_paused_subtitle': 'El presentador ha aturat l\'enviament d\'idees.' },
-            'gl': { 'create_title': 'Crear unha nova lista de ideas', 'question_label': 'Título ou pregunta:', 'question_placeholder': 'Ex: Ideas para mellorar o patio', 'theme_color_label': 'Cor do tema:', 'ideas_per_person_label': 'Ideas por persoa:', 'votes_per_person_label': 'Votos por persoa:', 'start_session_btn': 'Iniciar Sesión', 'switch_to_participant': 'Buscas unirte a unha sesión? Fai clic aquí.', 'start_voting_btn': 'Iniciar Votación', 'projection_btn_text': 'Proxectar', 'scan_qr_label': '1. Escanea o QR', 'direct_link_label': '2. Ou comparte a ligazón', 'or_go_to': 'Ou vai a', 'and_enter_code': 'e introduce o código:', 'join_title': 'Unirse a unha sesión', 'session_code_label': 'Código da sesión:', 'code_input_placeholder': 'Introduce o código', 'join_btn': 'Unirse', 'switch_to_presenter': 'Es o presentador? Inicia sesión aquí.', 'idea_input_placeholder': 'Escribe a túa idea (máx. 200 caracteres)', 'send_btn': 'Enviar Idea', 'voting_form_title': 'Vota polas túas ideas favoritas', 'completed_title': 'Grazas por participar!', 'completed_subtitle': 'Podes ver os resultados na pantalla principal.', 'copied_toast': 'Código copiado', 'link_copied_toast': 'Ligazón copiada', 'url_copied_toast': 'URL copiada', 'ideas_left_text': 'Quédanche {count} idea(s) por enviar.', 'votes_left_text': 'Podes votar por {count} idea(s).', 'idea_sent_confirmation': 'Idea enviada!', 'waiting_for_voting': 'Enviaches todas as túas ideas. Agardando a que o presentador inicie a votación...', 'stop_submission_btn': 'Deter', 'resume_submission_btn': 'Reanudar', 'submission_paused_title': 'Recepción en pausa', 'submission_paused_subtitle': 'O presentador detivo o envío de ideas.' },
-            'eu': { 'create_title': 'Ideia zerrenda berria sortu', 'question_label': 'Izenburua edo galdera:', 'question_placeholder': 'Adib: Jolastokia hobetzeko ideiak', 'theme_color_label': 'Gaiaren kolorea:', 'ideas_per_person_label': 'Ideiak pertsonako:', 'votes_per_person_label': 'Botoak pertsonako:', 'start_session_btn': 'Saioa Hasi', 'switch_to_participant': 'Saio batean sartu nahi duzu? Egin klik hemen.', 'start_voting_btn': 'Bozketa Hasi', 'projection_btn_text': 'Proiektatu', 'scan_qr_label': '1. Eskaneatu QR-a', 'direct_link_label': '2. Edo partekatu esteka', 'or_go_to': 'Edo joan hona', 'and_enter_code': 'eta sartu kodea:', 'join_title': 'Saio batean sartu', 'session_code_label': 'Saioaren kodea:', 'code_input_placeholder': 'Sartu kodea', 'join_btn': 'Sartu', 'switch_to_presenter': 'Aurkezlea zara? Hasi saioa hemen.', 'idea_input_placeholder': 'Idatzi zure ideia (gehienez 200 karaktere)', 'send_btn': 'Ideia Bidali', 'voting_form_title': 'Bozkatu zure ideia gogokoenak', 'completed_title': 'Eskerrik asko parte hartzeagatik!', 'completed_subtitle': 'Emaitzak pantaila nagusian ikus ditzakezu.', 'copied_toast': 'Kodea kopiatu da', 'link_copied_toast': 'Esteka kopiatu da', 'url_copied_toast': 'URLa kopiatu da', 'ideas_left_text': '{count} ideia geratzen zaizkizu bidaltzeko.', 'votes_left_text': '{count} ideia bozka ditzakezu.', 'idea_sent_confirmation': 'Ideia bidali da!', 'waiting_for_voting': 'Zure ideia guztiak bidali dituzu. Aurkezleak bozketa hasteko zain...', 'stop_submission_btn': 'Gelditu', 'resume_submission_btn': 'Berrekin', 'submission_paused_title': 'Harrera pausatuta', 'submission_paused_subtitle': 'Aurkezleak ideien bidalketa gelditu du.' },
-            'en': { 'create_title': 'Create a new idea list', 'question_label': 'Title or question:', 'question_placeholder': 'E.g., Ideas to improve the schoolyard', 'theme_color_label': 'Theme color:', 'ideas_per_person_label': 'Ideas per person:', 'votes_per_person_label': 'Votes per person:', 'start_session_btn': 'Start Session', 'switch_to_participant': 'Looking to join a session? Click here.', 'start_voting_btn': 'Start Voting', 'projection_btn_text': 'Project', 'scan_qr_label': '1. Scan the QR', 'direct_link_label': '2. Or share the link', 'or_go_to': 'Or go to', 'and_enter_code': 'and enter the code:', 'join_title': 'Join a session', 'session_code_label': 'Session code:', 'code_input_placeholder': 'Enter the code', 'join_btn': 'Join', 'switch_to_presenter': 'Are you the presenter? Log in here.', 'idea_input_placeholder': 'Write your idea (max 200 chars)', 'send_btn': 'Send Idea', 'voting_form_title': 'Vote for your favorite ideas', 'completed_title': 'Thanks for participating!', 'completed_subtitle': 'You can see the results on the main screen.', 'copied_toast': 'Code copied', 'link_copied_toast': 'Link copied', 'url_copied_toast': 'URL copied', 'ideas_left_text': 'You have {count} idea(s) left to send.', 'votes_left_text': 'You can vote for {count} idea(s).', 'idea_sent_confirmation': 'Idea sent!', 'waiting_for_voting': 'You have sent all your ideas. Waiting for the presenter to start the voting...', 'stop_submission_btn': 'Stop', 'resume_submission_btn': 'Resume', 'submission_paused_title': 'Submission paused', 'submission_paused_subtitle': 'The presenter has paused idea submissions.' }
-        };
+                                                                const APP_ID = 'ideas';
+                                let translations = {};
+                                
+                                async function loadTranslations() {
+                                    const response = await fetch('locales/index.json', { cache: 'no-store' });
+                                    if (!response.ok) {
+                                        throw new Error('No se pudo cargar locales/index.json');
+                                    }
+                                    const languages = await response.json();
+                                    const selectorIds = ['lang-selector', 'lang-selector-participant'];
+                                    selectorIds.forEach((id) => {
+                                        const select = document.getElementById(id);
+                                        if (!select) return;
+                                        select.innerHTML = '';
+                                        languages.forEach((lang) => {
+                                            const option = document.createElement('option');
+                                            option.value = lang.code;
+                                            option.textContent = lang.name;
+                                            select.appendChild(option);
+                                        });
+                                    });
+                                
+                                    const entries = await Promise.all(languages.map(async (lang) => {
+                                        const langResp = await fetch(`locales/${APP_ID}/${lang.code}.json`, { cache: 'no-store' });
+                                        if (!langResp.ok) return [lang.code, null];
+                                        const json = await langResp.json();
+                                        return [lang.code, json];
+                                    }));
+                                    translations = Object.fromEntries(entries);
+                                    if (!translations.es) {
+                                        throw new Error(`Falta locales/${APP_ID}/es.json`);
+                                    }
+                                    Object.keys(translations).forEach((code) => {
+                                        if (!translations[code]) translations[code] = translations.es;
+                                    });
+                                    return translations;
+                                }
         let currentLang = 'es';
 
         // --- Global Variables ---
@@ -707,7 +738,15 @@
             }
         }
 
-        window.onload = () => {
+        window.onload = async () => {
+            try {
+                await loadTranslations();
+            } catch (error) {
+                console.error(error);
+            }
+            const savedLang = localStorage.getItem('preferred_language');
+            const browserLang = (navigator.language || navigator.userLanguage).split('-')[0];
+            currentLang = savedLang || (translations[browserLang] ? browserLang : 'es');
             const params = new URLSearchParams(window.location.search);
             const sessionId = params.get('session');
             if (sessionId) {

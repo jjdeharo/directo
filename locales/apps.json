@@ -1,0 +1,30 @@
+[
+  {
+    "id": "index",
+    "name": "Página principal"
+  },
+  {
+    "id": "vota",
+    "name": "Votación simple"
+  },
+  {
+    "id": "nube",
+    "name": "Nube de palabras"
+  },
+  {
+    "id": "ideas",
+    "name": "Lluvia de ideas y votos"
+  },
+  {
+    "id": "muro",
+    "name": "Muro interactivo"
+  },
+  {
+    "id": "escala",
+    "name": "Escala de valoración"
+  },
+  {
+    "id": "manual",
+    "name": "Manual de usuario"
+  }
+]

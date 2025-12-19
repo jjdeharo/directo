@@ -1,0 +1,69 @@
+{
+  "create_title": "Crear una nueva escala",
+  "question_label": "Afirmación o pregunta:",
+  "question_placeholder": "Ej: Valora la sesión de hoy",
+  "theme_color_label": "Color:",
+  "scale_type_label": "Tipo de escala:",
+  "scale_satisfaction": "Satisfacción (5 niveles)",
+  "scale_agreement": "Acuerdo (5 niveles)",
+  "scale_frequency": "Frecuencia (5 niveles)",
+  "scale_trafficlight": "Comprensión / Semáforo (3 niveles)",
+  "scale_numeric": "Numérica (1-10)",
+  "scale_custom": "Personalizada",
+  "custom_scale_label": "Etiquetas personalizadas:",
+  "add_label_btn": "+ Añadir etiqueta",
+  "prepare_session_btn": "Preparar",
+  "start_session_btn": "Iniciar",
+  "switch_to_participant": "¿Unirte a una sesión?",
+  "projection_btn_text": "Proyectar",
+  "stop_voting_btn": "Detener",
+  "resume_voting_btn": "Reanudar",
+  "scan_qr_label": "1. Escanea QR",
+  "direct_link_label": "2. Comparte enlace",
+  "or_go_to": "O ve a",
+  "and_enter_code": "e introduce el código:",
+  "total_votes_label": "Votos totales",
+  "join_title": "Unirse a una valoración",
+  "session_code_label": "Código de sesión:",
+  "code_input_placeholder": "Introduce el código",
+  "join_btn": "Unirse",
+  "switch_to_presenter": "¿Eres presentador?",
+  "voted_title": "¡Gracias por tu valoración!",
+  "voted_subtitle": "Resultados en la pantalla principal.",
+  "vote_sending": "Enviando...",
+  "voting_paused_title": "Votación en pausa",
+  "voting_paused_subtitle": "El presentador ha detenido las respuestas.",
+  "alert_no_question": "Introduce una pregunta.",
+  "join_error_text": "Error. Verifica el código.",
+  "shareable_link_title": "Enlace de preparación:",
+  "link_copied_toast": "Enlace copiado",
+  "code_copied_toast": "Código copiado",
+  "scales": {
+    "satisfaction": [
+      "😠",
+      "🙁",
+      "😐",
+      "🙂",
+      "😄"
+    ],
+    "agreement": [
+      "Totalmente en desacuerdo",
+      "En desacord",
+      "Neutral",
+      "D'acord",
+      "Totalment d'acord"
+    ],
+    "frequency": [
+      "Nunca",
+      "Rara vez",
+      "A veces",
+      "Frecuentemente",
+      "Siempre"
+    ],
+    "trafficlight": [
+      "No lo entiendo",
+      "Tengo dudas",
+      "Lo entiendo"
+    ]
+  }
+}

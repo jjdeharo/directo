@@ -1,0 +1,19 @@
+{
+  "main-title": "Direktverbindung",
+  "main-subtitle": "Werkzeuge, um die gleichzeitige Beteiligung im Unterricht zu fördern.",
+  "instructions-title": "Wie erstellt man eine Aktivität?",
+  "instructions-body": "Um eine Aktivität als Präsentator zu starten, öffne die Anwendung, die du verwenden möchtest, und klicke auf den Link, den du unten auf dem Bildschirm findest.",
+  "manual-link-title": "Benutzerhandbuch",
+  "app-vota-title": "Einfache Abstimmung",
+  "app-vota-desc": "Erstelle Multiple-Choice-Abstimmungen. Die Teilnehmenden treten mit einem Code bei und stimmen von ihren Geräten ab; die Ergebnisse erscheinen in Balkendiagrammen, die sich sofort aktualisieren.",
+  "app-nube-title": "Wortwolke",
+  "app-nube-desc": "Sammle Ideen und visualisiere sie als dynamische Wortwolke. Du kannst die Wolke als PNG-Bild oder die Daten als Tabelle (CSV) herunterladen.",
+  "app-ideas-title": "Ideensammlung und Abstimmung",
+  "app-ideas-desc": "Ein Werkzeug in zwei Phasen: Zuerst senden die Teilnehmenden ihre Ideen anonym. Danach stimmen alle über die Vorschläge ab, um die beliebtesten zu priorisieren.",
+  "app-muro-title": "Interaktive Pinnwand",
+  "app-muro-desc": "Ermöglicht den Teilnehmenden, virtuelle \"Post-its\" zu senden. Der Inhalt ist nicht dauerhaft, aber du kannst die Wand als PDF oder die Daten als Tabelle (CSV) exportieren.",
+  "app-escala-title": "Bewertungsskala",
+  "app-escala-desc": "Erstelle Likert-, numerische oder Ampel-Skalen, um Meinungen schnell und visuell zu erfassen. Ideal für Bewertungen oder um das Verständnis zu messen.",
+  "app-qplay-title": "QPlay: Interaktiver Wettbewerb",
+  "app-qplay-desc": "Ein Werkzeug, um den Unterricht zu gamifizieren. Die Lehrkraft lädt ein Quiz, und die Schülerinnen und Schüler konkurrieren in Echtzeit von ihren Geräten aus, um die Rangliste anzuführen."
+}

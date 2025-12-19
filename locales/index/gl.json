@@ -1,0 +1,19 @@
+{
+  "main-title": "Conexión en Directo",
+  "main-subtitle": "Ferramentas para fomentar a participación simultánea na aula.",
+  "instructions-title": "Como crear unha actividade?",
+  "instructions-body": "Para iniciar unha actividade como presentador, abre a aplicación que queiras usar e preme no enlace que atoparás na parte inferior da pantalla.",
+  "manual-link-title": "Manual de Usuario",
+  "app-vota-title": "Votación sinxela",
+  "app-vota-desc": "Crea votacións de opción múltiple. Os participantes únense cun código e votan desde os seus dispositivos, vendo os resultados en gráficos de barras que se actualizan ao momento.",
+  "app-nube-title": "Nube de palabras",
+  "app-nube-desc": "Recolle ideas e visualízaas como unha nube dinámica. Podes descargar a nube como imaxe PNG ou os datos nunha folla de cálculo (CSV).",
+  "app-ideas-title": "Chuvia de ideas e votos",
+  "app-ideas-desc": "Unha ferramenta en dúas fases: primeiro, os participantes propoñen ideas de forma anónima. Despois, todos votan as propostas para priorizar as máis populares.",
+  "app-muro-title": "Muro interactivo",
+  "app-muro-desc": "Permite aos participantes enviar \"post-its\" virtuais. O contido non é persistente, pero podes exportar o muro a PDF ou os datos a unha folla de cálculo (CSV).",
+  "app-escala-title": "Escala de valoración",
+  "app-escala-desc": "Crea escalas de tipo Likert, numéricas ou de semáforo para recoller opinións de forma rápida e visual. Ideal para valoracións ou medir a comprensión.",
+  "app-qplay-title": "QPlay: Concurso interactivo",
+  "app-qplay-desc": "Unha ferramenta para gamificar a aula. O profesor carga un cuestionario e os alumnos compiten en tempo real desde os seus dispositivos para liderar a clasificación."
+}

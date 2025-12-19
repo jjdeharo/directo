@@ -1,0 +1,19 @@
+{
+  "main-title": "Zuzeneko Konexioa",
+  "main-subtitle": "Ikasgelan aldibereko parte-hartzea sustatzeko tresnak.",
+  "instructions-title": "Nola sortu jarduera bat?",
+  "instructions-body": "Jarduera bat aurkezle gisa hasteko, ireki erabili nahi duzun aplikazioa eta sakatu pantailaren behealdean aurkituko duzun estekan.",
+  "manual-link-title": "Erabiltzailearen Eskuliburua",
+  "app-vota-title": "Bozketa sinplea",
+  "app-vota-desc": "Sortu aukera anitzeko bozkak. Parte-hartzaileak kode batekin batzen dira eta beren gailuetatik bozkatzen dute, emaitzak unean eguneratzen diren barra-diagrametan ikusiz.",
+  "app-nube-title": "Hitz-hodeia",
+  "app-nube-desc": "Bildu ideiak eta bistaratu hodei dinamiko gisa. Hodeia PNG irudi gisa edo datuak kalkulu-orri batean (CSV) deskarga ditzakezu.",
+  "app-ideas-title": "Ideia-jasa eta botoak",
+  "app-ideas-desc": "Bi faseko tresna: lehenik, parte-hartzaileek ideiak modu anonimoan proposatzen dituzte. Gero, denek nahiago dituzten proposamenak bozkatzen dituzte, ezagunenak lehenesteko.",
+  "app-muro-title": "Harresi interaktiboa",
+  "app-muro-desc": "\"Post-it\" birtualak bidaltzeko aukera ematen die parte-hartzaileei. Edukia ez da iraunkorra, baina harresia PDFra edo datuak kalkulu-orri batera (CSV) esporta ditzakezu.",
+  "app-escala-title": "Balorazio eskala",
+  "app-escala-desc": "Sortu Likert motako, zenbakizko edo semaforo eskalak iritziak azkar eta bisualki jasotzeko. Balorazioetarako edo ulermena neurtzeko aproposa.",
+  "app-qplay-title": "QPlay: Lehiaketa interaktiboa",
+  "app-qplay-desc": "Ikasgela gamifikatzeko tresna. Irakasleak galdetegi bat kargatzen du eta ikasleek denbora errealean lehiatzen dute beren gailuetatik sailkapenaren buru izateko."
+}

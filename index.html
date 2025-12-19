@@ -68,6 +68,7 @@
                     <option value="gl">Galego</option>
                     <option value="eu">Euskara</option>
                     <option value="en">English</option>
+                    <option value="de">Deutsch</option>
                 </select>
             </div>
         </header>
@@ -173,103 +174,43 @@
     </div>
 
     <script>
-        const translations = {
-            'es': {
-                'main-title': 'Conexión en Directo',
-                'main-subtitle': 'Herramientas para fomentar la participación simultánea en el aula.',
-                'instructions-title': '¿Cómo crear una actividad?',
-                'instructions-body': "Para iniciar una actividad como presentador, abre la aplicación que quieras usar y pulsa en el enlace que encontrarás en la parte inferior de la pantalla.",
-                'manual-link-title': 'Manual de Usuario',
-                'app-vota-title': 'Votación simple',
-                'app-vota-desc': 'Crea votaciones de opción múltiple. Los participantes se unen con un código y votan desde sus dispositivos, viendo los resultados en gráficos de barras que se actualizan al momento.',
-                'app-nube-title': 'Nube de palabras',
-                'app-nube-desc': 'Recopila ideas y visualízalas como una nube dinámica. Puedes descargar la nube como imagen PNG o los datos en una hoja de cálculo (CSV).',
-                'app-ideas-title': 'Lluvia de ideas y votos',
-                'app-ideas-desc': 'Una herramienta en dos fases: primero, los participantes proponen ideas de forma anónima. Después, todos votan las propuestas para priorizar las más populares.',
-                'app-muro-title': 'Muro interactivo',
-                'app-muro-desc': 'Permite a los participantes enviar "post-its" virtuales. El contenido no es persistente, pero puedes exportar el muro a PDF o los datos a una hoja de cálculo (CSV).',
-                'app-escala-title': 'Escala de valoración',
-                'app-escala-desc': 'Crea escalas de tipo Likert, numéricas o de semáforo para recoger opiniones de forma rápida y visual. Ideal para valoraciones o medir la comprensión.',
-                'app-qplay-title': 'QPlay: Concurso interactivo',
-                'app-qplay-desc': 'Una herramienta para gamificar el aula. El profesor carga un cuestionario y los alumnos compiten en tiempo real desde sus dispositivos para liderar la clasificación.'
-            },
-            'ca': {
-                'main-title': 'Connexió en Directe',
-                'main-subtitle': 'Eines per fomentar la participació simultània a l\'aula.',
-                 'instructions-title': 'Com crear una activitat?',
-                'instructions-body': "Per iniciar una activitat com a presentador, obre l'aplicació que vulguis fer servir i prem a l'enllaç que trobaràs a la part inferior de la pantalla.",
-                'manual-link-title': 'Manual d\'Usuari',
-                'app-vota-title': 'Votació simple',
-                'app-vota-desc': 'Crea votacions d\'opció múltiple. Els participants s\'uneixen amb un codi i voten des dels seus dispositius, veient els resultats en gràfics de barres que s\'actualitzen al moment.',
-                'app-nube-title': 'Núvol de paraules',
-                'app-nube-desc': 'Recull idees i visualitza-les com un núvol dinàmic. Pots descarregar el núvol com a imatge PNG o les dades en un full de càlcul (CSV).',
-                'app-ideas-title': 'Pluja d\'idees i vots',
-                'app-ideas-desc': 'Una eina en dues fases: primer, els participants proposen idees de forma anònima. Després, tothom vota les propostes per prioritzar les més populars.',
-                'app-muro-title': 'Mur interactiu',
-                'app-muro-desc': 'Permet als participants enviar "post-its" virtuals. El contingut no és persistent, però pots exportar el mur a PDF o les dades a un full de càlcul (CSV).',
-                'app-escala-title': 'Escala de valoració',
-                'app-escala-desc': 'Crea escales de tipus Likert, numèriques o de semàfor per recollir opinions de forma ràpida i visual. Ideal per a valoracions o mesurar la comprensió.',
-                'app-qplay-title': 'QPlay: Concurs interactiu',
-                'app-qplay-desc': 'Una eina per gamificar l\'aula. El professor carrega un qüestionari i els alumnes competeixen en temps real des dels seus dispositius per liderar la classificació.'
-            },
-            'gl': {
-                'main-title': 'Conexión en Directo',
-                'main-subtitle': 'Ferramentas para fomentar a participación simultánea na aula.',
-                'instructions-title': 'Como crear unha actividade?',
-                'instructions-body': "Para iniciar unha actividade como presentador, abre a aplicación que queiras usar e preme no enlace que atoparás na parte inferior da pantalla.",
-                'manual-link-title': 'Manual de Usuario',
-                'app-vota-title': 'Votación sinxela',
-                'app-vota-desc': 'Crea votacións de opción múltiple. Os participantes únense cun código e votan desde os seus dispositivos, vendo os resultados en gráficos de barras que se actualizan ao momento.',
-                'app-nube-title': 'Nube de palabras',
-                'app-nube-desc': 'Recolle ideas e visualízaas como unha nube dinámica. Podes descargar a nube como imaxe PNG ou os datos nunha folla de cálculo (CSV).',
-                'app-ideas-title': 'Chuvia de ideas e votos',
-                'app-ideas-desc': 'Unha ferramenta en dúas fases: primeiro, os participantes propoñen ideas de forma anónima. Despois, todos votan as propostas para priorizar as máis populares.',
-                'app-muro-title': 'Muro interactivo',
-                'app-muro-desc': 'Permite aos participantes enviar "post-its" virtuais. O contido non é persistente, pero podes exportar o muro a PDF ou os datos a unha folla de cálculo (CSV).',
-                'app-escala-title': 'Escala de valoración',
-                'app-escala-desc': 'Crea escalas de tipo Likert, numéricas ou de semáforo para recoller opinións de forma rápida e visual. Ideal para valoracións ou medir a comprensión.',
-                'app-qplay-title': 'QPlay: Concurso interactivo',
-                'app-qplay-desc': 'Unha ferramenta para gamificar a aula. O profesor carga un cuestionario e os alumnos compiten en tempo real desde os seus dispositivos para liderar a clasificación.'
-            },
-            'eu': {
-                'main-title': 'Zuzeneko Konexioa',
-                'main-subtitle': 'Ikasgelan aldibereko parte-hartzea sustatzeko tresnak.',
-                'instructions-title': 'Nola sortu jarduera bat?',
-                'instructions-body': "Jarduera bat aurkezle gisa hasteko, ireki erabili nahi duzun aplikazioa eta sakatu pantailaren behealdean aurkituko duzun estekan.",
-                'manual-link-title': 'Erabiltzailearen Eskuliburua',
-                'app-vota-title': 'Bozketa sinplea',
-                'app-vota-desc': 'Sortu aukera anitzeko bozkak. Parte-hartzaileak kode batekin batzen dira eta beren gailuetatik bozkatzen dute, emaitzak unean eguneratzen diren barra-diagrametan ikusiz.',
-                'app-nube-title': 'Hitz-hodeia',
-                'app-nube-desc': 'Bildu ideiak eta bistaratu hodei dinamiko gisa. Hodeia PNG irudi gisa edo datuak kalkulu-orri batean (CSV) deskarga ditzakezu.',
-                'app-ideas-title': 'Ideia-jasa eta botoak',
-                'app-ideas-desc': 'Bi faseko tresna: lehenik, parte-hartzaileek ideiak modu anonimoan proposatzen dituzte. Gero, denek nahiago dituzten proposamenak bozkatzen dituzte, ezagunenak lehenesteko.',
-                'app-muro-title': 'Harresi interaktiboa',
-                'app-muro-desc': '"Post-it" birtualak bidaltzeko aukera ematen die parte-hartzaileei. Edukia ez da iraunkorra, baina harresia PDFra edo datuak kalkulu-orri batera (CSV) esporta ditzakezu.',
-                'app-escala-title': 'Balorazio eskala',
-                'app-escala-desc': 'Sortu Likert motako, zenbakizko edo semaforo eskalak iritziak azkar eta bisualki jasotzeko. Balorazioetarako edo ulermena neurtzeko aproposa.',
-                'app-qplay-title': 'QPlay: Lehiaketa interaktiboa',
-                'app-qplay-desc': 'Ikasgela gamifikatzeko tresna. Irakasleak galdetegi bat kargatzen du eta ikasleek denbora errealean lehiatzen dute beren gailuetatik sailkapenaren buru izateko.'
-            },
-            'en': {
-                'main-title': 'Live Connection',
-                'main-subtitle': 'Tools to foster simultaneous participation in the classroom.',
-                'instructions-title': 'How to create an activity?',
-                'instructions-body': "To start an activity as a presenter, open the application you want to use and click on the link at the bottom of the screen.",
-                'manual-link-title': 'User Manual',
-                'app-vota-title': 'Simple Voting',
-                'app-vota-desc': 'Create multiple-choice polls. Participants join with a code and vote from their devices, viewing results in bar charts that update instantly.',
-                'app-nube-title': 'Word Cloud',
-                'app-nube-desc': 'Gather ideas and display them as a dynamic cloud. You can download the cloud as a PNG image or the data in a spreadsheet (CSV).',
-                'app-ideas-title': 'Brainstorm & Vote',
-                'app-ideas-desc': 'A two-phase tool: first, participants anonymously propose ideas. Then, everyone votes on the proposals to prioritize the most popular ones.',
-                'app-muro-title': 'Interactive Wall',
-                'app-muro-desc': 'Allows participants to send virtual "post-its". The content is not persistent, but you can export the wall to PDF or the data to a spreadsheet (CSV).',
-                'app-escala-title': 'Rating Scale',
-                'app-escala-desc': 'Create Likert-type, numeric, or traffic light scales to gather opinions quickly and visually. Ideal for ratings or measuring understanding.',
-                'app-qplay-title': 'QPlay: Interactive contest',
-                'app-qplay-desc': 'A tool to gamify the classroom. The teacher loads a questionnaire and the students compete in real time from their devices to lead the ranking.'
-            }
-        };
+                                                                const APP_ID = 'index';
+                                let translations = {};
+                                
+                                async function loadTranslations() {
+                                    const response = await fetch('locales/index.json', { cache: 'no-store' });
+                                    if (!response.ok) {
+                                        throw new Error('No se pudo cargar locales/index.json');
+                                    }
+                                    const languages = await response.json();
+                                    const selectorIds = ['lang-selector', 'lang-selector-participant'];
+                                    selectorIds.forEach((id) => {
+                                        const select = document.getElementById(id);
+                                        if (!select) return;
+                                        select.innerHTML = '';
+                                        languages.forEach((lang) => {
+                                            const option = document.createElement('option');
+                                            option.value = lang.code;
+                                            option.textContent = lang.name;
+                                            select.appendChild(option);
+                                        });
+                                    });
+                                
+                                    const entries = await Promise.all(languages.map(async (lang) => {
+                                        const langResp = await fetch(`locales/${APP_ID}/${lang.code}.json`, { cache: 'no-store' });
+                                        if (!langResp.ok) return [lang.code, null];
+                                        const json = await langResp.json();
+                                        return [lang.code, json];
+                                    }));
+                                    translations = Object.fromEntries(entries);
+                                    if (!translations.es) {
+                                        throw new Error(`Falta locales/${APP_ID}/es.json`);
+                                    }
+                                    Object.keys(translations).forEach((code) => {
+                                        if (!translations[code]) translations[code] = translations.es;
+                                    });
+                                    return translations;
+                                }
 
         function setLanguage(lang) {
             if (!translations[lang]) return;
@@ -298,7 +239,12 @@
             });
         }
 
-        window.onload = () => {
+        window.onload = async () => {
+            try {
+                await loadTranslations();
+            } catch (error) {
+                console.error(error);
+            }
             const savedLang = localStorage.getItem('preferred_language');
             const browserLang = (navigator.language || navigator.userLanguage).split('-')[0];
             const langToSet = savedLang || (translations[browserLang] ? browserLang : 'es');

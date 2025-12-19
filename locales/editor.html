@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Editor de traducciones</title>
+    <link rel="stylesheet" href="./editor.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <div>
+        <h1>Editor de traducciones</h1>
+        <p class="subtitle">Corrige textos de los idiomas y guarda el JSON actualizado.</p>
+      </div>
+      <div class="header-actions">
+        <button id="reload-button" type="button">Recargar</button>
+        <button id="save-button" type="button">Guardar archivo</button>
+      </div>
+    </header>
+
+    <section class="controls">
+      <label>
+        Aplicación
+        <select id="app-select"></select>
+      </label>
+      <label>
+        Idioma
+        <select id="language-select"></select>
+      </label>
+      <label class="search-field">
+        Buscar
+        <input id="search-input" type="search" placeholder="Clave o texto..." />
+      </label>
+      <label class="checkbox-field">
+        <input id="missing-only" type="checkbox" />
+        Solo vacíos
+      </label>
+      <label class="checkbox-field">
+        <input id="changed-only" type="checkbox" />
+        Solo iguales al español
+      </label>
+    </section>
+
+    <section class="status" id="status">
+      <div><strong>Idioma base:</strong> Español (es)</div>
+      <div id="stats">Cargando...</div>
+      <div class="note">
+        Usa <code>\\n</code> para saltos de línea si es necesario.
+      </div>
+    </section>
+
+    <main class="table" id="rows"></main>
+
+    <template id="row-template">
+      <div class="row">
+        <div class="cell key"></div>
+        <div class="cell base"></div>
+        <div class="cell target">
+          <textarea rows="2" spellcheck="true"></textarea>
+        </div>
+      </div>
+    </template>
+
+    <footer class="app-footer">
+      <div id="footer-status"></div>
+      <div class="footer-actions">
+        <button id="copy-button" type="button">Copiar JSON</button>
+        <button id="download-button" type="button">Descargar JSON</button>
+      </div>
+    </footer>
+
+    <script type="module" src="./editor.js"></script>
+  </body>
+</html>

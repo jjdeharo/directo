@@ -1,0 +1,19 @@
+{
+  "main-title": "Live Connection",
+  "main-subtitle": "Tools to foster simultaneous participation in the classroom.",
+  "instructions-title": "How to create an activity?",
+  "instructions-body": "To start an activity as a presenter, open the application you want to use and click on the link at the bottom of the screen.",
+  "manual-link-title": "User Manual",
+  "app-vota-title": "Simple Voting",
+  "app-vota-desc": "Create multiple-choice polls. Participants join with a code and vote from their devices, viewing results in bar charts that update instantly.",
+  "app-nube-title": "Word Cloud",
+  "app-nube-desc": "Gather ideas and display them as a dynamic cloud. You can download the cloud as a PNG image or the data in a spreadsheet (CSV).",
+  "app-ideas-title": "Brainstorm & Vote",
+  "app-ideas-desc": "A two-phase tool: first, participants anonymously propose ideas. Then, everyone votes on the proposals to prioritize the most popular ones.",
+  "app-muro-title": "Interactive Wall",
+  "app-muro-desc": "Allows participants to send virtual \"post-its\". The content is not persistent, but you can export the wall to PDF or the data to a spreadsheet (CSV).",
+  "app-escala-title": "Rating Scale",
+  "app-escala-desc": "Create Likert-type, numeric, or traffic light scales to gather opinions quickly and visually. Ideal for ratings or measuring understanding.",
+  "app-qplay-title": "QPlay: Interactive contest",
+  "app-qplay-desc": "A tool to gamify the classroom. The teacher loads a questionnaire and the students compete in real time from their devices to lead the ranking."
+}

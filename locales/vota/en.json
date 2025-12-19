@@ -3,7 +3,7 @@
   "create_title": "Create a new poll",
   "question_label": "Your question:",
   "question_placeholder": "E.g., What is your favorite color?",
-  "theme_color_label": "Color:",
+  "theme_color_label": "Theme color:",
   "options_label": "Answer options:",
   "option_1_placeholder": "Option 1",
   "option_2_placeholder": "Option 2",

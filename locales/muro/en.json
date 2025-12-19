@@ -2,7 +2,7 @@
   "create_title": "Create a new idea wall",
   "question_label": "Wall title or question:",
   "question_placeholder": "E.g., What have we learned today?",
-  "theme_color_label": "Color:",
+  "theme_color_label": "Theme color:",
   "cards_per_person_label": "Cards per person:",
   "prepare_session_btn": "Prepare session",
   "start_session_btn": "Start Session",

@@ -9,7 +9,6 @@ const changedOnly = document.getElementById('changed-only');
 const statsEl = document.getElementById('stats');
 const footerStatus = document.getElementById('footer-status');
 const reloadButton = document.getElementById('reload-button');
-const saveButton = document.getElementById('save-button');
 const downloadButton = document.getElementById('download-button');
 const copyButton = document.getElementById('copy-button');
 
@@ -248,30 +247,12 @@ async function refresh() {
   footerStatus.textContent = `Editando: ${appId} · ${lang}`;
 }
 
-async function saveFile() {
-  const jsonText = `${JSON.stringify(buildOutput(), null, 2)}\n`;
-  const suggestedName = `${languageSelect.value}.json`;
-
-  if (window.showSaveFilePicker) {
-    const handle = await window.showSaveFilePicker({
-      suggestedName,
-      types: [{ description: 'JSON', accept: { 'application/json': ['.json'] } }],
-    });
-    const writable = await handle.createWritable();
-    await writable.write(jsonText);
-    await writable.close();
-    footerStatus.textContent = 'Archivo guardado.';
-  } else {
-    downloadJson(jsonText);
-  }
-}
-
 function downloadJson(jsonText) {
   const blob = new Blob([jsonText], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
   link.href = url;
-  link.download = `${languageSelect.value}.json`;
+  link.download = `${appSelect.value}-${languageSelect.value}.json`;
   link.click();
   URL.revokeObjectURL(url);
   footerStatus.textContent = 'Descarga iniciada.';
@@ -288,7 +269,6 @@ function attachEvents() {
   missingOnly.addEventListener('change', applyFilters);
   changedOnly.addEventListener('change', applyFilters);
   reloadButton.addEventListener('click', refresh);
-  saveButton.addEventListener('click', saveFile);
   downloadButton.addEventListener('click', () => downloadJson(`${JSON.stringify(buildOutput(), null, 2)}\n`));
   copyButton.addEventListener('click', copyJson);
   languageSelect.addEventListener('change', refresh);

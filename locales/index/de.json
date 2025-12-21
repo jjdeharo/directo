@@ -17,5 +17,5 @@
   "app-qplay-title": "QPlay: Interaktiver Wettbewerb",
   "app-qplay-desc": "Ein Werkzeug, um den Unterricht zu gamifizieren. Die Lehrkraft lädt ein Quiz, und die Schülerinnen und Schüler konkurrieren in Echtzeit von ihren Geräten aus, um die Rangliste anzuführen.",
   "app-boardlive-title": "BoardLive: Kollaboratives Whiteboard",
-  "app-boardlive-desc": "Kollaboratives Whiteboard in Echtzeit mit Rechteverwaltung, Seiten und PDF-Export; der Host teilt Code oder QR."
+  "app-boardlive-desc": "Kollaboratives Whiteboard in Echtzeit. Der Host erstellt die Sitzung, teilt Code oder QR und steuert, wer zeichnen darf. Enthält Seiten, Zeichenwerkzeuge, Bildeinfügen und PDF-Export."
 }

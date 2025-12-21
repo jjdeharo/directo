@@ -17,5 +17,5 @@
   "app-qplay-title": "QPlay: Concurso interativo",
   "app-qplay-desc": "Unha ferramenta para gamificar a aula. O profesor carga un cuestionario e os alumnos compiten en tempo real desde os seus dispositivos para liderar a clasificación.",
   "app-boardlive-title": "BoardLive: Pizarra colaborativa",
-  "app-boardlive-desc": "Pizarra colaborativa en tempo real con control de permisos, páxinas e exportación a PDF; o anfitrión comparte código ou QR."
+  "app-boardlive-desc": "Pizarra colaborativa en tempo real. O anfitrión crea a sesión, comparte un código ou QR e controla quen pode debuxar. Inclúe páxinas, ferramentas de debuxo, inserción de imaxes e exportación a PDF."
 }

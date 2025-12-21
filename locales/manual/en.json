@@ -46,5 +46,7 @@
   "app-escala-title": "Rating Scale",
   "app-escala-desc": "Allows creating different types of rating scales (Likert-type, numeric, traffic light, or fully custom) to gather audience opinion on a topic. Results are visualized as bar charts or in a traffic light format, facilitating a quick interpretation of the general sentiment. It is ideal for conducting opinion polls, measuring the degree of agreement, or evaluating the understanding of a concept.",
   "app-qplay-title": "QPlay: Interactive Contest",
-  "app-qplay-desc": "A tool to gamify the classroom. The teacher loads a quiz and students compete in real time from their devices to lead the leaderboard."
+  "app-qplay-desc": "A tool to gamify the classroom. The teacher loads a quiz and students compete in real time from their devices to lead the leaderboard.",
+  "app-boardlive-title": "BoardLive: Collaborative whiteboard",
+  "app-boardlive-desc": "Real-time collaborative whiteboard for classes, tutoring, and workshops. The host creates the session, shares a code or QR, and decides who can draw (global lock, individual permissions, and instant revocation). The canvas syncs live for all participants, including view, zoom, and background, so everyone sees the same page. It includes multiple pages with thumbnails, drawing tools (freehand, highlighter, shapes, eraser), color and stroke controls, plus image insertion and editing. You can export the work to PDF and manage content per page. It also lets teachers project on the classroom digital whiteboard what they write or draw on their tablet in real time, enabling dynamic explanations and immediate follow-up."
 }

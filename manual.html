@@ -51,6 +51,7 @@
         .tab-button.active.muro { border-color: #0891b2; color: #155e75; }
         .tab-button.active.escala { border-color: #3b82f6; color: #1e40af; }
         .tab-button.active.qplay { border-color: #facc15; color: #b45309; }
+        .tab-button.active.boardlive { border-color: #f472b6; color: #9d174d; }
         .tab-button.active.general { border-color: #6b7280; color: #1f2937; }
         .tab-button.active.privacidad { border-color: #6b7280; color: #1f2937; }
     </style>
@@ -119,6 +120,12 @@
                                <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
                             </svg>
                            QPlay
+                       </button>
+                        <button onclick="showTab('boardlive')" class="tab-button boardlive flex items-center gap-2 p-4 text-lg" data-translate-key="app-boardlive-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                           BoardLive
                        </button>
                     </nav>
                 </div>
@@ -205,6 +212,10 @@
                         <h2 id="app-qplay-title-content" class="text-yellow-700">QPlay: Concurso Interactivo</h2>
                         <p id="app-qplay-desc">Una herramienta para gamificar el aula. El profesor carga un cuestionario y los alumnos compiten en tiempo real desde sus dispositivos para liderar la clasificación.</p>
                     </section>
+                    <section id="boardlive" class="tab-pane hidden">
+                        <h2 id="app-boardlive-title-content" class="text-pink-700">BoardLive: Pizarra colaborativa</h2>
+                        <p id="app-boardlive-desc">Pizarra colaborativa en tiempo real pensada para clases, tutorías y talleres. El anfitrión crea la sesión, comparte un código o QR y decide quién puede dibujar (bloqueo global, permisos individuales y revocación instantánea). El lienzo se sincroniza en vivo entre todos los participantes, incluyendo la vista, el zoom y el fondo, para que vean exactamente lo mismo. Incluye páginas múltiples con miniaturas, herramientas de dibujo (trazo libre, resaltador, figuras, borrador) y control de color y grosor, además de inserción y edición de imágenes. Permite exportar el trabajo a PDF y gestionar el contenido por páginas. También permite que el profesorado proyecte en la pizarra digital del aula lo que escribe o dibuja en su tablet en tiempo real, facilitando explicaciones dinámicas y seguimiento inmediato del grupo.</p>
+                    </section>
                 </div>
             </div>
         </article>
@@ -279,6 +290,7 @@
             document.getElementById('app-muro-title-content').innerHTML = translations[lang]?.['app-muro-title'] || translations.es['app-muro-title'];
             document.getElementById('app-escala-title-content').innerHTML = translations[lang]?.['app-escala-title'] || translations.es['app-escala-title'];
             document.getElementById('app-qplay-title-content').innerHTML = translations[lang]?.['app-qplay-title'] || translations.es['app-qplay-title'];
+            document.getElementById('app-boardlive-title-content').innerHTML = translations[lang]?.['app-boardlive-title'] || translations.es['app-boardlive-title'];
             document.getElementById('home-link').setAttribute('title', translations[lang]?.['home-link-title'] || translations.es['home-link-title']);
         }
 

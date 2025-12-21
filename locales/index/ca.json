@@ -17,5 +17,5 @@
   "app-qplay-title": "QPlay: Concurs interactiu",
   "app-qplay-desc": "Una eina per gamificar l'aula. El professor carrega un qüestionari i els alumnes competeixen en temps real des dels seus dispositius per liderar la classificació.",
   "app-boardlive-title": "BoardLive: Pissarra col·laborativa",
-  "app-boardlive-desc": "Pissarra col·laborativa en temps real. L'amfitrió crea la sessió, comparteix un codi o QR i controla qui pot dibuixar. Inclou pàgines, eines de dibuix, inserció d'imatges i exportació a PDF."
+  "app-boardlive-desc": "Pissarra col·laborativa en temps real. L'amfitrió crea la sessió, comparteix un codi o QR i controla qui pot dibuixar. Inclou pàgines, eines de dibuix, inserció d'imatges i exportació a PDF. També permet que el professorat projecti a la pissarra digital de l'aula el que escriu o dibuixa a la seva tauleta en temps real."
 }

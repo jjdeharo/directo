@@ -15,5 +15,7 @@
   "app-escala-title": "Bewertungsskala",
   "app-escala-desc": "Erstelle Likert-, numerische oder Ampel-Skalen, um Meinungen schnell und visuell zu erfassen. Ideal für Bewertungen oder um das Verständnis zu messen.",
   "app-qplay-title": "QPlay: Interaktiver Wettbewerb",
-  "app-qplay-desc": "Ein Werkzeug, um den Unterricht zu gamifizieren. Die Lehrkraft lädt ein Quiz, und die Schülerinnen und Schüler konkurrieren in Echtzeit von ihren Geräten aus, um die Rangliste anzuführen."
+  "app-qplay-desc": "Ein Werkzeug, um den Unterricht zu gamifizieren. Die Lehrkraft lädt ein Quiz, und die Schülerinnen und Schüler konkurrieren in Echtzeit von ihren Geräten aus, um die Rangliste anzuführen.",
+  "app-boardlive-title": "BoardLive: Kollaboratives Whiteboard",
+  "app-boardlive-desc": "Kollaboratives Whiteboard in Echtzeit mit Rechteverwaltung, Seiten und PDF-Export; der Host teilt Code oder QR."
 }

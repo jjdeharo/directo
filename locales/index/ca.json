@@ -15,5 +15,7 @@
   "app-escala-title": "Escala de valoració",
   "app-escala-desc": "Crea escales de tipus Likert, numèriques o de semàfor per recollir opinions de forma ràpida i visual. Ideal per a valoracions o mesurar la comprensió.",
   "app-qplay-title": "QPlay: Concurs interactiu",
-  "app-qplay-desc": "Una eina per gamificar l'aula. El professor carrega un qüestionari i els alumnes competeixen en temps real des dels seus dispositius per liderar la classificació."
+  "app-qplay-desc": "Una eina per gamificar l'aula. El professor carrega un qüestionari i els alumnes competeixen en temps real des dels seus dispositius per liderar la classificació.",
+  "app-boardlive-title": "BoardLive: Pissarra col·laborativa",
+  "app-boardlive-desc": "Pissarra col·laborativa en temps real amb control de permisos, pàgines i exportació a PDF; l'amfitrió comparteix codi o QR."
 }

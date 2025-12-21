@@ -15,5 +15,7 @@
   "app-escala-title": "Balorazio eskala",
   "app-escala-desc": "Sortu Likert motako, zenbakizko edo semaforo eskalak iritziak azkar eta bisualki jasotzeko. Balorazioetarako edo ulermena neurtzeko aproposa.",
   "app-qplay-title": "QPlay: Lehiaketa interaktiboa",
-  "app-qplay-desc": "Ikasgela gamifikatzeko tresna. Irakasleak galdetegi bat kargatzen du eta ikasleek denbora errealean lehiatzen dute beren gailuetatik sailkapenaren buru izateko."
+  "app-qplay-desc": "Ikasgela gamifikatzeko tresna. Irakasleak galdetegi bat kargatzen du eta ikasleek denbora errealean lehiatzen dute beren gailuetatik sailkapenaren buru izateko.",
+  "app-boardlive-title": "BoardLive: Pizarra kolaboratiboa",
+  "app-boardlive-desc": "Denbora errealeko pizarra kolaboratiboa, baimen-kontrolarekin, orriekin eta PDF esportazioarekin; anfitrioiak kodea edo QR partekatzen du."
 }

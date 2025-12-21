@@ -15,5 +15,7 @@
   "app-escala-title": "Rating Scale",
   "app-escala-desc": "Create Likert-type, numeric, or traffic light scales to gather opinions quickly and visually. Ideal for ratings or measuring understanding.",
   "app-qplay-title": "QPlay: Interactive contest",
-  "app-qplay-desc": "A tool to gamify the classroom. The teacher loads a questionnaire and the students compete in real time from their devices to lead the ranking."
+  "app-qplay-desc": "A tool to gamify the classroom. The teacher loads a questionnaire and the students compete in real time from their devices to lead the ranking.",
+  "app-boardlive-title": "BoardLive: Collaborative whiteboard",
+  "app-boardlive-desc": "Real-time collaborative whiteboard with permission control, pages, and PDF export; the host shares a code or QR."
 }

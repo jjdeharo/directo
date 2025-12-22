@@ -50,5 +50,6 @@
   "stop_submission_btn": "Detener",
   "resume_submission_btn": "Reanudar",
   "submission_paused_title": "Recepción en pausa",
-  "submission_paused_subtitle": "El presentador ha detenido el envío de palabras."
+  "submission_paused_subtitle": "El presentador ha detenido el envío de palabras.",
+  "qr_expand_hint": "Haz clic para ampliar"
 }

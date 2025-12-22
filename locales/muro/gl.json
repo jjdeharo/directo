@@ -35,5 +35,6 @@
   "stop_receiving_btn": "Deter",
   "resume_receiving_btn": "Retomar",
   "receiving_paused_title": "Recepción pausada",
-  "receiving_paused_subtitle": "O presentador detivo o envío de tarxetas."
+  "receiving_paused_subtitle": "O presentador detivo o envío de tarxetas.",
+  "qr_expand_hint": "Fai clic para ampliar"
 }

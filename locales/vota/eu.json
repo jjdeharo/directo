@@ -45,5 +45,6 @@
   "stop_voting_btn": "Gelditu",
   "resume_voting_btn": "Berrekin",
   "voting_paused_title": "Bozketa pausatuta",
-  "voting_paused_subtitle": "Aurkezleak erantzunak aldi baterako gelditu ditu."
+  "voting_paused_subtitle": "Aurkezleak erantzunak aldi baterako gelditu ditu.",
+  "qr_expand_hint": "Egin klik handitzeko"
 }

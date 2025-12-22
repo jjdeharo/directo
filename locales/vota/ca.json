@@ -45,5 +45,6 @@
   "stop_voting_btn": "Aturar",
   "resume_voting_btn": "Reprendre",
   "voting_paused_title": "Votació en pausa",
-  "voting_paused_subtitle": "El presentador ha aturat les respostes temporalment."
+  "voting_paused_subtitle": "El presentador ha aturat les respostes temporalment.",
+  "qr_expand_hint": "Fes clic per ampliar"
 }

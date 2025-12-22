@@ -33,5 +33,6 @@
   "stop_submission_btn": "Stop",
   "resume_submission_btn": "Resume",
   "submission_paused_title": "Submission paused",
-  "submission_paused_subtitle": "The presenter has paused idea submissions."
+  "submission_paused_subtitle": "The presenter has paused idea submissions.",
+  "qr_expand_hint": "Click to enlarge"
 }

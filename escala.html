@@ -50,6 +50,10 @@
         .vote-btn-red { background-color: #fca5a5; border-color: #ef4444; }
         .vote-btn-yellow { background-color: #fde68a; border-color: #f59e0b; }
         .vote-btn-green { background-color: #86efac; border-color: #22c55e; }
+        .qr-wrapper { position: relative; display: flex; flex-direction: column; align-items: center; gap: 0.35rem; }
+        .qr-tooltip { position: absolute; top: -10px; transform: translateY(-100%); background: #111827; color: #ffffff; font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 999px; opacity: 0; pointer-events: none; transition: opacity 0.2s ease, transform 0.2s ease; white-space: nowrap; }
+        .qr-wrapper:hover .qr-tooltip { opacity: 1; transform: translateY(-120%); }
+        .qr-hint { font-size: 0.75rem; color: #4b5563; }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800 flex flex-col items-center justify-center min-h-screen p-4">
@@ -135,7 +139,11 @@
                     <div id="sharing-info-container" class="space-y-4 hide-on-projection">
                         <div class="bg-white/60 p-4 rounded-lg text-center backdrop-blur-sm">
                             <h3 class="font-bold mb-2 text-gray-700" data-translate-key="scan_qr_label"></h3>
-                            <div id="qrcode-container" class="mx-auto max-w-[160px]"></div>
+                            <div class="qr-wrapper">
+                                <span class="qr-tooltip" data-translate-key="qr_expand_hint">Haz clic para ampliar</span>
+                                <div id="qrcode-container" class="mx-auto max-w-[240px] cursor-pointer"></div>
+                                <p class="qr-hint" data-translate-key="qr_expand_hint">Haz clic para ampliar</p>
+                            </div>
                         </div>
                         <div class="bg-white/60 p-4 rounded-lg text-center backdrop-blur-sm">
                              <h3 class="font-bold mb-2 text-gray-700" data-translate-key="direct_link_label"></h3>
@@ -310,6 +318,41 @@
                 setTimeout(() => { toast.style.opacity = 0; }, 2000);
             });
         }
+
+        function openQrPopup(sessionUrl) {
+            const popup = window.open('', 'qrWindow', 'width=720,height=720,resizable=yes,scrollbars=yes');
+            if (!popup) return;
+            const popupDoc = popup.document;
+            popupDoc.open();
+            popupDoc.write(`<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR</title>
+    <style>
+        body { margin: 0; display: flex; align-items: center; justify-content: center; background: #f8fafc; font-family: 'Inter', sans-serif; }
+        #qr-wrapper { padding: 24px; background: white; border-radius: 16px; box-shadow: 0 10px 30px rgba(15, 23, 42, 0.2); }
+    </style>
+</head>
+<body>
+    <div id="qr-wrapper"><div id="qr"></div></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"><\/script>
+    <script>
+        const sessionUrl = ${JSON.stringify(sessionUrl)};
+        const qrContainer = document.getElementById('qr');
+        function renderQr() {
+            const size = Math.max(240, Math.min(window.innerWidth, window.innerHeight) - 80);
+            qrContainer.innerHTML = '';
+            new QRCode(qrContainer, { text: sessionUrl, width: size, height: size });
+        }
+        window.addEventListener('load', renderQr);
+        window.addEventListener('resize', renderQr);
+    <\/script>
+</body>
+</html>`);
+            popupDoc.close();
+        }
         
         function switchView(view) {
             document.getElementById('presenter-view').classList.toggle('hidden', view !== 'presenter');
@@ -425,7 +468,8 @@
                 
                 const qrContainer = document.getElementById('qrcode-container');
                 qrContainer.innerHTML = '';
-                new QRCode(qrContainer, { text: sessionUrl, width: 160, height: 160 });
+                new QRCode(qrContainer, { text: sessionUrl, width: 240, height: 240 });
+                qrContainer.onclick = () => openQrPopup(sessionUrl);
                 updateResultsView();
             });
 

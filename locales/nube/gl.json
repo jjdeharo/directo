@@ -50,5 +50,6 @@
   "stop_submission_btn": "Deter",
   "resume_submission_btn": "Retomar",
   "submission_paused_title": "Recepción pausada",
-  "submission_paused_subtitle": "O presentador detivo o envío de palabras."
+  "submission_paused_subtitle": "O presentador detivo o envío de palabras.",
+  "qr_expand_hint": "Fai clic para ampliar"
 }

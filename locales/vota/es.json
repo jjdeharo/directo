@@ -45,5 +45,6 @@
   "stop_voting_btn": "Detener",
   "resume_voting_btn": "Reanudar",
   "voting_paused_title": "Votación en pausa",
-  "voting_paused_subtitle": "El presentador ha detenido las respuestas temporalmente."
+  "voting_paused_subtitle": "El presentador ha detenido las respuestas temporalmente.",
+  "qr_expand_hint": "Haz clic para ampliar"
 }

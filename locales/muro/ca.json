@@ -35,5 +35,6 @@
   "stop_receiving_btn": "Aturar",
   "resume_receiving_btn": "Reprendre",
   "receiving_paused_title": "Recepció en pausa",
-  "receiving_paused_subtitle": "El presentador ha aturat l'enviament de targetes."
+  "receiving_paused_subtitle": "El presentador ha aturat l'enviament de targetes.",
+  "qr_expand_hint": "Fes clic per ampliar"
 }

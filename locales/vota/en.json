@@ -45,5 +45,6 @@
   "stop_voting_btn": "Stop",
   "resume_voting_btn": "Resume",
   "voting_paused_title": "Voting paused",
-  "voting_paused_subtitle": "The presenter has temporarily paused responses."
+  "voting_paused_subtitle": "The presenter has temporarily paused responses.",
+  "qr_expand_hint": "Click to enlarge"
 }

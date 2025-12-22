@@ -35,5 +35,6 @@
   "stop_receiving_btn": "Gelditu",
   "resume_receiving_btn": "Berrekin",
   "receiving_paused_title": "Harrera pausatuta",
-  "receiving_paused_subtitle": "Aurkezleak txartelen bidalketa gelditu du."
+  "receiving_paused_subtitle": "Aurkezleak txartelen bidalketa gelditu du.",
+  "qr_expand_hint": "Egin klik handitzeko"
 }

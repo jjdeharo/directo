@@ -33,5 +33,6 @@
   "stop_submission_btn": "Aturar",
   "resume_submission_btn": "Reprendre",
   "submission_paused_title": "Recepció en pausa",
-  "submission_paused_subtitle": "El presentador ha aturat l'enviament d'idees."
+  "submission_paused_subtitle": "El presentador ha aturat l'enviament d'idees.",
+  "qr_expand_hint": "Fes clic per ampliar"
 }

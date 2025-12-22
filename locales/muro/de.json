@@ -35,5 +35,6 @@
   "stop_receiving_btn": "Stoppen",
   "resume_receiving_btn": "Fortsetzen",
   "receiving_paused_title": "Empfang pausiert",
-  "receiving_paused_subtitle": "Der Präsentator hat das Senden von Karten vorübergehend gestoppt."
+  "receiving_paused_subtitle": "Der Präsentator hat das Senden von Karten vorübergehend gestoppt.",
+  "qr_expand_hint": "Zum Vergrößern klicken"
 }

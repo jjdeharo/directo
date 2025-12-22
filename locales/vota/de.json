@@ -45,5 +45,6 @@
   "stop_voting_btn": "Stoppen",
   "resume_voting_btn": "Fortsetzen",
   "voting_paused_title": "Abstimmung pausiert",
-  "voting_paused_subtitle": "Der Präsentator hat die Antworten vorübergehend gestoppt."
+  "voting_paused_subtitle": "Der Präsentator hat die Antworten vorübergehend gestoppt.",
+  "qr_expand_hint": "Zum Vergrößern klicken"
 }

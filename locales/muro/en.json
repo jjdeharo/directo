@@ -35,5 +35,6 @@
   "stop_receiving_btn": "Stop",
   "resume_receiving_btn": "Resume",
   "receiving_paused_title": "Receiving paused",
-  "receiving_paused_subtitle": "The presenter has paused card submissions."
+  "receiving_paused_subtitle": "The presenter has paused card submissions.",
+  "qr_expand_hint": "Click to enlarge"
 }

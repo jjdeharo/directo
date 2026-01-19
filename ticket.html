@@ -5,7 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tickets de salida</title>
     <script>
-        tailwind = { config: { darkMode: 'class', theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } } } };
+        window.tailwind = window.tailwind || {};
+        window.tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        };
     </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.4.7/peerjs.min.js"></script>
@@ -16,12 +23,10 @@
     <style>
         body { font-family: 'Inter', sans-serif; }
         .card { background: rgba(255, 255, 255, 0.92); }
-        .dark .card { background: rgba(15, 23, 42, 0.92); }
         .qr-wrapper { position: relative; display: inline-flex; flex-direction: column; align-items: center; gap: 0.35rem; }
         .qr-tooltip { position: absolute; top: -10px; transform: translateY(-100%); background: #111827; color: #ffffff; font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 999px; opacity: 0; pointer-events: none; transition: opacity 0.2s ease, transform 0.2s ease; white-space: nowrap; }
         .qr-wrapper:hover .qr-tooltip { opacity: 1; transform: translateY(-120%); }
         .qr-hint { font-size: 0.75rem; color: #4b5563; }
-        .dark .qr-hint { color: #94a3b8; }
         .projector-mode #ticket-builder,
         .projector-mode #portable-card,
         .projector-mode #session-config-card,
@@ -36,7 +41,6 @@
         .tab-panel.active { display: block; }
         .tab-btn { border: 1px solid transparent; }
         .tab-btn.active { background: #0f172a; color: #fff; border-color: #0f172a; }
-        .dark .tab-btn.active { background: #e2e8f0; color: #0f172a; border-color: #e2e8f0; }
         #projector-ticket h1 { font-size: 2.25rem; font-weight: 700; }
         #projector-ticket h2 { font-size: 1.25rem; font-weight: 600; margin-top: 1.5rem; }
         #projector-ticket p { font-size: 1rem; margin-top: 0.5rem; }
@@ -49,31 +53,26 @@
         #portable-print { display: none; }
     </style>
 </head>
-<body class="min-h-full bg-slate-100 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+<body class="min-h-full bg-slate-100 text-slate-900">
     <div class="max-w-6xl mx-auto px-4 py-6 md:px-8 md:py-10">
         <header class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div>
                 <h1 id="main-title" class="text-3xl md:text-4xl font-extrabold" data-translate-key="main_title">Tickets de salida</h1>
-                <p id="main-subtitle" class="text-slate-600 dark:text-slate-300" data-translate-key="main_subtitle">Recoge impresiones rápidas al final de la sesión, en directo o en modo portable.</p>
+                <p id="main-subtitle" class="text-slate-600" data-translate-key="main_subtitle">Recoge impresiones rápidas al final de la sesión, en directo o en modo portable.</p>
             </div>
             <div class="flex flex-wrap items-center gap-2 no-print">
-                <span class="px-3 py-2 rounded-lg bg-emerald-600 text-white font-semibold" data-translate-key="presenter_mode_label">Modo presentador</span>
-                <select id="theme-selector" class="px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900">
-                    <option value="system" data-translate-key="theme_system">Tema: Sistema</option>
-                    <option value="light" data-translate-key="theme_light">Tema: Claro</option>
-                    <option value="dark" data-translate-key="theme_dark">Tema: Oscuro</option>
-                </select>
-                <select id="lang-selector" class="px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900"></select>
+                <span class="text-sm font-semibold text-emerald-700" data-translate-key="presenter_mode_label">Modo presentador</span>
+                <select id="lang-selector" class="px-3 py-2 rounded-lg border border-slate-300 bg-white text-slate-700"></select>
             </div>
         </header>
 
         <main class="mt-8">
             <section id="presenter-view" class="space-y-6">
-                <div class="tab-bar no-print flex flex-wrap gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
-                    <button class="tab-btn active px-3 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-sm font-semibold" data-tab="ticket" data-translate-key="tab_ticket">Ticket</button>
-                    <button class="tab-btn px-3 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-sm font-semibold" data-tab="session" data-translate-key="tab_session">Sesión</button>
-                    <button class="tab-btn px-3 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-sm font-semibold" data-tab="results" data-translate-key="tab_results">Resultados</button>
-                    <button class="tab-btn px-3 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-sm font-semibold" data-tab="portable" data-translate-key="tab_portable">Portable</button>
+                <div class="tab-bar no-print flex flex-wrap gap-2 border-b border-slate-200 pb-3">
+                    <button class="tab-btn active px-3 py-2 rounded-lg bg-white border border-slate-300 text-sm font-semibold text-slate-700" data-tab="ticket" data-translate-key="tab_ticket">Ticket</button>
+                    <button class="tab-btn px-3 py-2 rounded-lg bg-white border border-slate-300 text-sm font-semibold text-slate-700" data-tab="session" data-translate-key="tab_session">Sesión</button>
+                    <button class="tab-btn px-3 py-2 rounded-lg bg-white border border-slate-300 text-sm font-semibold text-slate-700" data-tab="results" data-translate-key="tab_results">Resultados</button>
+                    <button class="tab-btn px-3 py-2 rounded-lg bg-white border border-slate-300 text-sm font-semibold text-slate-700" data-tab="portable" data-translate-key="tab_portable">Portable</button>
                 </div>
 
                 <div id="projector-ticket" class="card rounded-2xl shadow-lg border border-emerald-200/70 dark:border-emerald-700/60 p-10 bg-emerald-50/70 dark:bg-emerald-900/20">
@@ -81,8 +80,8 @@
                 </div>
 
                 <div id="tab-ticket" class="tab-panel active">
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <div id="ticket-builder" class="card rounded-2xl shadow-lg border border-emerald-200/70 dark:border-emerald-700/60 p-6 lg:col-span-2 bg-emerald-50/70 dark:bg-emerald-900/20">
+                    <div class="grid grid-cols-1 gap-6">
+                        <div id="ticket-builder" class="card rounded-2xl shadow-lg border border-slate-200/70 p-6 text-slate-900">
                             <div class="flex flex-col gap-4 mb-4 md:flex-row md:items-start md:justify-between">
                                 <div>
                                     <h2 class="text-xl font-bold" data-translate-key="builder_title">Crear ticket</h2>
@@ -230,7 +229,7 @@
                                 <button id="copy-analysis" class="px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 text-sm" data-translate-key="copy_analysis_btn">Copiar texto</button>
                                 <button id="download-analysis" class="px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 text-sm" data-translate-key="download_analysis_btn">TXT análisis</button>
                                 <button id="download-csv" class="px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 text-sm">CSV</button>
-                                <button id="download-json" class="px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 text-sm">JSON</button>
+                                <button id="download-docx-results" class="px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 text-sm">DOCX</button>
                             </div>
                         </div>
                         <div class="mt-4 overflow-x-auto">
@@ -1228,28 +1227,11 @@
             if (!translations[lang]) return;
             currentLang = lang;
             localStorage.setItem('preferred_language', lang);
+            const ticketSnapshot = buildTicketFromForm();
             applyTranslations();
             loadTemplates();
+            renderItemsFromTicket(ticketSnapshot);
             refreshTicketPreview();
-        }
-
-        function getThemePreference() {
-            return localStorage.getItem('preferred_theme') || 'system';
-        }
-
-        function applyTheme(theme) {
-            const root = document.documentElement;
-            if (theme === 'system') {
-                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                root.classList.toggle('dark', prefersDark);
-            } else {
-                root.classList.toggle('dark', theme === 'dark');
-            }
-        }
-
-        function setTheme(theme) {
-            localStorage.setItem('preferred_theme', theme);
-            applyTheme(theme);
         }
 
         function showToast(messageKey, fallback) {
@@ -1390,6 +1372,16 @@
             };
             const card = createItemCard(item);
             document.getElementById('items-container').appendChild(card);
+        }
+
+        function renderItemsFromTicket(ticket) {
+            const container = document.getElementById('items-container');
+            if (!container || !ticket) return;
+            container.innerHTML = '';
+            ticket.items.forEach((item) => {
+                const card = createItemCard(item);
+                container.appendChild(card);
+            });
         }
 
         function buildTicketFromForm() {
@@ -2166,17 +2158,12 @@
             document.getElementById('lang-selector').value = langToSet;
             setLanguage(langToSet);
 
-            const themePref = getThemePreference();
-            document.getElementById('theme-selector').value = themePref;
-            applyTheme(themePref);
-
             document.getElementById('switch-to-presenter').addEventListener('click', (e) => {
                 e.preventDefault();
                 switchView('presenter');
             });
 
             document.getElementById('lang-selector').addEventListener('change', (e) => setLanguage(e.target.value));
-            document.getElementById('theme-selector').addEventListener('change', (e) => setTheme(e.target.value));
 
             document.getElementById('add-item').addEventListener('click', () => addItem());
             document.getElementById('clear-ticket').addEventListener('click', () => {
@@ -2230,8 +2217,8 @@
             document.getElementById('download-csv').addEventListener('click', () => {
                 downloadFile(buildExportFilename('csv'), buildCsv(), 'text/csv');
             });
-            document.getElementById('download-json').addEventListener('click', () => {
-                downloadFile(buildExportFilename('json'), JSON.stringify(Array.from(responsesMap.values()), null, 2), 'application/json');
+            document.getElementById('download-docx-results').addEventListener('click', () => {
+                downloadFile(buildExportFilename('docx'), buildAnalysisText(), 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
             });
 
             document.getElementById('copy-portable').addEventListener('click', () => {

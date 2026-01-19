@@ -24,8 +24,12 @@
         .dark .qr-hint { color: #94a3b8; }
         .projector-mode #ticket-builder,
         .projector-mode #portable-card,
-        .projector-mode #session-config-card { display: none; }
-        .projector-mode #responses-card { grid-column: span 2 / span 2; }
+        .projector-mode #session-config-card,
+        .projector-mode .tab-panel,
+        .projector-mode .tab-bar { display: none; }
+        #projector-ticket { display: none; }
+        .projector-mode #projector-ticket { display: block; }
+        .projector-mode #responses-card { display: none; }
         .exit-projector { display: none; }
         .projector-mode .exit-projector { display: inline-flex; }
         .tab-panel { display: none; }
@@ -33,6 +37,9 @@
         .tab-btn { border: 1px solid transparent; }
         .tab-btn.active { background: #0f172a; color: #fff; border-color: #0f172a; }
         .dark .tab-btn.active { background: #e2e8f0; color: #0f172a; border-color: #e2e8f0; }
+        #projector-ticket h1 { font-size: 2.25rem; font-weight: 700; }
+        #projector-ticket h2 { font-size: 1.25rem; font-weight: 600; margin-top: 1.5rem; }
+        #projector-ticket p { font-size: 1rem; margin-top: 0.5rem; }
         @media print {
             body { background: white !important; color: #111827 !important; }
             body * { visibility: hidden !important; }
@@ -50,7 +57,7 @@
                 <p id="main-subtitle" class="text-slate-600 dark:text-slate-300" data-translate-key="main_subtitle">Recoge impresiones rápidas al final de la sesión, en directo o en modo portable.</p>
             </div>
             <div class="flex flex-wrap items-center gap-2 no-print">
-                <button id="presenter-btn" class="px-3 py-2 rounded-lg bg-emerald-600 text-white font-semibold" data-translate-key="presenter_mode">Presentador</button>
+                <span class="px-3 py-2 rounded-lg bg-emerald-600 text-white font-semibold" data-translate-key="presenter_mode_label">Modo presentador</span>
                 <select id="theme-selector" class="px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900">
                     <option value="system" data-translate-key="theme_system">Tema: Sistema</option>
                     <option value="light" data-translate-key="theme_light">Tema: Claro</option>
@@ -62,11 +69,15 @@
 
         <main class="mt-8">
             <section id="presenter-view" class="space-y-6">
-                <div class="no-print flex flex-wrap gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
+                <div class="tab-bar no-print flex flex-wrap gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
                     <button class="tab-btn active px-3 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-sm font-semibold" data-tab="ticket" data-translate-key="tab_ticket">Ticket</button>
                     <button class="tab-btn px-3 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-sm font-semibold" data-tab="session" data-translate-key="tab_session">Sesión</button>
                     <button class="tab-btn px-3 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-sm font-semibold" data-tab="results" data-translate-key="tab_results">Resultados</button>
                     <button class="tab-btn px-3 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-sm font-semibold" data-tab="portable" data-translate-key="tab_portable">Portable</button>
+                </div>
+
+                <div id="projector-ticket" class="card rounded-2xl shadow-lg border border-emerald-200/70 dark:border-emerald-700/60 p-10 bg-emerald-50/70 dark:bg-emerald-900/20">
+                    <div id="projector-output"></div>
                 </div>
 
                 <div id="tab-ticket" class="tab-panel active">
@@ -209,10 +220,6 @@
                         </div>
                     </div>
 
-                    <div class="mt-6 card rounded-2xl shadow-lg border border-slate-200/70 dark:border-slate-800 p-6">
-                        <h2 class="text-xl font-bold" data-translate-key="limits_title">Limitaciones y alternativa</h2>
-                        <p class="text-sm text-slate-500 dark:text-slate-400" data-translate-key="limits_body">Si la red bloquea WebRTC o PeerJS, utiliza el modo portable para distribuir el ticket y recopilar respuestas fuera de la aplicación.</p>
-                    </div>
                 </div>
 
                 <div id="tab-results" class="tab-panel">
@@ -248,7 +255,6 @@
                         <p class="text-sm text-slate-500 dark:text-slate-400" data-translate-key="portable_subtitle">Genera un ticket para copiar, imprimir o guardar.</p>
                         <div class="mt-4 space-y-3">
                             <div class="flex flex-wrap gap-2">
-                                <button id="generate-portable" class="px-3 py-2 rounded-lg bg-slate-900 text-white dark:bg-white dark:text-slate-900 text-sm" data-translate-key="generate_portable_btn">Generar</button>
                                 <button id="copy-portable" class="px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 text-sm" data-translate-key="copy_portable_btn">Copiar</button>
                                 <button id="download-md" class="px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 text-sm">.md</button>
                                 <button id="download-txt" class="px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 text-sm">.txt</button>
@@ -1256,18 +1262,12 @@
         function switchView(view) {
             const presenter = document.getElementById('presenter-view');
             const student = document.getElementById('student-view');
-            const presenterBtn = document.getElementById('presenter-btn');
-            const studentBtn = document.getElementById('student-btn');
             if (view === 'presenter') {
                 presenter.classList.remove('hidden');
                 student.classList.add('hidden');
-                if (presenterBtn) presenterBtn.classList.add('bg-emerald-600', 'text-white');
-                if (studentBtn) studentBtn.classList.remove('bg-emerald-600', 'text-white');
             } else {
                 presenter.classList.add('hidden');
                 student.classList.remove('hidden');
-                if (studentBtn) studentBtn.classList.add('bg-emerald-600', 'text-white');
-                if (presenterBtn) presenterBtn.classList.remove('bg-emerald-600', 'text-white');
             }
             localStorage.setItem('preferred_role', view);
         }
@@ -1602,6 +1602,20 @@
             setTimeout(() => URL.revokeObjectURL(link.href), 1000);
         }
 
+        function buildExportFilename(extension) {
+            const templateName = document.getElementById('template-name').value.trim();
+            const ticketTitle = document.getElementById('ticket-title').value.trim();
+            const base = templateName || ticketTitle || 'ticket';
+            const sanitized = base
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/^-+|-+$/g, '')
+                .slice(0, 60);
+            return `${sanitized || 'ticket'}.${extension}`;
+        }
+
         function buildPortableText(format) {
             const ticket = buildTicketFromForm();
             const lines = [];
@@ -1639,12 +1653,29 @@
         function refreshTicketPreview() {
             const preview = document.getElementById('portable-preview');
             preview.value = buildPortableText('txt');
-            renderPortableHtml();
+            renderTicketHtml('portable-output');
+            renderTicketHtml('projector-output');
         }
 
-        function renderPortableHtml() {
+        function attachPortableLiveUpdates() {
+            const fields = [
+                'ticket-title',
+                'ticket-criteria',
+                'ticket-instructions',
+                'items-container'
+            ];
+            fields.forEach((id) => {
+                const el = document.getElementById(id);
+                if (!el) return;
+                el.addEventListener('input', refreshTicketPreview);
+                el.addEventListener('change', refreshTicketPreview);
+            });
+        }
+
+        function renderTicketHtml(targetId) {
             const ticket = buildTicketFromForm();
-            const output = document.getElementById('portable-output');
+            const output = document.getElementById(targetId);
+            if (!output) return;
             output.innerHTML = '';
             const title = document.createElement('h1');
             title.className = 'text-2xl font-bold mb-2';
@@ -1998,6 +2029,7 @@
                 lastTemplateIndex = availableTemplates.length - 1;
             }
             selector.value = String(lastTemplateIndex);
+            updateDeleteTemplateVisibility();
         }
 
         function saveTemplate() {
@@ -2044,17 +2076,29 @@
             loadTemplates();
         }
 
+        function updateDeleteTemplateVisibility() {
+            const deleteBtn = document.getElementById('delete-template');
+            const selector = document.getElementById('template-selector');
+            if (!deleteBtn || !selector) return;
+            const index = Number(selector.value);
+            const selected = Number.isNaN(index) ? null : availableTemplates[index];
+            deleteBtn.classList.toggle('hidden', !selected || selected.source !== 'custom');
+        }
+
         function exportTemplates() {
-            const templates = JSON.parse(localStorage.getItem('ticket_templates') || '[]');
-            if (!templates.length) {
+            const customTemplates = JSON.parse(localStorage.getItem('ticket_templates') || '[]');
+            const ticket = buildTicketFromForm();
+            const hasTicketContent = ticket.title || ticket.criteria || ticket.instructions || ticket.items.length > 0;
+            if (!customTemplates.length && !hasTicketContent) {
                 showToast('toast_no_templates', 'No hay plantillas para exportar.');
                 return;
             }
             const payload = {
                 exportedAt: new Date().toISOString(),
-                templates
+                templates: customTemplates,
+                currentTicket: hasTicketContent ? ticket : null
             };
-            downloadFile('ticket-templates.json', JSON.stringify(payload, null, 2), 'application/json');
+            downloadFile(buildExportFilename('json'), JSON.stringify(payload, null, 2), 'application/json');
             showToast('toast_templates_exported', 'Plantillas exportadas.');
         }
 
@@ -2064,14 +2108,25 @@
                 try {
                     const parsed = JSON.parse(reader.result);
                     const incoming = Array.isArray(parsed) ? parsed : parsed.templates;
-                    if (!Array.isArray(incoming)) {
+                    if (!Array.isArray(incoming) && !parsed.currentTicket) {
                         showToast('toast_templates_invalid', 'Archivo de plantillas no valido.');
                         return;
                     }
-            const current = JSON.parse(localStorage.getItem('ticket_templates') || '[]');
-            const merged = current.concat(incoming.filter((item) => item && item.name && item.ticket));
-            localStorage.setItem('ticket_templates', JSON.stringify(merged));
-            loadTemplates();
+                    const current = JSON.parse(localStorage.getItem('ticket_templates') || '[]');
+                    const merged = current.concat(Array.isArray(incoming) ? incoming.filter((item) => item && item.name && item.ticket) : []);
+                    localStorage.setItem('ticket_templates', JSON.stringify(merged));
+                    if (parsed.currentTicket && parsed.currentTicket.items) {
+                        document.getElementById('ticket-title').value = parsed.currentTicket.title || '';
+                        document.getElementById('ticket-criteria').value = parsed.currentTicket.criteria || '';
+                        document.getElementById('ticket-instructions').value = parsed.currentTicket.instructions || '';
+                        const container = document.getElementById('items-container');
+                        container.innerHTML = '';
+                        parsed.currentTicket.items.forEach((item) => {
+                            const card = createItemCard(item);
+                            container.appendChild(card);
+                        });
+                    }
+                    loadTemplates();
                     showToast('toast_templates_imported', 'Plantillas importadas.');
                 } catch (err) {
                     console.error(err);
@@ -2115,10 +2170,6 @@
             document.getElementById('theme-selector').value = themePref;
             applyTheme(themePref);
 
-            const presenterBtn = document.getElementById('presenter-btn');
-            const studentBtn = document.getElementById('student-btn');
-            if (presenterBtn) presenterBtn.addEventListener('click', () => switchView('presenter'));
-            if (studentBtn) studentBtn.addEventListener('click', () => switchView('student'));
             document.getElementById('switch-to-presenter').addEventListener('click', (e) => {
                 e.preventDefault();
                 switchView('presenter');
@@ -2148,6 +2199,7 @@
                 }
                 lastTemplateIndex = e.target.value;
                 loadTemplate();
+                updateDeleteTemplateVisibility();
             });
             document.getElementById('import-templates-input').addEventListener('change', (e) => {
                 const file = e.target.files[0];
@@ -2173,28 +2225,27 @@
                 showToast('toast_copied', 'Copiado.');
             });
             document.getElementById('download-analysis').addEventListener('click', () => {
-                downloadFile('ticket-analisis.txt', buildAnalysisText(), 'text/plain');
+                downloadFile(buildExportFilename('txt'), buildAnalysisText(), 'text/plain');
             });
             document.getElementById('download-csv').addEventListener('click', () => {
-                downloadFile('ticket.csv', buildCsv(), 'text/csv');
+                downloadFile(buildExportFilename('csv'), buildCsv(), 'text/csv');
             });
             document.getElementById('download-json').addEventListener('click', () => {
-                downloadFile('ticket.json', JSON.stringify(Array.from(responsesMap.values()), null, 2), 'application/json');
+                downloadFile(buildExportFilename('json'), JSON.stringify(Array.from(responsesMap.values()), null, 2), 'application/json');
             });
 
-            document.getElementById('generate-portable').addEventListener('click', refreshTicketPreview);
             document.getElementById('copy-portable').addEventListener('click', () => {
                 navigator.clipboard.writeText(document.getElementById('portable-preview').value);
                 showToast('toast_copied', 'Copiado.');
             });
             document.getElementById('download-md').addEventListener('click', () => {
-                downloadFile('ticket.md', buildPortableText('md'), 'text/markdown');
+                downloadFile(buildExportFilename('md'), buildPortableText('md'), 'text/markdown');
             });
             document.getElementById('download-txt').addEventListener('click', () => {
-                downloadFile('ticket.txt', buildPortableText('txt'), 'text/plain');
+                downloadFile(buildExportFilename('txt'), buildPortableText('txt'), 'text/plain');
             });
             document.getElementById('download-docx').addEventListener('click', () => {
-                downloadFile('ticket.docx', buildPortableText('txt'), 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+                downloadFile(buildExportFilename('docx'), buildPortableText('txt'), 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
             });
             document.getElementById('print-portable').addEventListener('click', () => {
                 refreshTicketPreview();
@@ -2246,6 +2297,7 @@
             document.querySelectorAll('.tab-btn').forEach((btn) => {
                 btn.addEventListener('click', () => setPresenterTab(btn.dataset.tab));
             });
+            attachPortableLiveUpdates();
 
             const params = new URLSearchParams(window.location.search);
             const sessionId = params.get('session');

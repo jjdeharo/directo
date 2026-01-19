@@ -1,7 +1,7 @@
 {
   "main_title": "Exit-Tickets",
   "main_subtitle": "Sammle kurze Rückmeldungen am Ende der Stunde, live oder im portablen Modus.",
-  "presenter_mode": "Präsentator",
+  "presenter_mode_label": "Präsentationsmodus",
   "student_mode": "Schüler",
   "theme_system": "Thema: System",
   "theme_light": "Thema: Hell",

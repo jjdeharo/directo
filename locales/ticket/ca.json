@@ -1,7 +1,7 @@
 {
   "main_title": "Tiquets de sortida",
   "main_subtitle": "Recull impressions ràpides al final de la sessió, en directe o en mode portable.",
-  "presenter_mode": "Presentador",
+  "presenter_mode_label": "Mode presentador",
   "student_mode": "Alumne",
   "theme_system": "Tema: Sistema",
   "theme_light": "Tema: Clar",

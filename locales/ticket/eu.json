@@ -1,7 +1,7 @@
 {
   "main_title": "Irteera-txartelak",
   "main_subtitle": "Saioaren amaieran inpresio azkarrak jaso, zuzenean edo modu eramangarrian.",
-  "presenter_mode": "Aurkezlea",
+  "presenter_mode_label": "Aurkezle modua",
   "student_mode": "Ikaslea",
   "theme_system": "Gaia: Sistema",
   "theme_light": "Gaia: Argia",

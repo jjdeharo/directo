@@ -1,7 +1,7 @@
 {
   "main_title": "Exit Tickets",
   "main_subtitle": "Collect quick reflections at the end of the session, live or in portable mode.",
-  "presenter_mode": "Presenter",
+  "presenter_mode_label": "Presenter mode",
   "student_mode": "Student",
   "theme_system": "Theme: System",
   "theme_light": "Theme: Light",

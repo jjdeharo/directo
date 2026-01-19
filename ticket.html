@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tickets de salida</title>
+    <script>
+        tailwind = { config: { darkMode: 'class', theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } } } };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.4.7/peerjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .card { background: rgba(255, 255, 255, 0.92); }
+        .dark .card { background: rgba(15, 23, 42, 0.92); }
+        .qr-wrapper { position: relative; display: inline-flex; flex-direction: column; align-items: center; gap: 0.35rem; }
+        .qr-tooltip { position: absolute; top: -10px; transform: translateY(-100%); background: #111827; color: #ffffff; font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 999px; opacity: 0; pointer-events: none; transition: opacity 0.2s ease, transform 0.2s ease; white-space: nowrap; }
+        .qr-wrapper:hover .qr-tooltip { opacity: 1; transform: translateY(-120%); }
+        .qr-hint { font-size: 0.75rem; color: #4b5563; }
+        .dark .qr-hint { color: #94a3b8; }
+        .projector-mode #ticket-builder,
+        .projector-mode #portable-card,
+        .projector-mode #session-config-card { display: none; }
+        .projector-mode #responses-card { grid-column: span 2 / span 2; }
+        .exit-projector { display: none; }
+        .projector-mode .exit-projector { display: inline-flex; }
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
+        .tab-btn { border: 1px solid transparent; }
+        .tab-btn.active { background: #0f172a; color: #fff; border-color: #0f172a; }
+        .dark .tab-btn.active { background: #e2e8f0; color: #0f172a; border-color: #e2e8f0; }
+        @media print {
+            body { background: white !important; color: #111827 !important; }
+            body * { visibility: hidden !important; }
+            #portable-print, #portable-print * { visibility: visible !important; }
+            #portable-print { display: block !important; position: absolute; inset: 0; padding: 2rem; }
+        }
+        #portable-print { display: none; }
+    </style>
+</head>
+<body class="min-h-full bg-slate-100 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+    <div class="max-w-6xl mx-auto px-4 py-6 md:px-8 md:py-10">
+        <header class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div>
+                <h1 id="main-title" class="text-3xl md:text-4xl font-extrabold" data-translate-key="main_title">Tickets de salida</h1>
+                <p id="main-subtitle" class="text-slate-600 dark:text-slate-300" data-translate-key="main_subtitle">Recoge impresiones rápidas al final de la sesión, en directo o en modo portable.</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-2 no-print">
+                <button id="presenter-btn" class="px-3 py-2 rounded-lg bg-emerald-600 text-white font-semibold" data-translate-key="presenter_mode">Presentador</button>
+                <select id="theme-selector" class="px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900">
+                    <option value="system" data-translate-key="theme_system">Tema: Sistema</option>
+                    <option value="light" data-translate-key="theme_light">Tema: Claro</option>
+                    <option value="dark" data-translate-key="theme_dark">Tema: Oscuro</option>
+                </select>
+                <select id="lang-selector" class="px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900"></select>
+            </div>
+        </header>
+
+        <main class="mt-8">
+            <section id="presenter-view" class="space-y-6">
+                <div class="no-print flex flex-wrap gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
+                    <button class="tab-btn active px-3 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-sm font-semibold" data-tab="ticket" data-translate-key="tab_ticket">Ticket</button>
+                    <button class="tab-btn px-3 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-sm font-semibold" data-tab="session" data-translate-key="tab_session">Sesión</button>
+                    <button class="tab-btn px-3 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-sm font-semibold" data-tab="results" data-translate-key="tab_results">Resultados</button>
+                    <button class="tab-btn px-3 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-sm font-semibold" data-tab="portable" data-translate-key="tab_portable">Portable</button>
+                </div>
+
+                <div id="tab-ticket" class="tab-panel active">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div id="ticket-builder" class="card rounded-2xl shadow-lg border border-emerald-200/70 dark:border-emerald-700/60 p-6 lg:col-span-2 bg-emerald-50/70 dark:bg-emerald-900/20">
+                            <div class="flex flex-col gap-4 mb-4 md:flex-row md:items-start md:justify-between">
+                                <div>
+                                    <h2 class="text-xl font-bold" data-translate-key="builder_title">Crear ticket</h2>
+                                    <p class="text-sm text-slate-500 dark:text-slate-400" data-translate-key="builder_subtitle">Define las preguntas y reutiliza plantillas.</p>
+                                </div>
+                                <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-end">
+                                    <select id="template-selector" class="w-full sm:w-64 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2"></select>
+                                    <button id="delete-template" class="px-3 py-2 rounded-lg border border-rose-500 text-rose-600" data-translate-key="delete_template_btn">Eliminar</button>
+                                    <button id="clear-ticket" class="px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-200" data-translate-key="builder_clear">Limpiar</button>
+                                    <input id="import-templates-input" type="file" accept="application/json" class="hidden">
+                                </div>
+                            </div>
+                            <p class="mb-4 text-xs text-slate-500 dark:text-slate-400" data-translate-key="template_hint">Sustituye los textos entre corchetes (ej. [Tema]).</p>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="text-sm font-semibold" data-translate-key="ticket_title_label">Titulo del ticket</label>
+                                    <input id="ticket-title" type="text" class="mt-2 w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2" placeholder="Resumen de la clase" data-translate-key="ticket_title_placeholder" data-translate-attr="placeholder">
+                                </div>
+                                <div>
+                                    <label class="text-sm font-semibold" data-translate-key="ticket_criteria_label">Criterios / objetivos (opcional)</label>
+                                    <input id="ticket-criteria" type="text" class="mt-2 w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2" placeholder="Identificar ideas clave" data-translate-key="ticket_criteria_placeholder" data-translate-attr="placeholder">
+                                </div>
+                                <div>
+                                    <label class="text-sm font-semibold" data-translate-key="ticket_instructions_label">Instrucciones para el alumnado</label>
+                                    <textarea id="ticket-instructions" class="mt-2 w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2" rows="2" placeholder="Responde con claridad y concisión" data-translate-key="ticket_instructions_placeholder" data-translate-attr="placeholder"></textarea>
+                                </div>
+                            </div>
+                            <div class="mt-6">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="text-lg font-semibold" data-translate-key="items_title">Items del ticket</h3>
+                                    <button id="add-item" class="px-3 py-2 rounded-lg bg-slate-900 text-white dark:bg-white dark:text-slate-900 text-sm font-semibold" data-translate-key="add_item_btn">Agregar item</button>
+                                </div>
+                                <div id="items-container" class="mt-4 space-y-4"></div>
+                            </div>
+                            <div class="mt-6 border-t border-slate-200 dark:border-slate-800 pt-4">
+                                <div class="flex flex-col md:flex-row md:items-end gap-3">
+                                    <div class="flex-1">
+                                        <label class="text-sm font-semibold" data-translate-key="template_name_label">Nombre de plantilla</label>
+                                        <input id="template-name" type="text" class="mt-2 w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2" placeholder="Ticket semanal" data-translate-key="template_name_placeholder" data-translate-attr="placeholder">
+                                    </div>
+                                    <button id="save-template" class="px-4 py-2 rounded-lg bg-emerald-600 text-white font-semibold" data-translate-key="save_template_btn">Guardar plantilla</button>
+                                </div>
+                                <div class="mt-4 flex flex-col md:flex-row md:items-center gap-3">
+                                    <div class="flex flex-wrap gap-2">
+                                        <button id="export-templates" class="px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700" data-translate-key="export_templates_btn">Exportar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-session" class="tab-panel">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div id="session-config-card" class="card rounded-2xl shadow-lg border border-slate-200/70 dark:border-slate-800 p-6 lg:col-span-2">
+                            <h2 class="text-xl font-bold" data-translate-key="session_title">Sesión en directo (P2P)</h2>
+                            <p class="text-sm text-slate-500 dark:text-slate-400" data-translate-key="session_subtitle">Comparte el codigo o QR para recibir respuestas.</p>
+
+                            <div class="mt-4 space-y-3">
+                                <div class="flex flex-col sm:flex-row gap-2">
+                                    <button id="start-session" class="flex-1 px-4 py-2 rounded-lg bg-emerald-600 text-white font-semibold" data-translate-key="start_session_btn">Iniciar sesion</button>
+                                    <button id="end-session" class="flex-1 px-4 py-2 rounded-lg bg-slate-200 text-slate-700 dark:bg-slate-800 dark:text-slate-200 font-semibold" data-translate-key="end_session_btn">Finalizar</button>
+                                </div>
+                                <button id="toggle-projector" class="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-700" data-translate-key="projector_btn">Modo proyector</button>
+                            </div>
+
+                            <div id="session-info" class="mt-5 space-y-4 hidden">
+                                <div class="rounded-lg bg-slate-100 dark:bg-slate-900/70 p-3">
+                                    <p class="text-xs text-slate-500" data-translate-key="session_code_label">Código de sesión</p>
+                                    <div class="flex items-center justify-between">
+                                        <span id="session-code" class="text-lg font-bold tracking-widest"></span>
+                                        <button id="copy-code" class="text-sm text-emerald-600" data-translate-key="copy_code_btn">Copiar</button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-slate-500" data-translate-key="session_link_label">Enlace directo</p>
+                                    <div class="flex items-center gap-2">
+                                        <input id="session-link" class="flex-1 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-2 py-1 text-xs" readonly>
+                                        <button id="copy-link" class="text-sm text-emerald-600" data-translate-key="copy_link_btn">Copiar</button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="qr-wrapper">
+                                        <span class="qr-tooltip" data-translate-key="qr_expand_hint">Haz clic para ampliar</span>
+                                        <div id="qrcode" class="cursor-pointer"></div>
+                                        <span class="qr-hint" data-translate-key="qr_hint">Toca para ampliar</span>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2 gap-3 text-sm">
+                                    <div class="rounded-lg border border-slate-200 dark:border-slate-800 p-3">
+                                        <p class="text-xs text-slate-500" data-translate-key="connections_label">Conectados</p>
+                                        <p id="connections-count" class="text-lg font-semibold">0</p>
+                                    </div>
+                                    <div class="rounded-lg border border-slate-200 dark:border-slate-800 p-3">
+                                        <p class="text-xs text-slate-500" data-translate-key="responses_label">Respuestas</p>
+                                        <p id="responses-count" class="text-lg font-semibold">0</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-5 border-t border-slate-200 dark:border-slate-800 pt-4 space-y-3">
+                                <button id="toggle-config" class="text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-200" data-translate-key="peer_config_toggle">Configuracion avanzada de PeerServer</button>
+                                <div id="peer-config" class="space-y-3 hidden">
+                                    <div>
+                                        <label class="text-xs text-slate-500" data-translate-key="peer_host_label">Host</label>
+                                        <input id="peer-host" type="text" class="mt-1 w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-2 py-1 text-sm" value="0.peerjs.com">
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <div>
+                                            <label class="text-xs text-slate-500" data-translate-key="peer_port_label">Puerto</label>
+                                            <input id="peer-port" type="number" class="mt-1 w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-2 py-1 text-sm" value="443">
+                                        </div>
+                                        <div>
+                                            <label class="text-xs text-slate-500" data-translate-key="peer_path_label">Path</label>
+                                            <input id="peer-path" type="text" class="mt-1 w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-2 py-1 text-sm" value="/">
+                                        </div>
+                                    </div>
+                                    <label class="flex items-center gap-2 text-sm">
+                                        <input id="peer-secure" type="checkbox" class="rounded" checked>
+                                        <span data-translate-key="peer_secure_label">Usar conexion segura (TLS)</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card rounded-2xl shadow-lg border border-slate-200/70 dark:border-slate-800 p-6">
+                            <h2 class="text-xl font-bold" data-translate-key="timer_title">Temporizador opcional</h2>
+                            <p class="text-sm text-slate-500 dark:text-slate-400" data-translate-key="timer_subtitle">Configura un tiempo límite para responder.</p>
+                            <div class="mt-3 flex items-center gap-2">
+                                <input id="timer-minutes" type="number" min="1" class="w-24 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-2 py-1" placeholder="5">
+                                <button id="start-timer" class="px-3 py-2 rounded-lg bg-slate-900 text-white dark:bg-white dark:text-slate-900" data-translate-key="start_timer_btn">Iniciar</button>
+                                <button id="stop-timer" class="px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700" data-translate-key="stop_timer_btn">Detener</button>
+                            </div>
+                            <p id="timer-display" class="mt-3 text-lg font-semibold">00:00</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 card rounded-2xl shadow-lg border border-slate-200/70 dark:border-slate-800 p-6">
+                        <h2 class="text-xl font-bold" data-translate-key="limits_title">Limitaciones y alternativa</h2>
+                        <p class="text-sm text-slate-500 dark:text-slate-400" data-translate-key="limits_body">Si la red bloquea WebRTC o PeerJS, utiliza el modo portable para distribuir el ticket y recopilar respuestas fuera de la aplicación.</p>
+                    </div>
+                </div>
+
+                <div id="tab-results" class="tab-panel">
+                    <div id="responses-card" class="card rounded-2xl shadow-lg border border-slate-200/70 dark:border-slate-800 p-6">
+                        <div class="flex items-center justify-between">
+                            <h2 class="text-xl font-bold" data-translate-key="responses_title">Respuestas recibidas</h2>
+                            <div class="flex flex-wrap gap-2">
+                                <button id="copy-analysis" class="px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 text-sm" data-translate-key="copy_analysis_btn">Copiar texto</button>
+                                <button id="download-analysis" class="px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 text-sm" data-translate-key="download_analysis_btn">TXT análisis</button>
+                                <button id="download-csv" class="px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 text-sm">CSV</button>
+                                <button id="download-json" class="px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 text-sm">JSON</button>
+                            </div>
+                        </div>
+                        <div class="mt-4 overflow-x-auto">
+                            <table class="min-w-full text-sm">
+                                <thead class="text-left text-slate-500">
+                                    <tr>
+                                        <th class="py-2" data-translate-key="table_id">ID</th>
+                                        <th class="py-2" data-translate-key="table_time">Hora</th>
+                                        <th class="py-2" data-translate-key="table_answers">Respuestas</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="responses-table" class="divide-y divide-slate-200 dark:divide-slate-800"></tbody>
+                            </table>
+                        </div>
+                        <p id="responses-empty" class="mt-4 text-sm text-slate-500" data-translate-key="responses_empty">Aún no hay respuestas.</p>
+                    </div>
+                </div>
+
+                <div id="tab-portable" class="tab-panel">
+                    <div id="portable-card" class="card rounded-2xl shadow-lg border border-slate-200/70 dark:border-slate-800 p-6">
+                        <h2 class="text-xl font-bold" data-translate-key="portable_title">Modo portable</h2>
+                        <p class="text-sm text-slate-500 dark:text-slate-400" data-translate-key="portable_subtitle">Genera un ticket para copiar, imprimir o guardar.</p>
+                        <div class="mt-4 space-y-3">
+                            <div class="flex flex-wrap gap-2">
+                                <button id="generate-portable" class="px-3 py-2 rounded-lg bg-slate-900 text-white dark:bg-white dark:text-slate-900 text-sm" data-translate-key="generate_portable_btn">Generar</button>
+                                <button id="copy-portable" class="px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 text-sm" data-translate-key="copy_portable_btn">Copiar</button>
+                                <button id="download-md" class="px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 text-sm">.md</button>
+                                <button id="download-txt" class="px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 text-sm">.txt</button>
+                                <button id="download-docx" class="px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 text-sm">.docx</button>
+                                <button id="print-portable" class="px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 text-sm" data-translate-key="print_portable_btn">Imprimir</button>
+                            </div>
+                            <textarea id="portable-preview" class="w-full h-48 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2 text-xs" readonly></textarea>
+                        </div>
+                        <div class="mt-4 rounded-lg border border-amber-200 bg-amber-50 text-amber-800 text-xs p-3 dark:border-amber-700/60 dark:bg-amber-900/30 dark:text-amber-100">
+                            <p class="font-semibold" data-translate-key="portable_note_title">Nota:</p>
+                            <p data-translate-key="portable_note_body">El modo portable no recoge respuestas dentro de la app. Comparte el ticket en tu plataforma habitual.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="student-view" class="hidden space-y-6">
+                <div class="card rounded-2xl shadow-lg border border-slate-200/70 dark:border-slate-800 p-6">
+                    <h2 class="text-xl font-bold" data-translate-key="join_title">Unirse a un ticket</h2>
+                    <p class="text-sm text-slate-500 dark:text-slate-400" data-translate-key="join_subtitle">Introduce el código o escanea el QR del docente.</p>
+                    <div class="mt-4 space-y-3">
+                        <div class="flex flex-col md:flex-row gap-3">
+                            <input id="join-code" type="text" class="flex-1 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2 uppercase tracking-widest" placeholder="ABC123" data-translate-key="join_code_placeholder" data-translate-attr="placeholder">
+                            <button id="join-session" class="px-4 py-2 rounded-lg bg-emerald-600 text-white font-semibold" data-translate-key="join_btn">Conectar</button>
+                        </div>
+                        <div>
+                            <label class="text-sm font-semibold" data-translate-key="student_id_label">Tu ID del centro</label>
+                            <input id="student-id-input" type="text" class="mt-2 w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2 uppercase tracking-widest" data-translate-key="student_id_placeholder" data-translate-attr="placeholder">
+                        </div>
+                    </div>
+                    <p id="join-error" class="mt-3 text-sm text-rose-500 hidden" data-translate-key="join_error">No se pudo conectar. Comprueba el código.</p>
+                    <p id="join-status" class="mt-3 text-sm text-emerald-600 hidden" data-translate-key="join_ready">Conectado y listo para responder.</p>
+                    <p class="text-center mt-6 text-sm text-slate-500">
+                        <a href="#" id="switch-to-presenter" class="hover:text-emerald-600" data-translate-key="switch_to_presenter">¿Eres el presentador? Inicia sesion aqui.</a>
+                    </p>
+                </div>
+
+                <div id="ticket-view" class="card rounded-2xl shadow-lg border border-slate-200/70 dark:border-slate-800 p-6 hidden">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h2 id="student-ticket-title" class="text-xl font-bold"></h2>
+                            <p id="student-ticket-criteria" class="text-sm text-slate-500 dark:text-slate-400"></p>
+                        </div>
+                        <span id="ticket-timer" class="text-sm font-semibold text-amber-600"></span>
+                    </div>
+                    <p id="student-ticket-instructions" class="mt-2 text-sm text-slate-600 dark:text-slate-300"></p>
+                    <form id="ticket-form" class="mt-6 space-y-4"></form>
+                    <button id="submit-ticket" class="mt-4 px-4 py-2 rounded-lg bg-emerald-600 text-white font-semibold" data-translate-key="submit_btn">Enviar respuestas</button>
+                    <p id="submit-error" class="mt-3 text-sm text-rose-500 hidden" data-translate-key="submit_error">Completa los campos obligatorios.</p>
+                </div>
+
+                <div id="ticket-confirmation" class="card rounded-2xl shadow-lg border border-slate-200/70 dark:border-slate-800 p-6 hidden text-center">
+                    <h2 class="text-xl font-bold" data-translate-key="thanks_title">Gracias por tus respuestas</h2>
+                    <p class="text-sm text-slate-500 dark:text-slate-400" data-translate-key="thanks_body">Puedes cerrar esta ventana.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="toast" class="fixed bottom-5 right-5 bg-slate-900 text-white px-4 py-2 rounded-lg shadow-lg opacity-0 transition-opacity duration-300"></div>
+    <button id="exit-projector" class="exit-projector no-print fixed top-4 right-4 px-3 py-2 rounded-lg bg-slate-900 text-white text-sm font-semibold shadow-lg" data-translate-key="exit_projector_btn">Salir del modo proyector</button>
+    <div id="portable-print" class="p-8">
+        <div id="portable-output"></div>
+    </div>
+
+    <script>
+        const APP_ID = 'ticket';
+        const DEFAULT_PEER_CONFIG = {
+            host: '0.peerjs.com',
+            port: 443,
+            path: '/',
+            secure: true,
+            debug: 2,
+            config: {
+                iceServers: [
+                    { urls: 'stun:stun.relay.metered.ca:80' },
+                    {
+                        urls: 'turn:standard.relay.metered.ca:80',
+                        username: '9745e21b303bdaea589c29bc',
+                        credential: 'UgG56tBqCEGNjzLY'
+                    },
+                    {
+                        urls: 'turn:standard.relay.metered.ca:443?transport=tcp',
+                        username: '9745e21b303bdaea589c29bc',
+                        credential: 'UgG56tBqCEGNjzLY'
+                    }
+                ],
+                iceTransportPolicy: 'all'
+            }
+        };
+
+        let translations = {};
+        let currentLang = 'es';
+        let peer = null;
+        let hostConnection = null;
+        let guestConnections = [];
+        let sessionActive = false;
+        let responsesMap = new Map();
+        let currentTicket = null;
+        let qrInstance = null;
+        let timerInterval = null;
+        let remainingSeconds = 0;
+        let projectorMode = false;
+        let availableTemplates = [];
+        let lastTemplateIndex = 0;
+
+        const DEFAULT_TEMPLATES = [
+            {
+                name: 'Plantilla rápida (1 ítem, abierta)',
+                ticket: {
+                    title: 'Ticket rápido: [Tema]',
+                    criteria: 'Idea clave de la sesión sobre [Concepto]',
+                    instructions: 'Responde con una frase breve sobre [Concepto].',
+                    items: [
+                        {
+                            id: 'item_rapida_1',
+                            prompt: '¿Cuál es la idea más importante sobre [Concepto]?',
+                            type: 'short_text',
+                            required: true
+                        }
+                    ]
+                }
+            },
+            {
+                name: 'Plantilla de verificación rápida (1 ítem, cerrada)',
+                ticket: {
+                    title: 'Verificación rápida: [Tema]',
+                    criteria: 'Termómetro del grupo sobre [Concepto]',
+                    instructions: 'Selecciona una opción.',
+                    items: [
+                        {
+                            id: 'item_verificacion_1',
+                            prompt: '¿Qué tan claro te queda [Concepto]?',
+                            type: 'single_choice',
+                            required: true,
+                            options: ['Muy claro', 'Algo claro', 'Poco claro', 'Nada claro']
+                        }
+                    ]
+                }
+            },
+            {
+                name: 'Plantilla diagnóstica (2 ítems)',
+                ticket: {
+                    title: 'Diagnóstico rápido: [Tema]',
+                    criteria: 'Concepto y aplicación de [Concepto]',
+                    instructions: 'Responde con precisión.',
+                    items: [
+                        {
+                            id: 'item_diagnostico_1',
+                            prompt: 'Define brevemente [Concepto].',
+                            type: 'short_text',
+                            required: true
+                        },
+                        {
+                            id: 'item_diagnostico_2',
+                            prompt: 'Aplica [Concepto] en un ejemplo sencillo.',
+                            type: 'long_text',
+                            required: true
+                        }
+                    ]
+                }
+            },
+            {
+                name: 'Plantilla de evidencia mínima (2 ítems)',
+                ticket: {
+                    title: 'Evidencia mínima: [Tema]',
+                    criteria: 'Resultado y justificación sobre [Concepto]',
+                    instructions: 'Incluye un resultado y una breve evidencia.',
+                    items: [
+                        {
+                            id: 'item_evidencia_1',
+                            prompt: 'Resultado o decisión principal sobre [Situación].',
+                            type: 'short_text',
+                            required: true
+                        },
+                        {
+                            id: 'item_evidencia_2',
+                            prompt: 'Justifica tu respuesta con una evidencia.',
+                            type: 'long_text',
+                            required: true
+                        }
+                    ]
+                }
+            },
+            {
+                name: 'Plantilla de análisis formativo (3 ítems)',
+                ticket: {
+                    title: 'Análisis formativo: [Tema]',
+                    criteria: 'Identificación, aplicación y evidencia sobre [Concepto]',
+                    instructions: 'Responde cada punto de forma clara.',
+                    items: [
+                        {
+                            id: 'item_formativo_1',
+                            prompt: 'Identifica o define [Concepto].',
+                            type: 'short_text',
+                            required: true
+                        },
+                        {
+                            id: 'item_formativo_2',
+                            prompt: 'Aplica [Concepto] a una situación concreta.',
+                            type: 'long_text',
+                            required: true
+                        },
+                        {
+                            id: 'item_formativo_3',
+                            prompt: 'Explica brevemente por qué es correcto.',
+                            type: 'long_text',
+                            required: true
+                        }
+                    ]
+                }
+            },
+            {
+                name: 'Plantilla metacognitiva',
+                ticket: {
+                    title: 'Metacognición: [Tema]',
+                    criteria: 'Percepción de aprendizaje en [Tema]',
+                    instructions: 'Responde con honestidad.',
+                    items: [
+                        {
+                            id: 'item_meta_1',
+                            prompt: '¿Qué has aprendido hoy sobre [Tema]?',
+                            type: 'short_text',
+                            required: true
+                        },
+                        {
+                            id: 'item_meta_2',
+                            prompt: '¿Qué te ha resultado más difícil en [Tema]?',
+                            type: 'short_text',
+                            required: true
+                        },
+                        {
+                            id: 'item_meta_3',
+                            prompt: '¿Qué estrategia te ha ayudado más?',
+                            type: 'short_text',
+                            required: false
+                        }
+                    ]
+                }
+            }
+        ];
+
+        async function loadTranslations() {
+            const response = await fetch('locales/index.json', { cache: 'no-store' });
+            if (!response.ok) throw new Error('No se pudo cargar locales/index.json');
+            const languages = await response.json();
+            const selector = document.getElementById('lang-selector');
+            selector.innerHTML = '';
+            languages.forEach((lang) => {
+                const option = document.createElement('option');
+                option.value = lang.code;
+                option.textContent = lang.name;
+                selector.appendChild(option);
+            });
+            const entries = await Promise.all(languages.map(async (lang) => {
+                const langResp = await fetch(`locales/${APP_ID}/${lang.code}.json`, { cache: 'no-store' });
+                if (!langResp.ok) return [lang.code, null];
+                const json = await langResp.json();
+                return [lang.code, json];
+            }));
+            translations = Object.fromEntries(entries);
+            if (!translations.es) {
+                throw new Error(`Falta locales/${APP_ID}/es.json`);
+            }
+            Object.keys(translations).forEach((code) => {
+                if (!translations[code]) translations[code] = translations.es;
+            });
+        }
+
+        function t(key, fallback) {
+            return (translations[currentLang] && translations[currentLang][key]) || fallback || key;
+        }
+
+        function applyTranslations() {
+            document.documentElement.lang = currentLang;
+            document.querySelectorAll('[data-translate-key]').forEach((el) => {
+                const key = el.dataset.translateKey;
+                const value = translations[currentLang] && translations[currentLang][key];
+                if (!value) return;
+                const attr = el.dataset.translateAttr;
+                if (attr) {
+                    el.setAttribute(attr, value);
+                } else {
+                    el.innerText = value;
+                }
+            });
+        }
+
+        function setLanguage(lang) {
+            if (!translations[lang]) return;
+            currentLang = lang;
+            localStorage.setItem('preferred_language', lang);
+            applyTranslations();
+            refreshTicketPreview();
+        }
+
+        function getThemePreference() {
+            return localStorage.getItem('preferred_theme') || 'system';
+        }
+
+        function applyTheme(theme) {
+            const root = document.documentElement;
+            if (theme === 'system') {
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                root.classList.toggle('dark', prefersDark);
+            } else {
+                root.classList.toggle('dark', theme === 'dark');
+            }
+        }
+
+        function setTheme(theme) {
+            localStorage.setItem('preferred_theme', theme);
+            applyTheme(theme);
+        }
+
+        function showToast(messageKey, fallback) {
+            const toast = document.getElementById('toast');
+            toast.innerText = t(messageKey, fallback);
+            toast.style.opacity = 1;
+            setTimeout(() => { toast.style.opacity = 0; }, 2000);
+        }
+
+        function switchView(view) {
+            const presenter = document.getElementById('presenter-view');
+            const student = document.getElementById('student-view');
+            const presenterBtn = document.getElementById('presenter-btn');
+            const studentBtn = document.getElementById('student-btn');
+            if (view === 'presenter') {
+                presenter.classList.remove('hidden');
+                student.classList.add('hidden');
+                if (presenterBtn) presenterBtn.classList.add('bg-emerald-600', 'text-white');
+                if (studentBtn) studentBtn.classList.remove('bg-emerald-600', 'text-white');
+            } else {
+                presenter.classList.add('hidden');
+                student.classList.remove('hidden');
+                if (studentBtn) studentBtn.classList.add('bg-emerald-600', 'text-white');
+                if (presenterBtn) presenterBtn.classList.remove('bg-emerald-600', 'text-white');
+            }
+            localStorage.setItem('preferred_role', view);
+        }
+
+        function updateSessionButtons() {
+            const startBtn = document.getElementById('start-session');
+            const endBtn = document.getElementById('end-session');
+            if (sessionActive) {
+                startBtn.className = 'flex-1 px-4 py-2 rounded-lg bg-emerald-200 text-emerald-900 font-semibold dark:bg-emerald-500/40 dark:text-emerald-100';
+                endBtn.className = 'flex-1 px-4 py-2 rounded-lg bg-rose-600 text-white font-semibold hover:bg-rose-700';
+            } else {
+                startBtn.className = 'flex-1 px-4 py-2 rounded-lg bg-emerald-600 text-white font-semibold hover:bg-emerald-700';
+                endBtn.className = 'flex-1 px-4 py-2 rounded-lg bg-slate-200 text-slate-700 dark:bg-slate-800 dark:text-slate-200 font-semibold';
+            }
+        }
+
+        function createItemCard(item) {
+            const container = document.createElement('div');
+            container.className = 'ticket-item border border-slate-200 dark:border-slate-800 rounded-xl p-4 space-y-3';
+            container.dataset.itemId = item.id;
+            container.innerHTML = `
+                <div class="flex items-center justify-between">
+                    <h4 class="font-semibold">${t('item_label', 'Item')}</h4>
+                    <button class="remove-item text-sm text-rose-500">${t('remove_item', 'Eliminar')}</button>
+                </div>
+                <div>
+                    <label class="text-xs text-slate-500">${t('item_prompt_label', 'Pregunta')}</label>
+                    <input type="text" class="item-prompt mt-1 w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2" value="${item.prompt || ''}" placeholder="${t('item_prompt_placeholder', 'Escribe la pregunta')}" />
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div>
+                        <label class="text-xs text-slate-500">${t('item_type_label', 'Tipo de respuesta')}</label>
+                        <select class="item-type mt-1 w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-2 py-2">
+                            <option value="short_text">${t('type_short', 'Texto breve')}</option>
+                            <option value="long_text">${t('type_long', 'Texto largo')}</option>
+                            <option value="single_choice">${t('type_single', 'Opción única')}</option>
+                            <option value="multi_choice">${t('type_multi', 'Varias opciones')}</option>
+                            <option value="scale">${t('type_scale', 'Escala')}</option>
+                            <option value="number">${t('type_number', 'Respuesta numérica')}</option>
+                            <option value="true_false">${t('type_true_false', 'Verdadero/Falso')}</option>
+                        </select>
+                    </div>
+                    <label class="flex items-center gap-2 text-sm mt-6">
+                        <input type="checkbox" class="item-required" ${item.required ? 'checked' : ''}>
+                        <span>${t('item_required_label', 'Obligatorio')}</span>
+                    </label>
+                </div>
+                <div class="item-options space-y-2"></div>
+            `;
+
+            const typeSelect = container.querySelector('.item-type');
+            typeSelect.value = item.type;
+            const optionsContainer = container.querySelector('.item-options');
+            const renderOptions = () => {
+                optionsContainer.innerHTML = '';
+                const type = typeSelect.value;
+                if (type === 'single_choice' || type === 'multi_choice') {
+                    const options = item.options && item.options.length ? item.options : ['Opción 1', 'Opción 2'];
+                    options.forEach((opt) => addOptionInput(optionsContainer, opt));
+                    const addBtn = document.createElement('button');
+                    addBtn.type = 'button';
+                    addBtn.className = 'text-sm text-emerald-600';
+                    addBtn.innerText = t('add_option_btn', 'Agregar opcion');
+                    addBtn.addEventListener('click', () => addOptionInput(optionsContainer, ''));
+                    optionsContainer.appendChild(addBtn);
+                }
+                if (type === 'scale') {
+                    optionsContainer.innerHTML = `
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="text-xs text-slate-500">${t('scale_min_label', 'Minimo')}</label>
+                                <input type="number" class="scale-min mt-1 w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-2 py-1" value="${item.min ?? 1}">
+                            </div>
+                            <div>
+                                <label class="text-xs text-slate-500">${t('scale_max_label', 'Maximo')}</label>
+                                <input type="number" class="scale-max mt-1 w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-2 py-1" value="${item.max ?? 5}">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <input type="text" class="scale-low mt-1 w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-2 py-1" placeholder="${t('scale_low_placeholder', 'Bajo')}" value="${item.lowLabel || ''}">
+                            <input type="text" class="scale-high mt-1 w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-2 py-1" placeholder="${t('scale_high_placeholder', 'Alto')}" value="${item.highLabel || ''}">
+                        </div>
+                    `;
+                }
+                if (type === 'number') {
+                    optionsContainer.innerHTML = `
+                        <div class="grid grid-cols-2 gap-2">
+                            <input type="number" class="number-min mt-1 w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-2 py-1" placeholder="${t('number_min_placeholder', 'Min (opcional)')}" value="${item.min ?? ''}">
+                            <input type="number" class="number-max mt-1 w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-2 py-1" placeholder="${t('number_max_placeholder', 'Max (opcional)')}" value="${item.max ?? ''}">
+                        </div>
+                    `;
+                }
+            };
+            renderOptions();
+            typeSelect.addEventListener('change', renderOptions);
+            container.querySelector('.remove-item').addEventListener('click', () => container.remove());
+            return container;
+        }
+
+        function addOptionInput(container, value) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'flex items-center gap-2';
+            wrapper.innerHTML = `
+                <input type="text" class="option-input flex-1 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-2 py-1" value="${value}">
+                <button type="button" class="text-rose-500 text-sm">${t('remove_option_btn', 'Quitar')}</button>
+            `;
+            wrapper.querySelector('button').addEventListener('click', () => wrapper.remove());
+            container.appendChild(wrapper);
+        }
+
+        function addItem(type = 'short_text') {
+            const item = {
+                id: `item_${Date.now()}_${Math.random().toString(16).slice(2)}`,
+                type,
+                prompt: '',
+                required: true,
+                options: ['Opción 1', 'Opción 2'],
+                min: 1,
+                max: 5
+            };
+            const card = createItemCard(item);
+            document.getElementById('items-container').appendChild(card);
+        }
+
+        function buildTicketFromForm() {
+            const title = document.getElementById('ticket-title').value.trim();
+            const criteria = document.getElementById('ticket-criteria').value.trim();
+            const instructions = document.getElementById('ticket-instructions').value.trim();
+            const items = [];
+            document.querySelectorAll('.ticket-item').forEach((card) => {
+                const item = {
+                    id: card.dataset.itemId,
+                    prompt: card.querySelector('.item-prompt').value.trim(),
+                    type: card.querySelector('.item-type').value,
+                    required: card.querySelector('.item-required').checked
+                };
+                if (item.type === 'single_choice' || item.type === 'multi_choice') {
+                    item.options = Array.from(card.querySelectorAll('.option-input'))
+                        .map((input) => input.value.trim())
+                        .filter(Boolean);
+                }
+                if (item.type === 'scale') {
+                    item.min = Number(card.querySelector('.scale-min').value) || 1;
+                    item.max = Number(card.querySelector('.scale-max').value) || 5;
+                    item.lowLabel = card.querySelector('.scale-low').value.trim();
+                    item.highLabel = card.querySelector('.scale-high').value.trim();
+                }
+                if (item.type === 'number') {
+                    const minVal = card.querySelector('.number-min').value;
+                    const maxVal = card.querySelector('.number-max').value;
+                    item.min = minVal !== '' ? Number(minVal) : null;
+                    item.max = maxVal !== '' ? Number(maxVal) : null;
+                }
+                items.push(item);
+            });
+            return { title, criteria, instructions, items };
+        }
+
+        function renderTicketForStudent(ticket) {
+            const form = document.getElementById('ticket-form');
+            form.innerHTML = '';
+            ticket.items.forEach((item, index) => {
+                const field = document.createElement('div');
+                field.className = 'space-y-2';
+                const label = document.createElement('label');
+                label.className = 'font-semibold';
+                label.innerText = `${index + 1}. ${item.prompt || t('item_default_prompt', 'Pregunta sin título')}`;
+                field.appendChild(label);
+                if (item.type === 'short_text') {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.className = 'w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2';
+                    input.dataset.itemId = item.id;
+                    field.appendChild(input);
+                }
+                if (item.type === 'long_text') {
+                    const textarea = document.createElement('textarea');
+                    textarea.rows = 3;
+                    textarea.className = 'w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2';
+                    textarea.dataset.itemId = item.id;
+                    field.appendChild(textarea);
+                }
+                if (item.type === 'single_choice') {
+                    item.options.forEach((opt, idx) => {
+                        const option = document.createElement('label');
+                        option.className = 'flex items-center gap-2 text-sm';
+                        option.innerHTML = `<input type="radio" name="${item.id}" value="${opt}"> <span>${opt}</span>`;
+                        field.appendChild(option);
+                    });
+                }
+                if (item.type === 'multi_choice') {
+                    item.options.forEach((opt, idx) => {
+                        const option = document.createElement('label');
+                        option.className = 'flex items-center gap-2 text-sm';
+                        option.innerHTML = `<input type="checkbox" name="${item.id}" value="${opt}"> <span>${opt}</span>`;
+                        field.appendChild(option);
+                    });
+                }
+                if (item.type === 'scale') {
+                    const wrap = document.createElement('div');
+                    wrap.className = 'space-y-1';
+                    wrap.innerHTML = `
+                        <div class="flex justify-between text-xs text-slate-500">
+                            <span>${item.lowLabel || item.min}</span>
+                            <span>${item.highLabel || item.max}</span>
+                        </div>
+                        <input type="range" min="${item.min}" max="${item.max}" step="1" value="${item.min}" class="w-full" data-item-id="${item.id}">
+                    `;
+                    field.appendChild(wrap);
+                }
+                if (item.type === 'number') {
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    if (item.min !== null && item.min !== undefined) input.min = item.min;
+                    if (item.max !== null && item.max !== undefined) input.max = item.max;
+                    input.className = 'w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2';
+                    input.dataset.itemId = item.id;
+                    field.appendChild(input);
+                }
+                if (item.type === 'true_false') {
+                    ['Verdadero', 'Falso'].forEach((opt) => {
+                        const option = document.createElement('label');
+                        option.className = 'flex items-center gap-2 text-sm';
+                        option.innerHTML = `<input type="radio" name="${item.id}" value="${opt}"> <span>${opt}</span>`;
+                        field.appendChild(option);
+                    });
+                }
+                form.appendChild(field);
+            });
+        }
+
+        function collectStudentAnswers(ticket) {
+            const answers = {};
+            let valid = true;
+            ticket.items.forEach((item) => {
+                let value = null;
+                if (item.type === 'short_text' || item.type === 'long_text' || item.type === 'number') {
+                    const input = document.querySelector(`[data-item-id="${item.id}"]`);
+                    value = input ? input.value.trim() : '';
+                }
+                if (item.type === 'single_choice' || item.type === 'true_false') {
+                    const checked = document.querySelector(`input[name="${item.id}"]:checked`);
+                    value = checked ? checked.value : '';
+                }
+                if (item.type === 'multi_choice') {
+                    value = Array.from(document.querySelectorAll(`input[name="${item.id}"]:checked`)).map((el) => el.value);
+                }
+                if (item.type === 'scale') {
+                    const range = document.querySelector(`input[type="range"][data-item-id="${item.id}"]`);
+                    value = range ? range.value : '';
+                }
+                if (item.required) {
+                    if (Array.isArray(value) ? value.length === 0 : !value) valid = false;
+                }
+                answers[item.id] = value;
+            });
+            return { valid, answers };
+        }
+
+        function updateResponsesTable() {
+            const table = document.getElementById('responses-table');
+            table.innerHTML = '';
+            responsesMap.forEach((entry) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="py-2 font-semibold">${entry.studentId}</td>
+                    <td class="py-2 text-slate-500">${new Date(entry.timestamp).toLocaleTimeString()}</td>
+                    <td class="py-2">${formatAnswerSummary(entry.answers)}</td>
+                `;
+                table.appendChild(row);
+            });
+            document.getElementById('responses-empty').classList.toggle('hidden', responsesMap.size > 0);
+            document.getElementById('responses-count').innerText = responsesMap.size;
+        }
+
+        function formatAnswerSummary(answers) {
+            if (!currentTicket) return '';
+            return currentTicket.items.map((item, idx) => {
+                const value = answers[item.id];
+                if (Array.isArray(value)) return `${idx + 1}) ${value.join(', ')}`;
+                return `${idx + 1}) ${value ?? ''}`;
+            }).join(' | ');
+        }
+
+        function buildAnalysisText() {
+            if (!currentTicket) return '';
+            const lines = [];
+            lines.push(`${currentTicket.title || 'Ticket'}`);
+            if (currentTicket.criteria) lines.push(`Criterios: ${currentTicket.criteria}`);
+            if (currentTicket.instructions) lines.push(`Instrucciones: ${currentTicket.instructions}`);
+            lines.push('');
+            currentTicket.items.forEach((item, idx) => {
+                lines.push(`${idx + 1}. ${item.prompt || 'Pregunta sin título'}`);
+                responsesMap.forEach((entry) => {
+                    const value = entry.answers[item.id];
+                    const formatted = Array.isArray(value) ? value.join(', ') : value;
+                    lines.push(`- ${entry.studentId}: ${formatted || ''}`);
+                });
+                lines.push('');
+            });
+            return lines.join('\n');
+        }
+
+        function buildCsv() {
+            if (!currentTicket) return '';
+            const headers = ['id', 'timestamp', ...currentTicket.items.map((item, idx) => `item_${idx + 1}`)];
+            const rows = [headers];
+            responsesMap.forEach((entry) => {
+                const row = [entry.studentId, new Date(entry.timestamp).toISOString()];
+                currentTicket.items.forEach((item) => {
+                    const value = entry.answers[item.id];
+                    const formatted = Array.isArray(value) ? value.join(' | ') : value;
+                    row.push(formatted || '');
+                });
+                rows.push(row);
+            });
+            return rows.map((row) => row.map(csvEscape).join(',')).join('\n');
+        }
+
+        function csvEscape(value) {
+            const text = String(value ?? '');
+            if (/[",\n]/.test(text)) return `"${text.replace(/"/g, '""')}"`;
+            return text;
+        }
+
+        function downloadFile(filename, content, type) {
+            const blob = new Blob([content], { type: type || 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            link.click();
+            setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+        }
+
+        function buildPortableText(format) {
+            const ticket = buildTicketFromForm();
+            const lines = [];
+            if (format === 'md') {
+                lines.push(`# ${ticket.title || 'Ticket de salida'}`);
+                if (ticket.criteria) lines.push(`**Criterios:** ${ticket.criteria}`);
+                if (ticket.instructions) lines.push(`**Instrucciones:** ${ticket.instructions}`);
+                lines.push('');
+                ticket.items.forEach((item, idx) => {
+                    lines.push(`## ${idx + 1}. ${item.prompt || 'Pregunta'}`);
+                    lines.push(`Tipo: ${item.type}`);
+                    if (item.options && item.options.length) {
+                        item.options.forEach((opt) => lines.push(`- [ ] ${opt}`));
+                    } else {
+                        lines.push('');
+                    }
+                    lines.push('');
+                });
+                return lines.join('\n');
+            }
+            lines.push(ticket.title || 'Ticket de salida');
+            if (ticket.criteria) lines.push(`Criterios: ${ticket.criteria}`);
+            if (ticket.instructions) lines.push(`Instrucciones: ${ticket.instructions}`);
+            lines.push('');
+            ticket.items.forEach((item, idx) => {
+                lines.push(`${idx + 1}. ${item.prompt || 'Pregunta'}`);
+                if (item.options && item.options.length) {
+                    item.options.forEach((opt) => lines.push(`- [ ] ${opt}`));
+                }
+                lines.push('');
+            });
+            return lines.join('\n');
+        }
+
+        function refreshTicketPreview() {
+            const preview = document.getElementById('portable-preview');
+            preview.value = buildPortableText('txt');
+            renderPortableHtml();
+        }
+
+        function renderPortableHtml() {
+            const ticket = buildTicketFromForm();
+            const output = document.getElementById('portable-output');
+            output.innerHTML = '';
+            const title = document.createElement('h1');
+            title.className = 'text-2xl font-bold mb-2';
+            title.innerText = ticket.title || 'Ticket de salida';
+            output.appendChild(title);
+            if (ticket.criteria) {
+                const criteria = document.createElement('p');
+                criteria.className = 'text-sm mb-1';
+                criteria.innerText = `Criterios: ${ticket.criteria}`;
+                output.appendChild(criteria);
+            }
+            if (ticket.instructions) {
+                const instructions = document.createElement('p');
+                instructions.className = 'text-sm mb-4';
+                instructions.innerText = `Instrucciones: ${ticket.instructions}`;
+                output.appendChild(instructions);
+            }
+            ticket.items.forEach((item, idx) => {
+                const block = document.createElement('div');
+                block.className = 'mb-4';
+                block.innerHTML = `<p class="font-semibold">${idx + 1}. ${item.prompt || 'Pregunta'}</p>`;
+                if (item.options && item.options.length) {
+                    const list = document.createElement('ul');
+                    list.className = 'list-disc ml-5 text-sm';
+                    item.options.forEach((opt) => {
+                        const li = document.createElement('li');
+                        li.innerText = opt;
+                        list.appendChild(li);
+                    });
+                    block.appendChild(list);
+                } else {
+                    const line = document.createElement('div');
+                    line.className = 'mt-2 border-b border-slate-400';
+                    block.appendChild(line);
+                }
+                output.appendChild(block);
+            });
+        }
+
+        function updateSessionInfo(sessionId) {
+            const link = buildSessionLink(sessionId);
+            document.getElementById('session-code').innerText = sessionId;
+            document.getElementById('session-link').value = link;
+            document.getElementById('session-info').classList.remove('hidden');
+            if (!qrInstance) {
+                qrInstance = new QRCode(document.getElementById('qrcode'), { text: link, width: 140, height: 140 });
+            } else {
+                qrInstance.clear();
+                qrInstance.makeCode(link);
+            }
+            document.getElementById('qrcode').onclick = () => openQrPreview(link);
+        }
+
+        function openQrPreview(link) {
+            const qrContainer = document.getElementById('qrcode');
+            const img = qrContainer.querySelector('img');
+            const canvas = qrContainer.querySelector('canvas');
+            const dataUrl = img ? img.src : (canvas ? canvas.toDataURL('image/png') : '');
+            const win = window.open('', '_blank', 'width=420,height=480');
+            if (!win) return;
+            win.document.title = 'QR';
+            win.document.body.style.margin = '0';
+            win.document.body.style.display = 'flex';
+            win.document.body.style.flexDirection = 'column';
+            win.document.body.style.alignItems = 'center';
+            win.document.body.style.justifyContent = 'center';
+            win.document.body.style.fontFamily = 'Inter, sans-serif';
+            if (dataUrl) {
+                const image = win.document.createElement('img');
+                image.src = dataUrl;
+                image.alt = 'QR';
+                image.style.width = '320px';
+                image.style.height = '320px';
+                image.style.objectFit = 'contain';
+                win.document.body.appendChild(image);
+
+                const resizeQr = () => {
+                    const size = Math.floor(Math.min(win.innerWidth, win.innerHeight));
+                    image.style.width = `${size}px`;
+                    image.style.height = `${size}px`;
+                };
+                resizeQr();
+                win.addEventListener('resize', resizeQr);
+            }
+        }
+
+        function buildSessionLink(sessionId) {
+            const base = window.location.href.split('?')[0].split('#')[0];
+            const params = new URLSearchParams();
+            params.set('session', sessionId);
+            params.set('role', 'student');
+            params.set('lang', currentLang);
+            const peerConfig = getPeerConfigOverrides();
+            params.set('peerHost', peerConfig.host);
+            params.set('peerPort', peerConfig.port);
+            params.set('peerPath', peerConfig.path);
+            params.set('peerSecure', peerConfig.secure ? '1' : '0');
+            return `${base}?${params.toString()}`;
+        }
+
+        function getPeerConfigOverrides() {
+            return {
+                host: document.getElementById('peer-host').value.trim() || DEFAULT_PEER_CONFIG.host,
+                port: Number(document.getElementById('peer-port').value) || DEFAULT_PEER_CONFIG.port,
+                path: document.getElementById('peer-path').value.trim() || DEFAULT_PEER_CONFIG.path,
+                secure: document.getElementById('peer-secure').checked
+            };
+        }
+
+        function buildPeerConfigForSession() {
+            const overrides = getPeerConfigOverrides();
+            return {
+                ...DEFAULT_PEER_CONFIG,
+                ...overrides,
+                config: { ...DEFAULT_PEER_CONFIG.config }
+            };
+        }
+
+        function parsePeerConfigFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            const host = params.get('peerHost');
+            const port = params.get('peerPort');
+            const path = params.get('peerPath');
+            const secure = params.get('peerSecure');
+            if (!host && !port && !path && !secure) return DEFAULT_PEER_CONFIG;
+            return {
+                ...DEFAULT_PEER_CONFIG,
+                host: host || DEFAULT_PEER_CONFIG.host,
+                port: port ? Number(port) : DEFAULT_PEER_CONFIG.port,
+                path: path || DEFAULT_PEER_CONFIG.path,
+                secure: secure ? secure === '1' : DEFAULT_PEER_CONFIG.secure,
+                config: { ...DEFAULT_PEER_CONFIG.config }
+            };
+        }
+
+        function startSession() {
+            if (sessionActive) return;
+            const ticket = buildTicketFromForm();
+            if (!ticket.title || ticket.items.length === 0) {
+                showToast('toast_ticket_required', 'Define un título y al menos un ítem.');
+                return;
+            }
+            if (peer) {
+                peer.destroy();
+                peer = null;
+            }
+            currentTicket = ticket;
+            responsesMap = new Map();
+            updateResponsesTable();
+            const sessionId = Math.random().toString(36).substring(2, 8).toUpperCase();
+            const config = buildPeerConfigForSession();
+            peer = new Peer(sessionId, config);
+            peer.on('open', (id) => {
+                sessionActive = true;
+                updateSessionInfo(id);
+                updateSessionButtons();
+                showToast('toast_session_started', 'Sesión iniciada.');
+            });
+            peer.on('connection', (conn) => {
+                guestConnections.push(conn);
+                document.getElementById('connections-count').innerText = guestConnections.length;
+                conn.on('open', () => {
+                    conn.send({ type: 'ticket', payload: currentTicket, timer: remainingSeconds });
+                });
+                conn.on('data', (data) => handleGuestMessage(conn, data));
+                conn.on('close', () => {
+                    guestConnections = guestConnections.filter((c) => c.peer !== conn.peer);
+                    document.getElementById('connections-count').innerText = guestConnections.length;
+                });
+            });
+            peer.on('error', (err) => {
+                console.error(err);
+                showToast('toast_session_error', 'Error al iniciar la sesion.');
+            });
+        }
+
+        function endSession() {
+            if (peer) {
+                guestConnections.forEach((conn) => conn.send({ type: 'end' }));
+                peer.destroy();
+            }
+            peer = null;
+            hostConnection = null;
+            guestConnections = [];
+            sessionActive = false;
+            document.getElementById('session-info').classList.add('hidden');
+            document.getElementById('connections-count').innerText = '0';
+            updateSessionButtons();
+            showToast('toast_session_ended', 'Sesión finalizada.');
+        }
+
+        function handleGuestMessage(conn, data) {
+            if (!data || !data.type) return;
+            if (data.type === 'hello') {
+                conn.send({ type: 'ticket', payload: currentTicket, timer: remainingSeconds });
+            }
+            if (data.type === 'response') {
+                const entry = {
+                    studentId: data.studentId,
+                    answers: data.answers,
+                    timestamp: Date.now()
+                };
+                responsesMap.set(entry.studentId, entry);
+                updateResponsesTable();
+            }
+        }
+
+        function joinSession(sessionId) {
+            if (peer) {
+                peer.destroy();
+                peer = null;
+            }
+            const config = parsePeerConfigFromUrl();
+            peer = new Peer(null, config);
+            peer.on('open', () => {
+                hostConnection = peer.connect(sessionId, { reliable: true });
+                hostConnection.on('open', () => {
+                    hostConnection.send({ type: 'hello', studentId: getStudentId() });
+                });
+                hostConnection.on('data', handleHostMessage);
+                hostConnection.on('close', () => {
+                    showJoinError();
+                });
+            });
+            peer.on('error', (err) => {
+                console.error(err);
+                showJoinError();
+            });
+        }
+
+        function handleHostMessage(data) {
+            if (!data || !data.type) return;
+            if (data.type === 'ticket') {
+                currentTicket = data.payload;
+                document.getElementById('join-status').classList.remove('hidden');
+                document.getElementById('join-error').classList.add('hidden');
+                document.getElementById('ticket-view').classList.remove('hidden');
+                document.getElementById('student-ticket-title').innerText = currentTicket.title || 'Ticket';
+                document.getElementById('student-ticket-criteria').innerText = currentTicket.criteria || '';
+                document.getElementById('student-ticket-instructions').innerText = currentTicket.instructions || '';
+                renderTicketForStudent(currentTicket);
+                if (data.timer && data.timer > 0) startStudentTimer(data.timer);
+                document.getElementById('ticket-view').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+            if (data.type === 'end') {
+                showJoinError(t('session_closed', 'La sesion ha finalizado.'));
+            }
+        }
+
+        function getStudentId() {
+            return document.getElementById('student-id-input').value.trim().toUpperCase();
+        }
+
+        function showJoinError(message) {
+            const error = document.getElementById('join-error');
+            error.innerText = message || t('join_error', 'No se pudo conectar.');
+            error.classList.remove('hidden');
+            document.getElementById('join-status').classList.add('hidden');
+        }
+
+        function submitTicket() {
+            if (!currentTicket || !hostConnection) return;
+            if (!getStudentId()) {
+                document.getElementById('submit-error').innerText = t('submit_missing_id', 'Introduce tu ID antes de enviar.');
+                document.getElementById('submit-error').classList.remove('hidden');
+                return;
+            }
+            const result = collectStudentAnswers(currentTicket);
+            if (!result.valid) {
+                document.getElementById('submit-error').innerText = t('submit_error', 'Completa los campos obligatorios.');
+                document.getElementById('submit-error').classList.remove('hidden');
+                return;
+            }
+            document.getElementById('submit-error').classList.add('hidden');
+            hostConnection.send({ type: 'response', studentId: getStudentId(), answers: result.answers });
+            localStorage.setItem(`ticket_submitted_${hostConnection.peer}`, 'true');
+            document.getElementById('ticket-view').classList.add('hidden');
+            document.getElementById('ticket-confirmation').classList.remove('hidden');
+        }
+
+        function checkAlreadySubmitted(sessionId) {
+            return localStorage.getItem(`ticket_submitted_${sessionId}`) === 'true';
+        }
+
+        function startTimer(minutes) {
+            remainingSeconds = minutes * 60;
+            updateTimerDisplay();
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                if (remainingSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    remainingSeconds = 0;
+                } else {
+                    remainingSeconds -= 1;
+                }
+                updateTimerDisplay();
+                broadcastTimer();
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+            remainingSeconds = 0;
+            updateTimerDisplay();
+            broadcastTimer();
+        }
+
+        function updateTimerDisplay() {
+            const minutes = String(Math.floor(remainingSeconds / 60)).padStart(2, '0');
+            const seconds = String(remainingSeconds % 60).padStart(2, '0');
+            document.getElementById('timer-display').innerText = `${minutes}:${seconds}`;
+        }
+
+        function broadcastTimer() {
+            if (!sessionActive) return;
+            guestConnections.forEach((conn) => conn.send({ type: 'ticket', payload: currentTicket, timer: remainingSeconds }));
+        }
+
+        function startStudentTimer(seconds) {
+            const display = document.getElementById('ticket-timer');
+            if (!seconds) {
+                display.innerText = '';
+                return;
+            }
+            display.innerText = t('timer_label', 'Tiempo restante') + `: ${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
+        }
+
+        function loadTemplates() {
+            const stored = JSON.parse(localStorage.getItem('ticket_templates') || '[]');
+            const selector = document.getElementById('template-selector');
+            selector.innerHTML = '';
+            availableTemplates = [
+                ...DEFAULT_TEMPLATES.map((template) => ({ ...template, source: 'default' })),
+                ...stored.map((template) => ({ ...template, source: 'custom' }))
+            ];
+            availableTemplates.forEach((template, idx) => {
+                const option = document.createElement('option');
+                option.value = idx;
+                option.textContent = template.name;
+                selector.appendChild(option);
+            });
+            const importOption = document.createElement('option');
+            importOption.value = 'import';
+            importOption.textContent = t('import_templates_btn', 'Importar');
+            selector.appendChild(importOption);
+            selector.value = lastTemplateIndex;
+        }
+
+        function saveTemplate() {
+            const name = document.getElementById('template-name').value.trim();
+            if (!name) {
+                showToast('toast_template_name', 'Introduce un nombre.');
+                return;
+            }
+            const templates = JSON.parse(localStorage.getItem('ticket_templates') || '[]');
+            templates.push({ name, ticket: buildTicketFromForm() });
+            localStorage.setItem('ticket_templates', JSON.stringify(templates));
+            loadTemplates();
+            showToast('toast_template_saved', 'Plantilla guardada.');
+        }
+
+        function loadTemplate() {
+            const index = Number(document.getElementById('template-selector').value);
+            const template = availableTemplates[index];
+            if (!template) return;
+            document.getElementById('ticket-title').value = template.ticket.title || '';
+            document.getElementById('ticket-criteria').value = template.ticket.criteria || '';
+            document.getElementById('ticket-instructions').value = template.ticket.instructions || '';
+            const container = document.getElementById('items-container');
+            container.innerHTML = '';
+            template.ticket.items.forEach((item) => {
+                const card = createItemCard(item);
+                container.appendChild(card);
+            });
+            refreshTicketPreview();
+        }
+
+        function deleteTemplate() {
+            const templates = JSON.parse(localStorage.getItem('ticket_templates') || '[]');
+            const index = Number(document.getElementById('template-selector').value);
+            if (Number.isNaN(index)) return;
+            const selected = availableTemplates[index];
+            if (!selected || selected.source === 'default') {
+                showToast('toast_template_default', 'No puedes eliminar una plantilla base.');
+                return;
+            }
+            const customIndex = index - DEFAULT_TEMPLATES.length;
+            templates.splice(customIndex, 1);
+            localStorage.setItem('ticket_templates', JSON.stringify(templates));
+            loadTemplates();
+        }
+
+        function exportTemplates() {
+            const templates = JSON.parse(localStorage.getItem('ticket_templates') || '[]');
+            if (!templates.length) {
+                showToast('toast_no_templates', 'No hay plantillas para exportar.');
+                return;
+            }
+            const payload = {
+                exportedAt: new Date().toISOString(),
+                templates
+            };
+            downloadFile('ticket-templates.json', JSON.stringify(payload, null, 2), 'application/json');
+            showToast('toast_templates_exported', 'Plantillas exportadas.');
+        }
+
+        function importTemplates(file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                try {
+                    const parsed = JSON.parse(reader.result);
+                    const incoming = Array.isArray(parsed) ? parsed : parsed.templates;
+                    if (!Array.isArray(incoming)) {
+                        showToast('toast_templates_invalid', 'Archivo de plantillas no valido.');
+                        return;
+                    }
+            const current = JSON.parse(localStorage.getItem('ticket_templates') || '[]');
+            const merged = current.concat(incoming.filter((item) => item && item.name && item.ticket));
+            localStorage.setItem('ticket_templates', JSON.stringify(merged));
+            loadTemplates();
+                    showToast('toast_templates_imported', 'Plantillas importadas.');
+                } catch (err) {
+                    console.error(err);
+                    showToast('toast_templates_invalid', 'Archivo de plantillas no valido.');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function toggleProjectorMode() {
+            projectorMode = !projectorMode;
+            document.body.classList.toggle('projector-mode', projectorMode);
+        }
+
+        function setPresenterTab(tabId) {
+            const tabs = document.querySelectorAll('.tab-btn');
+            const panels = document.querySelectorAll('.tab-panel');
+            tabs.forEach((btn) => {
+                btn.classList.toggle('active', btn.dataset.tab === tabId);
+            });
+            panels.forEach((panel) => {
+                panel.classList.toggle('active', panel.id === `tab-${tabId}`);
+            });
+            localStorage.setItem('preferred_ticket_tab', tabId);
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadTranslations();
+            const savedLang = localStorage.getItem('preferred_language');
+            const browserLang = (navigator.language || navigator.userLanguage).split('-')[0];
+            const urlLang = new URLSearchParams(window.location.search).get('lang');
+            const langToSet = (urlLang && translations[urlLang])
+                ? urlLang
+                : (savedLang && translations[savedLang])
+                    ? savedLang
+                    : (translations[browserLang] ? browserLang : 'es');
+            document.getElementById('lang-selector').value = langToSet;
+            currentLang = langToSet;
+            applyTranslations();
+
+            const themePref = getThemePreference();
+            document.getElementById('theme-selector').value = themePref;
+            applyTheme(themePref);
+
+            const presenterBtn = document.getElementById('presenter-btn');
+            const studentBtn = document.getElementById('student-btn');
+            if (presenterBtn) presenterBtn.addEventListener('click', () => switchView('presenter'));
+            if (studentBtn) studentBtn.addEventListener('click', () => switchView('student'));
+            document.getElementById('switch-to-presenter').addEventListener('click', (e) => {
+                e.preventDefault();
+                switchView('presenter');
+            });
+
+            document.getElementById('lang-selector').addEventListener('change', (e) => setLanguage(e.target.value));
+            document.getElementById('theme-selector').addEventListener('change', (e) => setTheme(e.target.value));
+
+            document.getElementById('add-item').addEventListener('click', () => addItem());
+            document.getElementById('clear-ticket').addEventListener('click', () => {
+                document.getElementById('ticket-title').value = '';
+                document.getElementById('ticket-criteria').value = '';
+                document.getElementById('ticket-instructions').value = '';
+                document.getElementById('items-container').innerHTML = '';
+                addItem();
+                refreshTicketPreview();
+            });
+
+            document.getElementById('save-template').addEventListener('click', saveTemplate);
+            document.getElementById('delete-template').addEventListener('click', deleteTemplate);
+            document.getElementById('export-templates').addEventListener('click', exportTemplates);
+            document.getElementById('template-selector').addEventListener('change', (e) => {
+                if (e.target.value === 'import') {
+                    e.target.value = lastTemplateIndex;
+                    document.getElementById('import-templates-input').click();
+                    return;
+                }
+                lastTemplateIndex = e.target.value;
+                loadTemplate();
+            });
+            document.getElementById('import-templates-input').addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) importTemplates(file);
+                e.target.value = '';
+            });
+
+            document.getElementById('start-session').addEventListener('click', startSession);
+            document.getElementById('end-session').addEventListener('click', endSession);
+            document.getElementById('toggle-projector').addEventListener('click', toggleProjectorMode);
+            document.getElementById('exit-projector').addEventListener('click', toggleProjectorMode);
+
+            document.getElementById('copy-code').addEventListener('click', () => {
+                navigator.clipboard.writeText(document.getElementById('session-code').innerText);
+                showToast('toast_copied', 'Copiado.');
+            });
+            document.getElementById('copy-link').addEventListener('click', () => {
+                navigator.clipboard.writeText(document.getElementById('session-link').value);
+                showToast('toast_copied', 'Copiado.');
+            });
+            document.getElementById('copy-analysis').addEventListener('click', () => {
+                navigator.clipboard.writeText(buildAnalysisText());
+                showToast('toast_copied', 'Copiado.');
+            });
+            document.getElementById('download-analysis').addEventListener('click', () => {
+                downloadFile('ticket-analisis.txt', buildAnalysisText(), 'text/plain');
+            });
+            document.getElementById('download-csv').addEventListener('click', () => {
+                downloadFile('ticket.csv', buildCsv(), 'text/csv');
+            });
+            document.getElementById('download-json').addEventListener('click', () => {
+                downloadFile('ticket.json', JSON.stringify(Array.from(responsesMap.values()), null, 2), 'application/json');
+            });
+
+            document.getElementById('generate-portable').addEventListener('click', refreshTicketPreview);
+            document.getElementById('copy-portable').addEventListener('click', () => {
+                navigator.clipboard.writeText(document.getElementById('portable-preview').value);
+                showToast('toast_copied', 'Copiado.');
+            });
+            document.getElementById('download-md').addEventListener('click', () => {
+                downloadFile('ticket.md', buildPortableText('md'), 'text/markdown');
+            });
+            document.getElementById('download-txt').addEventListener('click', () => {
+                downloadFile('ticket.txt', buildPortableText('txt'), 'text/plain');
+            });
+            document.getElementById('download-docx').addEventListener('click', () => {
+                downloadFile('ticket.docx', buildPortableText('txt'), 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+            });
+            document.getElementById('print-portable').addEventListener('click', () => {
+                refreshTicketPreview();
+                window.print();
+            });
+
+            document.getElementById('join-session').addEventListener('click', () => {
+                const code = document.getElementById('join-code').value.trim().toUpperCase();
+                const studentId = getStudentId();
+                document.getElementById('join-error').classList.add('hidden');
+                if (!code) {
+                    showJoinError(t('join_missing_code', 'Introduce el código de sesión.'));
+                    return;
+                }
+                if (!studentId) {
+                    showJoinError(t('join_missing_id', 'Introduce tu ID antes de conectar.'));
+                    return;
+                }
+                if (checkAlreadySubmitted(code)) {
+                    document.getElementById('ticket-confirmation').classList.remove('hidden');
+                    document.getElementById('ticket-view').classList.add('hidden');
+                    return;
+                }
+                joinSession(code);
+            });
+
+            document.getElementById('submit-ticket').addEventListener('click', (e) => {
+                e.preventDefault();
+                submitTicket();
+            });
+
+            document.getElementById('toggle-config').addEventListener('click', () => {
+                document.getElementById('peer-config').classList.toggle('hidden');
+            });
+
+            document.getElementById('start-timer').addEventListener('click', () => {
+                const minutes = Number(document.getElementById('timer-minutes').value);
+                if (!minutes) return;
+                startTimer(minutes);
+            });
+            document.getElementById('stop-timer').addEventListener('click', stopTimer);
+
+            loadTemplates();
+            addItem();
+            refreshTicketPreview();
+            updateSessionButtons();
+            const preferredTab = localStorage.getItem('preferred_ticket_tab') || 'ticket';
+            setPresenterTab(preferredTab);
+            document.querySelectorAll('.tab-btn').forEach((btn) => {
+                btn.addEventListener('click', () => setPresenterTab(btn.dataset.tab));
+            });
+
+            const params = new URLSearchParams(window.location.search);
+            const sessionId = params.get('session');
+            const role = params.get('role');
+            if (role === 'student' || sessionId) {
+                switchView('student');
+                if (sessionId) {
+                    document.getElementById('join-code').value = sessionId;
+                    if (!getStudentId()) {
+                        showJoinError(t('join_missing_id', 'Introduce tu ID antes de conectar.'));
+                    } else if (checkAlreadySubmitted(sessionId)) {
+                        document.getElementById('ticket-confirmation').classList.remove('hidden');
+                    } else {
+                        joinSession(sessionId);
+                    }
+                }
+            } else {
+                switchView('presenter');
+            }
+        });
+    </script>
+</body>
+</html>

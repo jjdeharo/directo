@@ -792,7 +792,12 @@
             }
             const savedLang = localStorage.getItem('preferred_language');
             const browserLang = (navigator.language || navigator.userLanguage).split('-')[0];
-            currentLang = savedLang || (translations[browserLang] ? browserLang : 'es');
+            const urlLang = new URLSearchParams(window.location.search).get('lang');
+            currentLang = (urlLang && translations[urlLang])
+                ? urlLang
+                : (savedLang && translations[savedLang])
+                    ? savedLang
+                    : (translations[browserLang] ? browserLang : 'es');
             const params = new URLSearchParams(window.location.search);
             const sessionId = params.get('session');
             if (sessionId) {

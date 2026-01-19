@@ -25,6 +25,7 @@ Este proyecto incluye varias herramientas interactivas:
 3.  **Lluvia de ideas y votos**: Una herramienta en dos fases. Primero, los participantes envían sus ideas de forma anónima. Después, en la fase de votación, pueden votar por las propuestas de los demás para priorizarlas.
 4.  **Muro interactivo**: Un lienzo digital colaborativo donde los participantes envían "post-its" virtuales. El presentador puede organizar las notas libremente. El resultado se puede exportar como PDF o CSV.
 5.  **Escala de valoración**: Permite crear diferentes tipos de escalas (Likert, numéricas, semáforo, personalizadas) para recoger opiniones de forma visual e inmediata. Es ideal para medir el grado de acuerdo o la comprensión de un tema.
+6.  **Tickets de salida**: Permite crear tickets breves con varios tipos de respuesta, recoger respuestas en directo con un código o generar versiones portables para imprimir o pegar en plataformas educativas.
 
 ---
 

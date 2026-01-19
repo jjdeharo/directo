@@ -1098,7 +1098,13 @@
             }
             const savedLang = localStorage.getItem('preferred_language');
             const browserLang = (navigator.language || navigator.userLanguage).split('-')[0];
-            setLanguage(savedLang || (translations[browserLang] ? browserLang : 'es'));
+            const urlLang = new URLSearchParams(window.location.search).get('lang');
+            const langToSet = (urlLang && translations[urlLang])
+                ? urlLang
+                : (savedLang && translations[savedLang])
+                    ? savedLang
+                    : (translations[browserLang] ? browserLang : 'es');
+            setLanguage(langToSet);
             
             checkURLParameters();
 

@@ -24,6 +24,10 @@
     "name": "Escala de valoración"
   },
   {
+    "id": "ticket",
+    "name": "Tickets de salida"
+  },
+  {
     "id": "manual",
     "name": "Manual de usuario"
   }

@@ -14,6 +14,8 @@
   "app-muro-desc": "Allows participants to send virtual \"post-its\". The content is not persistent, but you can export the wall to PDF or the data to a spreadsheet (CSV).",
   "app-escala-title": "Rating Scale",
   "app-escala-desc": "Create Likert-type, numeric, or traffic light scales to gather opinions quickly and visually. Ideal for ratings or measuring understanding.",
+  "app-ticket-title": "Exit Tickets",
+  "app-ticket-desc": "Create short tickets to capture final reflections. Works live with a code and also in portable mode for printing or pasting into platforms.",
   "app-qplay-title": "QPlay: Interactive contest",
   "app-qplay-desc": "A tool to gamify the classroom. The teacher loads a questionnaire and the students compete in real time from their devices to lead the ranking.",
   "app-boardlive-title": "BoardLive: Collaborative whiteboard",

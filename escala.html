@@ -678,8 +678,15 @@
             } catch (error) {
                 console.error(error);
             }
-            const savedLang = localStorage.getItem('preferred_language') || (navigator.language || navigator.userLanguage).split('-')[0];
-            setLanguage(savedLang);
+            const savedLang = localStorage.getItem('preferred_language');
+            const browserLang = (navigator.language || navigator.userLanguage).split('-')[0];
+            const urlLang = new URLSearchParams(window.location.search).get('lang');
+            const langToSet = (urlLang && translations[urlLang])
+                ? urlLang
+                : (savedLang && translations[savedLang])
+                    ? savedLang
+                    : (translations[browserLang] ? browserLang : 'es');
+            setLanguage(langToSet);
             switchView('participant');
             checkURLParameters();
             document.getElementById('color-picker').addEventListener('input', (e) => applyTheme(e.target.value));

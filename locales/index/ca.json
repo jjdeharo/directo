@@ -14,6 +14,8 @@
   "app-muro-desc": "Permet als participants enviar \"post-its\" virtuals. El contingut no és persistent, però pots exportar el mur a PDF o les dades a un full de càlcul (CSV).",
   "app-escala-title": "Escala de valoració",
   "app-escala-desc": "Crea escales de tipus Likert, numèriques o de semàfor per recollir opinions de forma ràpida i visual. Ideal per a valoracions o mesurar la comprensió.",
+  "app-ticket-title": "Tiquets de sortida",
+  "app-ticket-desc": "Crea tiquets breus per recollir impressions finals. Funciona en directe amb codi i també en mode portable per imprimir o enganxar a plataformes.",
   "app-qplay-title": "QPlay: Concurs interactiu",
   "app-qplay-desc": "Una eina per gamificar l'aula. El professor carrega un qüestionari i els alumnes competeixen en temps real des dels seus dispositius per liderar la classificació.",
   "app-boardlive-title": "BoardLive: Pissarra col·laborativa",

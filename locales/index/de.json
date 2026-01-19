@@ -14,6 +14,8 @@
   "app-muro-desc": "Ermöglicht den Teilnehmenden, virtuelle \"Post-its\" zu senden. Der Inhalt ist nicht dauerhaft, aber du kannst die Wand als PDF oder die Daten als Tabelle (CSV) exportieren.",
   "app-escala-title": "Bewertungsskala",
   "app-escala-desc": "Erstelle Likert-, numerische oder Ampel-Skalen, um Meinungen schnell und visuell zu erfassen. Ideal für Bewertungen oder um das Verständnis zu messen.",
+  "app-ticket-title": "Exit-Tickets",
+  "app-ticket-desc": "Erstelle kurze Exit-Tickets, um Abschlussrückmeldungen zu sammeln. Funktioniert live mit Code und auch im portablen Modus zum Drucken oder Einfügen in Plattformen.",
   "app-qplay-title": "QPlay: Interaktiver Wettbewerb",
   "app-qplay-desc": "Ein Werkzeug, um den Unterricht zu gamifizieren. Die Lehrkraft lädt ein Quiz, und die Schülerinnen und Schüler konkurrieren in Echtzeit von ihren Geräten aus, um die Rangliste anzuführen.",
   "app-boardlive-title": "BoardLive: Kollaboratives Whiteboard",

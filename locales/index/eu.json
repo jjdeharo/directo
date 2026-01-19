@@ -14,6 +14,8 @@
   "app-muro-desc": "\"Post-it\" birtualak bidaltzeko aukera ematen die parte-hartzaileei. Edukia ez da iraunkorra, baina harresia PDFra edo datuak kalkulu-orri batera (CSV) esporta ditzakezu.",
   "app-escala-title": "Balorazio eskala",
   "app-escala-desc": "Sortu Likert motako, zenbakizko edo semaforo eskalak iritziak azkar eta bisualki jasotzeko. Balorazioetarako edo ulermena neurtzeko aproposa.",
+  "app-ticket-title": "Irteera-txartelak",
+  "app-ticket-desc": "Sortu amaierako inpresioak jasotzeko txartel laburrak. Kodearekin zuzenean funtzionatzen du, eta modu eramangarri batean ere bai inprimatzeko edo plataformetan itsasteko.",
   "app-qplay-title": "QPlay: Lehiaketa interaktiboa",
   "app-qplay-desc": "Ikasgela gamifikatzeko tresna. Irakasleak galdetegi bat kargatzen du eta ikasleek denbora errealean lehiatzen dute beren gailuetatik sailkapenaren buru izateko.",
   "app-boardlive-title": "BoardLive: Pizarra kolaboratiboa",

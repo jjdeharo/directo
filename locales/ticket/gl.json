@@ -24,6 +24,7 @@
   "delete_template_btn": "Eliminar",
   "export_templates_btn": "Exportar",
   "import_templates_btn": "Importar",
+  "template_placeholder": "Escolle unha plantilla",
   "template_hint": "Substitúe os textos entre corchetes (p. ex. [Tema]).",
   "tab_ticket": "Ticket",
   "tab_session": "Sesión",

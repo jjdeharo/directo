@@ -24,6 +24,7 @@
   "delete_template_btn": "Löschen",
   "export_templates_btn": "Exportieren",
   "import_templates_btn": "Importieren",
+  "template_placeholder": "Vorlage wählen",
   "template_hint": "Ersetze die Texte in Klammern (z. B. [Thema]).",
   "tab_ticket": "Ticket",
   "tab_session": "Sitzung",

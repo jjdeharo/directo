@@ -24,6 +24,7 @@
   "delete_template_btn": "Delete",
   "export_templates_btn": "Export",
   "import_templates_btn": "Import",
+  "template_placeholder": "Choose a template",
   "template_hint": "Replace text in brackets (e.g., [Topic]).",
   "tab_ticket": "Ticket",
   "tab_session": "Session",

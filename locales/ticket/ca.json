@@ -24,6 +24,7 @@
   "delete_template_btn": "Eliminar",
   "export_templates_btn": "Exportar",
   "import_templates_btn": "Importar",
+  "template_placeholder": "Tria una plantilla",
   "template_hint": "Substitueix els textos entre claudàtors (p. ex. [Tema]).",
   "tab_ticket": "Tiquet",
   "tab_session": "Sessió",

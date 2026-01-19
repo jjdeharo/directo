@@ -24,6 +24,7 @@
   "delete_template_btn": "Ezabatu",
   "export_templates_btn": "Esportatu",
   "import_templates_btn": "Inportatu",
+  "template_placeholder": "Aukeratu txantiloi bat",
   "template_hint": "Ordezkatu kortxeteen arteko testuak (adib. [Gaia]).",
   "tab_ticket": "Txartela",
   "tab_session": "Saioa",

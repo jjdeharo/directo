@@ -358,7 +358,7 @@
         let remainingSeconds = 0;
         let projectorMode = false;
         let availableTemplates = [];
-        let lastTemplateIndex = 0;
+        let lastTemplateIndex = '';
 
         const TEMPLATE_SETS = {
             es: [
@@ -1234,6 +1234,15 @@
             refreshTicketPreview();
         }
 
+        function clearTicketForm() {
+            document.getElementById('ticket-title').value = '';
+            document.getElementById('ticket-criteria').value = '';
+            document.getElementById('ticket-instructions').value = '';
+            document.getElementById('items-container').innerHTML = '';
+            addItem();
+            refreshTicketPreview();
+        }
+
         function showToast(messageKey, fallback) {
             const toast = document.getElementById('toast');
             toast.innerText = t(messageKey, fallback);
@@ -2004,6 +2013,10 @@
                 ...defaultTemplates.map((template) => ({ ...template, source: 'default' })),
                 ...stored.map((template) => ({ ...template, source: 'custom' }))
             ];
+            const placeholderOption = document.createElement('option');
+            placeholderOption.value = '';
+            placeholderOption.textContent = t('template_placeholder', 'Elige una plantilla');
+            selector.appendChild(placeholderOption);
             availableTemplates.forEach((template, idx) => {
                 const option = document.createElement('option');
                 option.value = idx;
@@ -2014,13 +2027,16 @@
             importOption.value = 'import';
             importOption.textContent = t('import_templates_btn', 'Importar');
             selector.appendChild(importOption);
-            const numericIndex = Number(lastTemplateIndex);
-            if (Number.isNaN(numericIndex) || numericIndex < 0) {
-                lastTemplateIndex = 0;
+            const numericIndex = Number.parseInt(lastTemplateIndex, 10);
+            if (lastTemplateIndex === '' || Number.isNaN(numericIndex) || numericIndex < 0) {
+                lastTemplateIndex = '';
+                selector.value = '';
             } else if (numericIndex > availableTemplates.length - 1) {
-                lastTemplateIndex = availableTemplates.length - 1;
+                lastTemplateIndex = String(availableTemplates.length - 1);
+                selector.value = lastTemplateIndex;
+            } else {
+                selector.value = String(lastTemplateIndex);
             }
-            selector.value = String(lastTemplateIndex);
             updateDeleteTemplateVisibility();
         }
 
@@ -2072,7 +2088,12 @@
             const deleteBtn = document.getElementById('delete-template');
             const selector = document.getElementById('template-selector');
             if (!deleteBtn || !selector) return;
-            const index = Number(selector.value);
+            const value = selector.value;
+            if (value === '' || value === 'import') {
+                deleteBtn.classList.add('hidden');
+                return;
+            }
+            const index = Number(value);
             const selected = Number.isNaN(index) ? null : availableTemplates[index];
             deleteBtn.classList.toggle('hidden', !selected || selected.source !== 'custom');
         }
@@ -2167,12 +2188,7 @@
 
             document.getElementById('add-item').addEventListener('click', () => addItem());
             document.getElementById('clear-ticket').addEventListener('click', () => {
-                document.getElementById('ticket-title').value = '';
-                document.getElementById('ticket-criteria').value = '';
-                document.getElementById('ticket-instructions').value = '';
-                document.getElementById('items-container').innerHTML = '';
-                addItem();
-                refreshTicketPreview();
+                clearTicketForm();
             });
 
             document.getElementById('save-template').addEventListener('click', saveTemplate);
@@ -2182,6 +2198,12 @@
                 if (e.target.value === 'import') {
                     e.target.value = lastTemplateIndex;
                     document.getElementById('import-templates-input').click();
+                    return;
+                }
+                if (e.target.value === '') {
+                    lastTemplateIndex = '';
+                    clearTicketForm();
+                    updateDeleteTemplateVisibility();
                     return;
                 }
                 lastTemplateIndex = e.target.value;

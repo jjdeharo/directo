@@ -355,141 +355,822 @@
         let availableTemplates = [];
         let lastTemplateIndex = 0;
 
-        const DEFAULT_TEMPLATES = [
-            {
-                name: 'Plantilla rápida (1 ítem, abierta)',
-                ticket: {
-                    title: 'Ticket rápido: [Tema]',
-                    criteria: 'Idea clave de la sesión sobre [Concepto]',
-                    instructions: 'Responde con una frase breve sobre [Concepto].',
-                    items: [
-                        {
-                            id: 'item_rapida_1',
-                            prompt: '¿Cuál es la idea más importante sobre [Concepto]?',
-                            type: 'short_text',
-                            required: true
-                        }
-                    ]
+        const TEMPLATE_SETS = {
+            es: [
+                {
+                    name: 'Plantilla rápida (1 ítem, abierta)',
+                    ticket: {
+                        title: 'Ticket rápido: [Tema]',
+                        criteria: 'Idea clave de la sesión sobre [Concepto]',
+                        instructions: 'Responde con una frase breve sobre [Concepto].',
+                        items: [
+                            {
+                                id: 'item_rapida_1',
+                                prompt: '¿Cuál es la idea más importante sobre [Concepto]?',
+                                type: 'short_text',
+                                required: true
+                            }
+                        ]
+                    }
+                },
+                {
+                    name: 'Plantilla de verificación rápida (1 ítem, cerrada)',
+                    ticket: {
+                        title: 'Verificación rápida: [Tema]',
+                        criteria: 'Termómetro del grupo sobre [Concepto]',
+                        instructions: 'Selecciona una opción.',
+                        items: [
+                            {
+                                id: 'item_verificacion_1',
+                                prompt: '¿Qué tan claro te queda [Concepto]?',
+                                type: 'single_choice',
+                                required: true,
+                                options: ['Muy claro', 'Algo claro', 'Poco claro', 'Nada claro']
+                            }
+                        ]
+                    }
+                },
+                {
+                    name: 'Plantilla diagnóstica (2 ítems)',
+                    ticket: {
+                        title: 'Diagnóstico rápido: [Tema]',
+                        criteria: 'Concepto y aplicación de [Concepto]',
+                        instructions: 'Responde con precisión.',
+                        items: [
+                            {
+                                id: 'item_diagnostico_1',
+                                prompt: 'Define brevemente [Concepto].',
+                                type: 'short_text',
+                                required: true
+                            },
+                            {
+                                id: 'item_diagnostico_2',
+                                prompt: 'Aplica [Concepto] en un ejemplo sencillo.',
+                                type: 'long_text',
+                                required: true
+                            }
+                        ]
+                    }
+                },
+                {
+                    name: 'Plantilla de evidencia mínima (2 ítems)',
+                    ticket: {
+                        title: 'Evidencia mínima: [Tema]',
+                        criteria: 'Resultado y justificación sobre [Concepto]',
+                        instructions: 'Incluye un resultado y una breve evidencia.',
+                        items: [
+                            {
+                                id: 'item_evidencia_1',
+                                prompt: 'Resultado o decisión principal sobre [Situación].',
+                                type: 'short_text',
+                                required: true
+                            },
+                            {
+                                id: 'item_evidencia_2',
+                                prompt: 'Justifica tu respuesta con una evidencia.',
+                                type: 'long_text',
+                                required: true
+                            }
+                        ]
+                    }
+                },
+                {
+                    name: 'Plantilla de análisis formativo (3 ítems)',
+                    ticket: {
+                        title: 'Análisis formativo: [Tema]',
+                        criteria: 'Identificación, aplicación y evidencia sobre [Concepto]',
+                        instructions: 'Responde cada punto de forma clara.',
+                        items: [
+                            {
+                                id: 'item_formativo_1',
+                                prompt: 'Identifica o define [Concepto].',
+                                type: 'short_text',
+                                required: true
+                            },
+                            {
+                                id: 'item_formativo_2',
+                                prompt: 'Aplica [Concepto] a una situación concreta.',
+                                type: 'long_text',
+                                required: true
+                            },
+                            {
+                                id: 'item_formativo_3',
+                                prompt: 'Explica brevemente por qué es correcto.',
+                                type: 'long_text',
+                                required: true
+                            }
+                        ]
+                    }
+                },
+                {
+                    name: 'Plantilla metacognitiva',
+                    ticket: {
+                        title: 'Metacognición: [Tema]',
+                        criteria: 'Percepción de aprendizaje en [Tema]',
+                        instructions: 'Responde con honestidad.',
+                        items: [
+                            {
+                                id: 'item_meta_1',
+                                prompt: '¿Qué has aprendido hoy sobre [Tema]?',
+                                type: 'short_text',
+                                required: true
+                            },
+                            {
+                                id: 'item_meta_2',
+                                prompt: '¿Qué te ha resultado más difícil en [Tema]?',
+                                type: 'short_text',
+                                required: true
+                            },
+                            {
+                                id: 'item_meta_3',
+                                prompt: '¿Qué estrategia te ha ayudado más?',
+                                type: 'short_text',
+                                required: false
+                            }
+                        ]
+                    }
                 }
-            },
-            {
-                name: 'Plantilla de verificación rápida (1 ítem, cerrada)',
-                ticket: {
-                    title: 'Verificación rápida: [Tema]',
-                    criteria: 'Termómetro del grupo sobre [Concepto]',
-                    instructions: 'Selecciona una opción.',
-                    items: [
-                        {
-                            id: 'item_verificacion_1',
-                            prompt: '¿Qué tan claro te queda [Concepto]?',
-                            type: 'single_choice',
-                            required: true,
-                            options: ['Muy claro', 'Algo claro', 'Poco claro', 'Nada claro']
-                        }
-                    ]
+            ],
+            en: [
+                {
+                    name: 'Quick template (1 item, open)',
+                    ticket: {
+                        title: 'Quick ticket: [Topic]',
+                        criteria: 'Key idea about [Concept]',
+                        instructions: 'Answer with one short sentence about [Concept].',
+                        items: [
+                            {
+                                id: 'item_rapida_1',
+                                prompt: 'What is the most important idea about [Concept]?',
+                                type: 'short_text',
+                                required: true
+                            }
+                        ]
+                    }
+                },
+                {
+                    name: 'Quick check template (1 item, closed)',
+                    ticket: {
+                        title: 'Quick check: [Topic]',
+                        criteria: 'Group thermometer about [Concept]',
+                        instructions: 'Select one option.',
+                        items: [
+                            {
+                                id: 'item_verificacion_1',
+                                prompt: 'How clear is [Concept] to you?',
+                                type: 'single_choice',
+                                required: true,
+                                options: ['Very clear', 'Somewhat clear', 'Not very clear', 'Not clear at all']
+                            }
+                        ]
+                    }
+                },
+                {
+                    name: 'Diagnostic template (2 items)',
+                    ticket: {
+                        title: 'Quick diagnosis: [Topic]',
+                        criteria: 'Concept and application of [Concept]',
+                        instructions: 'Answer precisely.',
+                        items: [
+                            {
+                                id: 'item_diagnostico_1',
+                                prompt: 'Briefly define [Concept].',
+                                type: 'short_text',
+                                required: true
+                            },
+                            {
+                                id: 'item_diagnostico_2',
+                                prompt: 'Apply [Concept] to a simple example.',
+                                type: 'long_text',
+                                required: true
+                            }
+                        ]
+                    }
+                },
+                {
+                    name: 'Minimal evidence template (2 items)',
+                    ticket: {
+                        title: 'Minimal evidence: [Topic]',
+                        criteria: 'Result and justification about [Concept]',
+                        instructions: 'Include a result and brief evidence.',
+                        items: [
+                            {
+                                id: 'item_evidencia_1',
+                                prompt: 'Main result or decision about [Situation].',
+                                type: 'short_text',
+                                required: true
+                            },
+                            {
+                                id: 'item_evidencia_2',
+                                prompt: 'Justify your response with evidence.',
+                                type: 'long_text',
+                                required: true
+                            }
+                        ]
+                    }
+                },
+                {
+                    name: 'Formative analysis template (3 items)',
+                    ticket: {
+                        title: 'Formative analysis: [Topic]',
+                        criteria: 'Identification, application, and evidence about [Concept]',
+                        instructions: 'Answer each point clearly.',
+                        items: [
+                            {
+                                id: 'item_formativo_1',
+                                prompt: 'Identify or define [Concept].',
+                                type: 'short_text',
+                                required: true
+                            },
+                            {
+                                id: 'item_formativo_2',
+                                prompt: 'Apply [Concept] to a specific situation.',
+                                type: 'long_text',
+                                required: true
+                            },
+                            {
+                                id: 'item_formativo_3',
+                                prompt: 'Briefly explain why it is correct.',
+                                type: 'long_text',
+                                required: true
+                            }
+                        ]
+                    }
+                },
+                {
+                    name: 'Metacognitive template',
+                    ticket: {
+                        title: 'Metacognition: [Topic]',
+                        criteria: 'Learning perception about [Topic]',
+                        instructions: 'Answer honestly.',
+                        items: [
+                            {
+                                id: 'item_meta_1',
+                                prompt: 'What did you learn today about [Topic]?',
+                                type: 'short_text',
+                                required: true
+                            },
+                            {
+                                id: 'item_meta_2',
+                                prompt: 'What was hardest about [Topic]?',
+                                type: 'short_text',
+                                required: true
+                            },
+                            {
+                                id: 'item_meta_3',
+                                prompt: 'Which strategy helped you most?',
+                                type: 'short_text',
+                                required: false
+                            }
+                        ]
+                    }
                 }
-            },
-            {
-                name: 'Plantilla diagnóstica (2 ítems)',
-                ticket: {
-                    title: 'Diagnóstico rápido: [Tema]',
-                    criteria: 'Concepto y aplicación de [Concepto]',
-                    instructions: 'Responde con precisión.',
-                    items: [
-                        {
-                            id: 'item_diagnostico_1',
-                            prompt: 'Define brevemente [Concepto].',
-                            type: 'short_text',
-                            required: true
-                        },
-                        {
-                            id: 'item_diagnostico_2',
-                            prompt: 'Aplica [Concepto] en un ejemplo sencillo.',
-                            type: 'long_text',
-                            required: true
-                        }
-                    ]
+            ],
+            ca: [
+                {
+                    name: 'Plantilla ràpida (1 ítem, oberta)',
+                    ticket: {
+                        title: 'Tiquet ràpid: [Tema]',
+                        criteria: 'Idea clau de la sessió sobre [Concepte]',
+                        instructions: 'Respon amb una frase breu sobre [Concepte].',
+                        items: [
+                            {
+                                id: 'item_rapida_1',
+                                prompt: 'Quina és la idea més important sobre [Concepte]?',
+                                type: 'short_text',
+                                required: true
+                            }
+                        ]
+                    }
+                },
+                {
+                    name: 'Plantilla de verificació ràpida (1 ítem, tancada)',
+                    ticket: {
+                        title: 'Verificació ràpida: [Tema]',
+                        criteria: 'Termòmetre del grup sobre [Concepte]',
+                        instructions: 'Selecciona una opció.',
+                        items: [
+                            {
+                                id: 'item_verificacion_1',
+                                prompt: 'Com de clar tens [Concepte]?',
+                                type: 'single_choice',
+                                required: true,
+                                options: ['Molt clar', 'Força clar', 'Poc clar', 'Gens clar']
+                            }
+                        ]
+                    }
+                },
+                {
+                    name: 'Plantilla diagnòstica (2 ítems)',
+                    ticket: {
+                        title: 'Diagnòstic ràpid: [Tema]',
+                        criteria: 'Concepte i aplicació de [Concepte]',
+                        instructions: 'Respon amb precisió.',
+                        items: [
+                            {
+                                id: 'item_diagnostico_1',
+                                prompt: 'Defineix breument [Concepte].',
+                                type: 'short_text',
+                                required: true
+                            },
+                            {
+                                id: 'item_diagnostico_2',
+                                prompt: 'Aplica [Concepte] en un exemple senzill.',
+                                type: 'long_text',
+                                required: true
+                            }
+                        ]
+                    }
+                },
+                {
+                    name: 'Plantilla d’evidència mínima (2 ítems)',
+                    ticket: {
+                        title: 'Evidència mínima: [Tema]',
+                        criteria: 'Resultat i justificació sobre [Concepte]',
+                        instructions: 'Inclou un resultat i una evidència breu.',
+                        items: [
+                            {
+                                id: 'item_evidencia_1',
+                                prompt: 'Resultat o decisió principal sobre [Situació].',
+                                type: 'short_text',
+                                required: true
+                            },
+                            {
+                                id: 'item_evidencia_2',
+                                prompt: 'Justifica la teva resposta amb una evidència.',
+                                type: 'long_text',
+                                required: true
+                            }
+                        ]
+                    }
+                },
+                {
+                    name: 'Plantilla d’anàlisi formativa (3 ítems)',
+                    ticket: {
+                        title: 'Anàlisi formativa: [Tema]',
+                        criteria: 'Identificació, aplicació i evidència sobre [Concepte]',
+                        instructions: 'Respon cada punt amb claredat.',
+                        items: [
+                            {
+                                id: 'item_formativo_1',
+                                prompt: 'Identifica o defineix [Concepte].',
+                                type: 'short_text',
+                                required: true
+                            },
+                            {
+                                id: 'item_formativo_2',
+                                prompt: 'Aplica [Concepte] a una situació concreta.',
+                                type: 'long_text',
+                                required: true
+                            },
+                            {
+                                id: 'item_formativo_3',
+                                prompt: 'Explica breument per què és correcte.',
+                                type: 'long_text',
+                                required: true
+                            }
+                        ]
+                    }
+                },
+                {
+                    name: 'Plantilla metacognitiva',
+                    ticket: {
+                        title: 'Metacognició: [Tema]',
+                        criteria: 'Percepció d’aprenentatge sobre [Tema]',
+                        instructions: 'Respon amb honestedat.',
+                        items: [
+                            {
+                                id: 'item_meta_1',
+                                prompt: 'Què has après avui sobre [Tema]?',
+                                type: 'short_text',
+                                required: true
+                            },
+                            {
+                                id: 'item_meta_2',
+                                prompt: 'Què t’ha costat més de [Tema]?',
+                                type: 'short_text',
+                                required: true
+                            },
+                            {
+                                id: 'item_meta_3',
+                                prompt: 'Quina estratègia t’ha ajudat més?',
+                                type: 'short_text',
+                                required: false
+                            }
+                        ]
+                    }
                 }
-            },
-            {
-                name: 'Plantilla de evidencia mínima (2 ítems)',
-                ticket: {
-                    title: 'Evidencia mínima: [Tema]',
-                    criteria: 'Resultado y justificación sobre [Concepto]',
-                    instructions: 'Incluye un resultado y una breve evidencia.',
-                    items: [
-                        {
-                            id: 'item_evidencia_1',
-                            prompt: 'Resultado o decisión principal sobre [Situación].',
-                            type: 'short_text',
-                            required: true
-                        },
-                        {
-                            id: 'item_evidencia_2',
-                            prompt: 'Justifica tu respuesta con una evidencia.',
-                            type: 'long_text',
-                            required: true
-                        }
-                    ]
+            ],
+            gl: [
+                {
+                    name: 'Plantilla rápida (1 ítem, aberta)',
+                    ticket: {
+                        title: 'Ticket rápido: [Tema]',
+                        criteria: 'Idea clave da sesión sobre [Concepto]',
+                        instructions: 'Responde cunha frase breve sobre [Concepto].',
+                        items: [
+                            {
+                                id: 'item_rapida_1',
+                                prompt: 'Cal é a idea máis importante sobre [Concepto]?',
+                                type: 'short_text',
+                                required: true
+                            }
+                        ]
+                    }
+                },
+                {
+                    name: 'Plantilla de verificación rápida (1 ítem, pechada)',
+                    ticket: {
+                        title: 'Verificación rápida: [Tema]',
+                        criteria: 'Termómetro do grupo sobre [Concepto]',
+                        instructions: 'Selecciona unha opción.',
+                        items: [
+                            {
+                                id: 'item_verificacion_1',
+                                prompt: 'Que claro tes [Concepto]?',
+                                type: 'single_choice',
+                                required: true,
+                                options: ['Moi claro', 'Bastante claro', 'Pouco claro', 'Nada claro']
+                            }
+                        ]
+                    }
+                },
+                {
+                    name: 'Plantilla diagnóstica (2 ítems)',
+                    ticket: {
+                        title: 'Diagnóstico rápido: [Tema]',
+                        criteria: 'Concepto e aplicación de [Concepto]',
+                        instructions: 'Responde con precisión.',
+                        items: [
+                            {
+                                id: 'item_diagnostico_1',
+                                prompt: 'Define brevemente [Concepto].',
+                                type: 'short_text',
+                                required: true
+                            },
+                            {
+                                id: 'item_diagnostico_2',
+                                prompt: 'Aplica [Concepto] nun exemplo sinxelo.',
+                                type: 'long_text',
+                                required: true
+                            }
+                        ]
+                    }
+                },
+                {
+                    name: 'Plantilla de evidencia mínima (2 ítems)',
+                    ticket: {
+                        title: 'Evidencia mínima: [Tema]',
+                        criteria: 'Resultado e xustificación sobre [Concepto]',
+                        instructions: 'Inclúe un resultado e unha evidencia breve.',
+                        items: [
+                            {
+                                id: 'item_evidencia_1',
+                                prompt: 'Resultado ou decisión principal sobre [Situación].',
+                                type: 'short_text',
+                                required: true
+                            },
+                            {
+                                id: 'item_evidencia_2',
+                                prompt: 'Xustifica a túa resposta cunha evidencia.',
+                                type: 'long_text',
+                                required: true
+                            }
+                        ]
+                    }
+                },
+                {
+                    name: 'Plantilla de análise formativa (3 ítems)',
+                    ticket: {
+                        title: 'Análise formativa: [Tema]',
+                        criteria: 'Identificación, aplicación e evidencia sobre [Concepto]',
+                        instructions: 'Responde cada punto con claridade.',
+                        items: [
+                            {
+                                id: 'item_formativo_1',
+                                prompt: 'Identifica ou define [Concepto].',
+                                type: 'short_text',
+                                required: true
+                            },
+                            {
+                                id: 'item_formativo_2',
+                                prompt: 'Aplica [Concepto] a unha situación concreta.',
+                                type: 'long_text',
+                                required: true
+                            },
+                            {
+                                id: 'item_formativo_3',
+                                prompt: 'Explica brevemente por que é correcto.',
+                                type: 'long_text',
+                                required: true
+                            }
+                        ]
+                    }
+                },
+                {
+                    name: 'Plantilla metacognitiva',
+                    ticket: {
+                        title: 'Metacognición: [Tema]',
+                        criteria: 'Percepción de aprendizaxe sobre [Tema]',
+                        instructions: 'Responde con honestidade.',
+                        items: [
+                            {
+                                id: 'item_meta_1',
+                                prompt: 'Que aprendiches hoxe sobre [Tema]?',
+                                type: 'short_text',
+                                required: true
+                            },
+                            {
+                                id: 'item_meta_2',
+                                prompt: 'Que foi o máis difícil en [Tema]?',
+                                type: 'short_text',
+                                required: true
+                            },
+                            {
+                                id: 'item_meta_3',
+                                prompt: 'Que estratexia che axudou máis?',
+                                type: 'short_text',
+                                required: false
+                            }
+                        ]
+                    }
                 }
-            },
-            {
-                name: 'Plantilla de análisis formativo (3 ítems)',
-                ticket: {
-                    title: 'Análisis formativo: [Tema]',
-                    criteria: 'Identificación, aplicación y evidencia sobre [Concepto]',
-                    instructions: 'Responde cada punto de forma clara.',
-                    items: [
-                        {
-                            id: 'item_formativo_1',
-                            prompt: 'Identifica o define [Concepto].',
-                            type: 'short_text',
-                            required: true
-                        },
-                        {
-                            id: 'item_formativo_2',
-                            prompt: 'Aplica [Concepto] a una situación concreta.',
-                            type: 'long_text',
-                            required: true
-                        },
-                        {
-                            id: 'item_formativo_3',
-                            prompt: 'Explica brevemente por qué es correcto.',
-                            type: 'long_text',
-                            required: true
-                        }
-                    ]
+            ],
+            eu: [
+                {
+                    name: 'Txantiloi azkarra (1 item, irekia)',
+                    ticket: {
+                        title: 'Txartel azkarra: [Gaia]',
+                        criteria: 'Saioaren ideia nagusia [Kontzeptua]-ri buruz',
+                        instructions: 'Erantzun [Kontzeptua]-ri buruzko esaldi labur batekin.',
+                        items: [
+                            {
+                                id: 'item_rapida_1',
+                                prompt: 'Zein da [Kontzeptua]-ri buruzko ideia garrantzitsuena?',
+                                type: 'short_text',
+                                required: true
+                            }
+                        ]
+                    }
+                },
+                {
+                    name: 'Egiaztapen azkarreko txantiloia (1 item, itxia)',
+                    ticket: {
+                        title: 'Egiaztapen azkarra: [Gaia]',
+                        criteria: 'Taldearen termometroa [Kontzeptua]-ri buruz',
+                        instructions: 'Aukeratu aukera bat.',
+                        items: [
+                            {
+                                id: 'item_verificacion_1',
+                                prompt: 'Zein argi daukazu [Kontzeptua]?',
+                                type: 'single_choice',
+                                required: true,
+                                options: ['Oso argi', 'Nahiko argi', 'Gutxi argi', 'Batere argi ez']
+                            }
+                        ]
+                    }
+                },
+                {
+                    name: 'Txantiloi diagnostikoa (2 item)',
+                    ticket: {
+                        title: 'Diagnostiko azkarra: [Gaia]',
+                        criteria: '[Kontzeptua]-ren kontzeptua eta aplikazioa',
+                        instructions: 'Erantzun zehaztasunez.',
+                        items: [
+                            {
+                                id: 'item_diagnostico_1',
+                                prompt: 'Definitu labur [Kontzeptua].',
+                                type: 'short_text',
+                                required: true
+                            },
+                            {
+                                id: 'item_diagnostico_2',
+                                prompt: 'Aplikatu [Kontzeptua] adibide erraz batean.',
+                                type: 'long_text',
+                                required: true
+                            }
+                        ]
+                    }
+                },
+                {
+                    name: 'Gutxieneko ebidentzia txantiloia (2 item)',
+                    ticket: {
+                        title: 'Gutxieneko ebidentzia: [Gaia]',
+                        criteria: 'Emaitza eta justifikazioa [Kontzeptua]-ri buruz',
+                        instructions: 'Eman emaitza eta ebidentzia labur bat.',
+                        items: [
+                            {
+                                id: 'item_evidencia_1',
+                                prompt: '[Egoera]-ri buruzko emaitza edo erabaki nagusia.',
+                                type: 'short_text',
+                                required: true
+                            },
+                            {
+                                id: 'item_evidencia_2',
+                                prompt: 'Justifikatu zure erantzuna ebidentzia batekin.',
+                                type: 'long_text',
+                                required: true
+                            }
+                        ]
+                    }
+                },
+                {
+                    name: 'Formazio-analisi txantiloia (3 item)',
+                    ticket: {
+                        title: 'Formazio-analisi: [Gaia]',
+                        criteria: 'Identifikazioa, aplikazioa eta ebidentzia [Kontzeptua]-ri buruz',
+                        instructions: 'Erantzun puntu bakoitza argi.',
+                        items: [
+                            {
+                                id: 'item_formativo_1',
+                                prompt: 'Identifikatu edo definitu [Kontzeptua].',
+                                type: 'short_text',
+                                required: true
+                            },
+                            {
+                                id: 'item_formativo_2',
+                                prompt: 'Aplikatu [Kontzeptua] egoera zehatz batean.',
+                                type: 'long_text',
+                                required: true
+                            },
+                            {
+                                id: 'item_formativo_3',
+                                prompt: 'Azaldu labur zergatik den zuzena.',
+                                type: 'long_text',
+                                required: true
+                            }
+                        ]
+                    }
+                },
+                {
+                    name: 'Txantiloi metakognitiboa',
+                    ticket: {
+                        title: 'Metakognizioa: [Gaia]',
+                        criteria: '[Gaia]-ri buruzko ikaskuntza pertzepzioa',
+                        instructions: 'Erantzun zintzotasunez.',
+                        items: [
+                            {
+                                id: 'item_meta_1',
+                                prompt: 'Zer ikasi duzu gaur [Gaia]-ri buruz?',
+                                type: 'short_text',
+                                required: true
+                            },
+                            {
+                                id: 'item_meta_2',
+                                prompt: 'Zer izan da zailena [Gaia]-n?',
+                                type: 'short_text',
+                                required: true
+                            },
+                            {
+                                id: 'item_meta_3',
+                                prompt: 'Zein estrategia izan da lagungarriena?',
+                                type: 'short_text',
+                                required: false
+                            }
+                        ]
+                    }
                 }
-            },
-            {
-                name: 'Plantilla metacognitiva',
-                ticket: {
-                    title: 'Metacognición: [Tema]',
-                    criteria: 'Percepción de aprendizaje en [Tema]',
-                    instructions: 'Responde con honestidad.',
-                    items: [
-                        {
-                            id: 'item_meta_1',
-                            prompt: '¿Qué has aprendido hoy sobre [Tema]?',
-                            type: 'short_text',
-                            required: true
-                        },
-                        {
-                            id: 'item_meta_2',
-                            prompt: '¿Qué te ha resultado más difícil en [Tema]?',
-                            type: 'short_text',
-                            required: true
-                        },
-                        {
-                            id: 'item_meta_3',
-                            prompt: '¿Qué estrategia te ha ayudado más?',
-                            type: 'short_text',
-                            required: false
-                        }
-                    ]
+            ],
+            de: [
+                {
+                    name: 'Schnellvorlage (1 Item, offen)',
+                    ticket: {
+                        title: 'Schnellticket: [Thema]',
+                        criteria: 'Schlüsselidee zur Sitzung über [Begriff]',
+                        instructions: 'Antworte mit einem kurzen Satz über [Begriff].',
+                        items: [
+                            {
+                                id: 'item_rapida_1',
+                                prompt: 'Was ist die wichtigste Idee zu [Begriff]?',
+                                type: 'short_text',
+                                required: true
+                            }
+                        ]
+                    }
+                },
+                {
+                    name: 'Schnell-Check-Vorlage (1 Item, geschlossen)',
+                    ticket: {
+                        title: 'Schnell-Check: [Thema]',
+                        criteria: 'Gruppenthermometer zu [Begriff]',
+                        instructions: 'Wähle eine Option.',
+                        items: [
+                            {
+                                id: 'item_verificacion_1',
+                                prompt: 'Wie klar ist dir [Begriff]?',
+                                type: 'single_choice',
+                                required: true,
+                                options: ['Sehr klar', 'Ziemlich klar', 'Wenig klar', 'Gar nicht klar']
+                            }
+                        ]
+                    }
+                },
+                {
+                    name: 'Diagnose-Vorlage (2 Items)',
+                    ticket: {
+                        title: 'Schnelldiagnose: [Thema]',
+                        criteria: 'Begriff und Anwendung von [Begriff]',
+                        instructions: 'Antworte präzise.',
+                        items: [
+                            {
+                                id: 'item_diagnostico_1',
+                                prompt: 'Definiere [Begriff] kurz.',
+                                type: 'short_text',
+                                required: true
+                            },
+                            {
+                                id: 'item_diagnostico_2',
+                                prompt: 'Wende [Begriff] an einem einfachen Beispiel an.',
+                                type: 'long_text',
+                                required: true
+                            }
+                        ]
+                    }
+                },
+                {
+                    name: 'Minimaler Evidenz-Vorlage (2 Items)',
+                    ticket: {
+                        title: 'Minimale Evidenz: [Thema]',
+                        criteria: 'Ergebnis und Begründung zu [Begriff]',
+                        instructions: 'Nenne ein Ergebnis und eine kurze Evidenz.',
+                        items: [
+                            {
+                                id: 'item_evidencia_1',
+                                prompt: 'Hauptergebnis oder Entscheidung zu [Situation].',
+                                type: 'short_text',
+                                required: true
+                            },
+                            {
+                                id: 'item_evidencia_2',
+                                prompt: 'Begründe deine Antwort mit Evidenz.',
+                                type: 'long_text',
+                                required: true
+                            }
+                        ]
+                    }
+                },
+                {
+                    name: 'Formative Analyse-Vorlage (3 Items)',
+                    ticket: {
+                        title: 'Formative Analyse: [Thema]',
+                        criteria: 'Identifikation, Anwendung und Evidenz zu [Begriff]',
+                        instructions: 'Beantworte jeden Punkt klar.',
+                        items: [
+                            {
+                                id: 'item_formativo_1',
+                                prompt: 'Identifiziere oder definiere [Begriff].',
+                                type: 'short_text',
+                                required: true
+                            },
+                            {
+                                id: 'item_formativo_2',
+                                prompt: 'Wende [Begriff] auf eine konkrete Situation an.',
+                                type: 'long_text',
+                                required: true
+                            },
+                            {
+                                id: 'item_formativo_3',
+                                prompt: 'Erkläre kurz, warum es korrekt ist.',
+                                type: 'long_text',
+                                required: true
+                            }
+                        ]
+                    }
+                },
+                {
+                    name: 'Metakognitive Vorlage',
+                    ticket: {
+                        title: 'Metakognition: [Thema]',
+                        criteria: 'Lernwahrnehmung zu [Thema]',
+                        instructions: 'Antworte ehrlich.',
+                        items: [
+                            {
+                                id: 'item_meta_1',
+                                prompt: 'Was hast du heute über [Thema] gelernt?',
+                                type: 'short_text',
+                                required: true
+                            },
+                            {
+                                id: 'item_meta_2',
+                                prompt: 'Was war am schwierigsten bei [Thema]?',
+                                type: 'short_text',
+                                required: true
+                            },
+                            {
+                                id: 'item_meta_3',
+                                prompt: 'Welche Strategie hat dir am meisten geholfen?',
+                                type: 'short_text',
+                                required: false
+                            }
+                        ]
+                    }
                 }
-            }
-        ];
+            ]
+        };
+
+        function getDefaultTemplates() {
+            return TEMPLATE_SETS[currentLang] || TEMPLATE_SETS.es;
+        }
 
         async function loadTranslations() {
             const response = await fetch('locales/index.json', { cache: 'no-store' });
@@ -542,6 +1223,7 @@
             currentLang = lang;
             localStorage.setItem('preferred_language', lang);
             applyTranslations();
+            loadTemplates();
             refreshTicketPreview();
         }
 
@@ -1294,8 +1976,9 @@
             const stored = JSON.parse(localStorage.getItem('ticket_templates') || '[]');
             const selector = document.getElementById('template-selector');
             selector.innerHTML = '';
+            const defaultTemplates = getDefaultTemplates();
             availableTemplates = [
-                ...DEFAULT_TEMPLATES.map((template) => ({ ...template, source: 'default' })),
+                ...defaultTemplates.map((template) => ({ ...template, source: 'default' })),
                 ...stored.map((template) => ({ ...template, source: 'custom' }))
             ];
             availableTemplates.forEach((template, idx) => {
@@ -1308,7 +1991,13 @@
             importOption.value = 'import';
             importOption.textContent = t('import_templates_btn', 'Importar');
             selector.appendChild(importOption);
-            selector.value = lastTemplateIndex;
+            const numericIndex = Number(lastTemplateIndex);
+            if (Number.isNaN(numericIndex) || numericIndex < 0) {
+                lastTemplateIndex = 0;
+            } else if (numericIndex > availableTemplates.length - 1) {
+                lastTemplateIndex = availableTemplates.length - 1;
+            }
+            selector.value = String(lastTemplateIndex);
         }
 
         function saveTemplate() {
@@ -1349,7 +2038,7 @@
                 showToast('toast_template_default', 'No puedes eliminar una plantilla base.');
                 return;
             }
-            const customIndex = index - DEFAULT_TEMPLATES.length;
+            const customIndex = index - getDefaultTemplates().length;
             templates.splice(customIndex, 1);
             localStorage.setItem('ticket_templates', JSON.stringify(templates));
             loadTemplates();
@@ -1420,8 +2109,7 @@
                     ? savedLang
                     : (translations[browserLang] ? browserLang : 'es');
             document.getElementById('lang-selector').value = langToSet;
-            currentLang = langToSet;
-            applyTranslations();
+            setLanguage(langToSet);
 
             const themePref = getThemePreference();
             document.getElementById('theme-selector').value = themePref;

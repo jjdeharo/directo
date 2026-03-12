@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.4.7/peerjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="analytics-presenter.js" defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
@@ -489,6 +490,9 @@
                 studentView.classList.add('hidden');
                 appContainer.classList.remove('max-w-2xl');
                 appContainer.classList.add('max-w-5xl');
+                if (window.analyticsMarkPresenterView) {
+                    window.analyticsMarkPresenterView('directo-vota');
+                }
             } else {
                 presenterView.classList.add('hidden');
                 studentView.classList.remove('hidden');

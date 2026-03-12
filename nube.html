@@ -11,6 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
+    <script src="analytics-presenter.js" defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
@@ -654,6 +655,9 @@
                 participantView.classList.add('hidden');
                 document.getElementById('create-session-form').classList.remove('hidden');
                 document.getElementById('results-view').classList.add('hidden');
+                if (window.analyticsMarkPresenterView) {
+                    window.analyticsMarkPresenterView('directo-nube');
+                }
             } else {
                 presenterView.classList.add('hidden');
                 participantView.classList.remove('hidden');

@@ -29,7 +29,7 @@
   "vote_timeout_error": "No s'ha rebut resposta. Si us plau, torna-ho a provar.",
   "copied_toast": "Codi copiat al porta-retalls",
   "link_copied_toast": "Enllaç copiat al porta-retalls",
-  "url_copied_toast": "URL copiada al porta-retalls",
+  "url_copied_toast": "URL copiat al porta-retalls",
   "alert_no_question": "Si us plau, introdueix una pregunta i almenys dues opcions.",
   "alert_connection_error": "Hi ha hagut un error amb la connexió. Si us plau, recarrega la pàgina.",
   "join_error_text": "Error de connexió. Verifica el codi o que la persona amfitriona estigui connectada.",

@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.4.7/peerjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="analytics-presenter.js" defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
@@ -360,6 +361,9 @@
             const appEl = document.getElementById('app');
             appEl.classList.toggle('max-w-5xl', view === 'presenter');
             appEl.classList.toggle('max-w-2xl', view !== 'presenter');
+            if (view === 'presenter' && window.analyticsMarkPresenterView) {
+                window.analyticsMarkPresenterView('directo-escala');
+            }
             if(view === 'participant') {
                 document.getElementById('join-session-form').classList.remove('hidden');
                 document.getElementById('voting-view').classList.add('hidden');

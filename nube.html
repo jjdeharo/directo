@@ -232,14 +232,20 @@
                     <input type="color" id="color-picker" value="#f97316" class="w-12 h-12 p-1 border border-gray-300 rounded-md cursor-pointer">
                 </div>
 
-                <div class="flex flex-col sm:flex-row gap-4 mt-6">
-                    <button onclick="generateShareableLink()" id="prepare-button" class="w-full bg-gray-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-600 transition duration-300 flex items-center justify-center">
-                        <span data-translate-key="prepare_session_btn">Preparar sesión</span>
-                    </button>
-                    <button onclick="hostSession()" id="host-button" class="w-full themed-bg themed-bg-hover font-bold py-3 px-4 rounded-lg transition duration-300 flex items-center justify-center">
-                        <span id="host-button-text" data-translate-key="start_session_btn">Iniciar Sesión</span>
-                        <div id="host-loader" class="loader hidden ml-3"></div>
-                    </button>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 items-start">
+                    <div class="w-full">
+                        <button onclick="generateShareableLink()" id="prepare-button" class="w-full bg-gray-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-600 transition duration-300 flex items-center justify-center">
+                            <span data-translate-key="prepare_session_btn">Preparar sesión</span>
+                        </button>
+                        <p class="mt-2 text-sm text-gray-600 leading-snug" data-translate-key="prepare_session_help">Guarda el título, el límite de palabras y el color en una URL para recuperarlos después y lanzar la nube en otro momento.</p>
+                    </div>
+                    <div class="w-full">
+                        <button onclick="hostSession()" id="host-button" class="w-full themed-bg themed-bg-hover font-bold py-3 px-4 rounded-lg transition duration-300 flex items-center justify-center">
+                            <span id="host-button-text" data-translate-key="start_session_btn">Iniciar Sesión</span>
+                            <div id="host-loader" class="loader hidden ml-3"></div>
+                        </button>
+                        <p class="mt-2 text-sm text-gray-600 leading-snug" data-translate-key="start_session_help">Inicia la nube ahora mismo y genera el código, el enlace y el QR para que otras personas puedan enviar palabras en directo.</p>
+                    </div>
                 </div>
                 <div id="shareable-link-container" class="hidden mt-4 p-4 bg-gray-100 rounded-lg">
                     <label class="block text-sm font-medium text-gray-700 mb-2" data-translate-key="shareable_link_title">Enlace de preparación listo. Cópialo y guárdalo:</label>

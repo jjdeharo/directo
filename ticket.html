@@ -143,10 +143,20 @@
 
                             <div class="mt-4 space-y-3">
                                 <div class="flex flex-col sm:flex-row gap-2">
+                                    <button id="prepare-session" class="flex-1 px-4 py-2 rounded-lg bg-slate-600 text-white font-semibold hover:bg-slate-700" data-translate-key="prepare_session_btn">Preparar sesión</button>
                                     <button id="start-session" class="flex-1 px-4 py-2 rounded-lg bg-emerald-600 text-white font-semibold" data-translate-key="start_session_btn">Iniciar sesion</button>
                                     <button id="end-session" class="flex-1 px-4 py-2 rounded-lg bg-slate-200 text-slate-700 dark:bg-slate-800 dark:text-slate-200 font-semibold" data-translate-key="end_session_btn">Finalizar</button>
                                 </div>
+                                <p class="text-sm text-slate-500 dark:text-slate-400" data-translate-key="prepare_session_help">Guarda la configuración completa del ticket en una URL para recuperarla después y usarla en otro momento.</p>
+                                <p class="text-sm text-slate-500 dark:text-slate-400" data-translate-key="start_session_help">Inicia el ticket ahora mismo y genera el código, el enlace y el QR para que otras personas respondan en directo.</p>
                                 <button id="toggle-projector" class="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-700" data-translate-key="projector_btn">Modo proyector</button>
+                            </div>
+                            <div id="prepared-link-box" class="mt-4 hidden rounded-lg bg-slate-100 dark:bg-slate-900/70 p-3">
+                                <p class="text-xs text-slate-500" data-translate-key="shareable_link_title">Enlace de preparación</p>
+                                <div class="mt-2 flex items-center gap-2">
+                                    <input id="prepared-link-input" class="flex-1 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-2 py-1 text-xs" readonly>
+                                    <button id="copy-prepared-link" class="text-sm text-emerald-600" data-translate-key="copy_link_btn">Copiar</button>
+                                </div>
                             </div>
 
                             <div id="session-info" class="mt-5 space-y-4 hidden">
@@ -1251,6 +1261,21 @@
             setTimeout(() => { toast.style.opacity = 0; }, 2000);
         }
 
+        function encodeStateToBase64(value) {
+            const bytes = new TextEncoder().encode(JSON.stringify(value));
+            let binary = '';
+            bytes.forEach((byte) => {
+                binary += String.fromCharCode(byte);
+            });
+            return btoa(binary);
+        }
+
+        function decodeStateFromBase64(value) {
+            const binary = atob(value);
+            const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
+            return JSON.parse(new TextDecoder().decode(bytes));
+        }
+
         function switchView(view) {
             const presenter = document.getElementById('presenter-view');
             const student = document.getElementById('student-view');
@@ -1781,6 +1806,36 @@
             return `${base}?${params.toString()}`;
         }
 
+        function buildPreparedState() {
+            return {
+                ticket: buildTicketFromForm(),
+                templateName: document.getElementById('template-name').value.trim(),
+                timerMinutes: document.getElementById('timer-minutes').value.trim(),
+                peerConfig: getPeerConfigOverrides(),
+                lang: currentLang
+            };
+        }
+
+        function buildPreparedLink() {
+            const base = window.location.href.split('?')[0].split('#')[0];
+            const params = new URLSearchParams();
+            params.set('data', encodeStateToBase64(buildPreparedState()));
+            params.set('lang', currentLang);
+            return `${base}?${params.toString()}`;
+        }
+
+        function prepareSession() {
+            const ticket = buildTicketFromForm();
+            if (!ticket.title || ticket.items.length === 0) {
+                showToast('toast_ticket_required', 'Define un título y al menos un ítem.');
+                return;
+            }
+            const shareUrl = buildPreparedLink();
+            document.getElementById('prepared-link-input').value = shareUrl;
+            document.getElementById('prepared-link-box').classList.remove('hidden');
+            navigator.clipboard.writeText(shareUrl).then(() => showToast('toast_prepared_link_copied', 'Enlace de preparación copiado.'));
+        }
+
         function getPeerConfigOverrides() {
             return {
                 host: document.getElementById('peer-host').value.trim() || DEFAULT_PEER_CONFIG.host,
@@ -2170,6 +2225,40 @@
             localStorage.setItem('preferred_ticket_tab', tabId);
         }
 
+        function applyPreparedState(state) {
+            if (!state || !state.ticket || !Array.isArray(state.ticket.items)) return false;
+
+            document.getElementById('ticket-title').value = state.ticket.title || '';
+            document.getElementById('ticket-criteria').value = state.ticket.criteria || '';
+            document.getElementById('ticket-instructions').value = state.ticket.instructions || '';
+            document.getElementById('template-name').value = state.templateName || '';
+            document.getElementById('timer-minutes').value = state.timerMinutes || '';
+
+            const peerConfig = state.peerConfig || {};
+            document.getElementById('peer-host').value = peerConfig.host || DEFAULT_PEER_CONFIG.host;
+            document.getElementById('peer-port').value = peerConfig.port || DEFAULT_PEER_CONFIG.port;
+            document.getElementById('peer-path').value = peerConfig.path || DEFAULT_PEER_CONFIG.path;
+            document.getElementById('peer-secure').checked = typeof peerConfig.secure === 'boolean' ? peerConfig.secure : DEFAULT_PEER_CONFIG.secure;
+
+            renderItemsFromTicket(state.ticket);
+            refreshTicketPreview();
+            return true;
+        }
+
+        function restorePreparedStateFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            const data = params.get('data');
+            if (!data) return false;
+            try {
+                const preparedState = decodeStateFromBase64(data);
+                return applyPreparedState(preparedState);
+            } catch (err) {
+                console.error('Error restoring prepared ticket state:', err);
+                showToast('toast_prepared_link_invalid', 'No se pudo recuperar la preparación.');
+                return false;
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', async () => {
             await loadTranslations();
             const savedLang = localStorage.getItem('preferred_language');
@@ -2220,11 +2309,18 @@
                 e.target.value = '';
             });
 
+            document.getElementById('prepare-session').addEventListener('click', prepareSession);
             document.getElementById('start-session').addEventListener('click', startSession);
             document.getElementById('end-session').addEventListener('click', endSession);
             document.getElementById('toggle-projector').addEventListener('click', toggleProjectorMode);
             document.getElementById('exit-projector').addEventListener('click', toggleProjectorMode);
 
+            document.getElementById('copy-prepared-link').addEventListener('click', () => {
+                const value = document.getElementById('prepared-link-input').value;
+                if (!value) return;
+                navigator.clipboard.writeText(value);
+                showToast('toast_prepared_link_copied', 'Enlace de preparación copiado.');
+            });
             document.getElementById('copy-code').addEventListener('click', () => {
                 navigator.clipboard.writeText(document.getElementById('session-code').innerText);
                 showToast('toast_copied', 'Copiado.');
@@ -2315,6 +2411,7 @@
             const params = new URLSearchParams(window.location.search);
             const sessionId = params.get('session');
             const role = params.get('role');
+            const restoredPreparedState = restorePreparedStateFromUrl();
             if (role === 'student' || sessionId) {
                 switchView('student');
                 if (sessionId) {
@@ -2327,6 +2424,8 @@
                         joinSession(sessionId);
                     }
                 }
+            } else if (restoredPreparedState) {
+                switchView('presenter');
             } else {
                 switchView('presenter');
             }

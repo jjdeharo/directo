@@ -126,14 +126,20 @@
                         <label for="cards-per-person" class="block text-sm font-medium text-gray-700 mb-1" data-translate-key="cards_per_person_label"></label>
                         <input type="number" id="cards-per-person" value="2" min="1" class="w-full p-2 border border-gray-300 rounded-md shadow-sm">
                     </div>
-                    <div class="flex flex-col sm:flex-row gap-4 mt-6">
-                        <button onclick="generateShareableLink()" id="prepare-button" class="w-full bg-gray-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-600 transition duration-300 flex items-center justify-center">
-                            <span data-translate-key="prepare_session_btn"></span>
-                        </button>
-                        <button onclick="hostSession()" id="host-button" class="w-full themed-bg themed-bg-hover font-bold py-3 px-4 rounded-lg flex items-center justify-center">
-                            <span data-translate-key="start_session_btn"></span>
-                            <div id="host-loader" class="loader hidden ml-3"></div>
-                        </button>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 items-start">
+                        <div class="w-full">
+                            <button onclick="generateShareableLink()" id="prepare-button" class="w-full bg-gray-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-600 transition duration-300 flex items-center justify-center">
+                                <span data-translate-key="prepare_session_btn"></span>
+                            </button>
+                            <p class="mt-2 text-sm text-gray-600 leading-snug" data-translate-key="prepare_session_help"></p>
+                        </div>
+                        <div class="w-full">
+                            <button onclick="hostSession()" id="host-button" class="w-full themed-bg themed-bg-hover font-bold py-3 px-4 rounded-lg flex items-center justify-center">
+                                <span data-translate-key="start_session_btn"></span>
+                                <div id="host-loader" class="loader hidden ml-3"></div>
+                            </button>
+                            <p class="mt-2 text-sm text-gray-600 leading-snug" data-translate-key="start_session_help"></p>
+                        </div>
                     </div>
                 </div>
                 <div id="shareable-link-container" class="hidden mt-4 p-4 bg-gray-100 rounded-lg">

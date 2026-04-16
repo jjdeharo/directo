@@ -109,12 +109,18 @@
                      <button onclick="addCustomLabel()" class="text-sm text-blue-600 hover:text-blue-800" data-translate-key="add_label_btn"></button>
                 </div>
                 
-                <div class="flex flex-col sm:flex-row gap-4 mt-6">
-                    <button onclick="generateShareableLink()" class="w-full bg-gray-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-600" data-translate-key="prepare_session_btn"></button>
-                    <button onclick="hostSession()" id="host-button" class="w-full themed-bg themed-bg-hover font-bold py-3 px-4 rounded-lg flex items-center justify-center">
-                        <span id="host-button-text" data-translate-key="start_session_btn"></span>
-                        <div id="host-loader" class="loader hidden ml-3"></div>
-                    </button>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 items-start">
+                    <div class="w-full">
+                        <button onclick="generateShareableLink()" class="w-full bg-gray-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-600" data-translate-key="prepare_session_btn"></button>
+                        <p class="mt-2 text-sm text-gray-600 leading-snug" data-translate-key="prepare_session_help"></p>
+                    </div>
+                    <div class="w-full">
+                        <button onclick="hostSession()" id="host-button" class="w-full themed-bg themed-bg-hover font-bold py-3 px-4 rounded-lg flex items-center justify-center">
+                            <span id="host-button-text" data-translate-key="start_session_btn"></span>
+                            <div id="host-loader" class="loader hidden ml-3"></div>
+                        </button>
+                        <p class="mt-2 text-sm text-gray-600 leading-snug" data-translate-key="start_session_help"></p>
+                    </div>
                 </div>
 
                 <div id="shareable-link-container" class="hidden mt-4 p-4 bg-gray-100 rounded-lg">

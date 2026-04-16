@@ -161,14 +161,20 @@
                     </div>
                     <button onclick="addOption()" class="mt-2 text-sm text-green-600 hover:text-green-800" data-translate-key="add_option_btn">+ Añadir opción</button>
                 </div>
-                <div class="flex flex-col sm:flex-row gap-4 mt-6">
-                    <button onclick="generateShareableLink()" id="prepare-button" class="w-full bg-gray-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-600 transition duration-300 flex items-center justify-center">
-                        <span data-translate-key="prepare_session_btn">Preparar sesión</span>
-                    </button>
-                    <button onclick="hostSession()" id="host-button" class="w-full themed-bg themed-bg-hover font-bold py-3 px-4 rounded-lg transition duration-300 flex items-center justify-center">
-                        <span id="host-button-text" data-translate-key="start_session_btn">Iniciar Sesión</span>
-                        <div id="host-loader" class="loader hidden ml-3"></div>
-                    </button>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 items-start">
+                    <div class="w-full">
+                        <button onclick="generateShareableLink()" id="prepare-button" class="w-full bg-gray-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-600 transition duration-300 flex items-center justify-center">
+                            <span data-translate-key="prepare_session_btn">Preparar sesión</span>
+                        </button>
+                        <p class="mt-2 text-sm text-gray-600 leading-snug" data-translate-key="prepare_session_help">Guarda la pregunta y las opciones en una URL para recuperarlas después y lanzar la votación en otro momento.</p>
+                    </div>
+                    <div class="w-full">
+                        <button onclick="hostSession()" id="host-button" class="w-full themed-bg themed-bg-hover font-bold py-3 px-4 rounded-lg transition duration-300 flex items-center justify-center">
+                            <span id="host-button-text" data-translate-key="start_session_btn">Iniciar Sesión</span>
+                            <div id="host-loader" class="loader hidden ml-3"></div>
+                        </button>
+                        <p class="mt-2 text-sm text-gray-600 leading-snug" data-translate-key="start_session_help">Inicia la votación ahora mismo y genera el código, el enlace y el QR para que otras personas puedan responder en directo.</p>
+                    </div>
                 </div>
                 <div id="shareable-link-container" class="hidden mt-4 p-4 bg-gray-100 rounded-lg">
                     <label class="block text-sm font-medium text-gray-700 mb-2" data-translate-key="shareable_link_title">Enlace de preparación listo. Cópialo y guárdalo para usarlo más tarde:</label>

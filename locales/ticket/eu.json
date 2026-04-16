@@ -37,6 +37,7 @@
   "start_session_btn": "Saioa hasi",
   "start_session_help": "Abiarazi txartela oraintxe bertan eta sortu kodea, esteka eta QR-a, beste pertsona batzuek zuzenean erantzun dezaten.",
   "end_session_btn": "Amaitu",
+  "end_session_help": "Itxi uneko saioa, gelditu erantzun berriak eta jaso diren emaitzak gorde.",
   "projector_btn": "Proiektore modua",
   "exit_projector_btn": "Proiektore modutik irten",
   "session_code_label": "Saioaren kodea",

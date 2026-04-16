@@ -37,6 +37,7 @@
   "start_session_btn": "Iniciar sesión",
   "start_session_help": "Inicia o ticket agora mesmo e xera o código, a ligazón e o QR para que outras persoas respondan en directo.",
   "end_session_btn": "Finalizar",
+  "end_session_help": "Pecha a sesión actual, detén novas respostas e conserva os resultados xa recibidos.",
   "projector_btn": "Modo proxector",
   "exit_projector_btn": "Saír do modo proxector",
   "session_code_label": "Código de sesión",

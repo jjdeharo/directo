@@ -142,13 +142,20 @@
                             <p class="text-sm text-slate-500 dark:text-slate-400" data-translate-key="session_subtitle">Comparte el codigo o QR para recibir respuestas.</p>
 
                             <div class="mt-4 space-y-3">
-                                <div class="flex flex-col sm:flex-row gap-2">
-                                    <button id="prepare-session" class="flex-1 px-4 py-2 rounded-lg bg-slate-600 text-white font-semibold hover:bg-slate-700" data-translate-key="prepare_session_btn">Preparar sesión</button>
-                                    <button id="start-session" class="flex-1 px-4 py-2 rounded-lg bg-emerald-600 text-white font-semibold" data-translate-key="start_session_btn">Iniciar sesion</button>
-                                    <button id="end-session" class="flex-1 px-4 py-2 rounded-lg bg-slate-200 text-slate-700 dark:bg-slate-800 dark:text-slate-200 font-semibold" data-translate-key="end_session_btn">Finalizar</button>
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                    <div class="space-y-2">
+                                        <button id="prepare-session" class="w-full px-4 py-2 rounded-lg bg-slate-600 text-white font-semibold hover:bg-slate-700" data-translate-key="prepare_session_btn">Preparar sesión</button>
+                                        <p class="text-sm text-slate-500 dark:text-slate-400" data-translate-key="prepare_session_help">Guarda la configuración completa del ticket en una URL para recuperarla después y usarla en otro momento.</p>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <button id="start-session" class="w-full px-4 py-2 rounded-lg bg-emerald-600 text-white font-semibold" data-translate-key="start_session_btn">Iniciar sesion</button>
+                                        <p class="text-sm text-slate-500 dark:text-slate-400" data-translate-key="start_session_help">Inicia el ticket ahora mismo y genera el código, el enlace y el QR para que otras personas respondan en directo.</p>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <button id="end-session" class="w-full px-4 py-2 rounded-lg bg-slate-200 text-slate-700 dark:bg-slate-800 dark:text-slate-200 font-semibold" data-translate-key="end_session_btn">Finalizar</button>
+                                        <p class="text-sm text-slate-500 dark:text-slate-400" data-translate-key="end_session_help">Cierra la sesión actual, detiene nuevas respuestas y conserva los resultados recibidos.</p>
+                                    </div>
                                 </div>
-                                <p class="text-sm text-slate-500 dark:text-slate-400" data-translate-key="prepare_session_help">Guarda la configuración completa del ticket en una URL para recuperarla después y usarla en otro momento.</p>
-                                <p class="text-sm text-slate-500 dark:text-slate-400" data-translate-key="start_session_help">Inicia el ticket ahora mismo y genera el código, el enlace y el QR para que otras personas respondan en directo.</p>
                                 <button id="toggle-projector" class="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-700" data-translate-key="projector_btn">Modo proyector</button>
                             </div>
                             <div id="prepared-link-box" class="mt-4 hidden rounded-lg bg-slate-100 dark:bg-slate-900/70 p-3">

@@ -37,6 +37,7 @@
   "start_session_btn": "Sitzung starten",
   "start_session_help": "Starte das Ticket jetzt sofort und erzeuge Code, Link und QR, damit andere Personen live antworten können.",
   "end_session_btn": "Beenden",
+  "end_session_help": "Beende die aktuelle Sitzung, stoppe neue Antworten und behalte die bereits empfangenen Ergebnisse.",
   "projector_btn": "Projektormodus",
   "exit_projector_btn": "Projektormodus verlassen",
   "session_code_label": "Sitzungscode",

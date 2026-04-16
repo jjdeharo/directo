@@ -37,6 +37,7 @@
   "start_session_btn": "Start session",
   "start_session_help": "Start the ticket right now and generate the code, link, and QR so other people can respond live.",
   "end_session_btn": "End",
+  "end_session_help": "Close the current session, stop new responses, and keep the results already received.",
   "projector_btn": "Projector mode",
   "exit_projector_btn": "Exit projector mode",
   "session_code_label": "Session code",

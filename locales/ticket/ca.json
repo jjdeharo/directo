@@ -37,6 +37,7 @@
   "start_session_btn": "Iniciar sessió",
   "start_session_help": "Inicia el tiquet ara mateix i genera el codi, l'enllaç i el QR perquè altres persones responguin en directe.",
   "end_session_btn": "Finalitzar",
+  "end_session_help": "Tanca la sessió actual, atura les noves respostes i conserva els resultats rebuts.",
   "projector_btn": "Mode projector",
   "exit_projector_btn": "Sortir del mode projector",
   "session_code_label": "Codi de sessió",

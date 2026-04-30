@@ -1,4 +1,8 @@
 {
+  "role_title": "Simple Voting",
+  "role_subtitle": "Choose how you want to enter.",
+  "role_teacher": "I am a teacher",
+  "role_student": "I am a student",
   "page_title": "Real-time Voting",
   "create_title": "Create a new poll",
   "question_label": "Your question:",

@@ -1,4 +1,8 @@
 {
+  "role_title": "Einfache Abstimmung",
+  "role_subtitle": "Wähle aus, wie du beitreten möchtest.",
+  "role_teacher": "Ich bin Lehrer/in",
+  "role_student": "Ich bin Schüler/in",
   "page_title": "Abstimmung in Echtzeit",
   "create_title": "Neue Abstimmung erstellen",
   "question_label": "Deine Frage:",

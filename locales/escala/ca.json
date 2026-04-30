@@ -1,4 +1,8 @@
 {
+  "role_title": "Escala de valoració",
+  "role_subtitle": "Tria com vols entrar.",
+  "role_teacher": "Soc professor/a",
+  "role_student": "Soc alumne/a",
   "create_title": "Crear una nova escala",
   "question_label": "Afirmació o pregunta:",
   "question_placeholder": "Ex: Valora la sessió d'avui",

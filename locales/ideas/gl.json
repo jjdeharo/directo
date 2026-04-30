@@ -1,4 +1,8 @@
 {
+  "role_title": "Chuvia de ideas e votos",
+  "role_subtitle": "Escolle como queres entrar.",
+  "role_teacher": "Son profesor/a",
+  "role_student": "Son alumno/a",
   "create_title": "Crear unha nova lista de ideas",
   "question_label": "Título ou pregunta:",
   "question_placeholder": "Ex: Ideas para mellorar o patio",

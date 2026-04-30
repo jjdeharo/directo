@@ -14,7 +14,7 @@
   "general-joining-p1": "Once the presenter has started an activity, participants have three simple ways to connect:",
   "general-joining-li1": "<strong>QR Code:</strong> The fastest way. Simply scan the QR code displayed on the presenter's screen with a mobile camera.",
   "general-joining-li2": "<strong>Direct Link:</strong> The presenter can share a unique link. Clicking on it takes the participant directly into the session.",
-  "general-joining-li3": "<strong>Manual Code:</strong> The participant can open the main page of the application and enter the short code (usually 6 characters) shown on the presenter's screen.",
+  "general-joining-li3": "<strong>Manual Code:</strong> The participant can open the application, choose <strong>I am a student</strong>, and enter the short code (usually 6 characters) shown on the presenter's screen.",
   "general-customization-title": "Activity Customization",
   "general-customization-p1": "All applications allow the presenter to unify the activity's look and feel by choosing a <strong>base color</strong>. This color is applied to buttons, backgrounds, and other visual elements, creating a cohesive experience. In addition to the color, all activity parameters can be configured, such as the question, answer options, or participation limits.",
   "general-prepare-title": "The \"Prepare Session\" Function",

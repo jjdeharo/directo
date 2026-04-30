@@ -1,8 +1,8 @@
 {
   "main-title": "Zuzeneko Konexioa",
   "main-subtitle": "Ikasgelan aldibereko parte-hartzea sustatzeko tresnak.",
-  "instructions-title": "Nola sortu jarduera bat?",
-  "instructions-body": "Jarduera bat aurkezle gisa hasteko, ireki erabili nahi duzun aplikazioa eta sakatu pantailaren behealdean aurkituko duzun estekan.",
+  "instructions-title": "Nola hasi?",
+  "instructions-body": "Tresna bat irekitzean, aukeratu irakasle gisa jarduera sortzeko edo ikasle gisa kodearekin sartzeko.",
   "manual-link-title": "Erabiltzailearen Eskuliburua",
   "app-vota-title": "Bozketa sinplea",
   "app-vota-desc": "Sortu aukera anitzeko bozkak. Parte-hartzaileak kode batekin batzen dira eta beren gailuetatik bozkatzen dute, emaitzak unean eguneratzen diren barra-diagrametan ikusiz.",
@@ -18,6 +18,8 @@
   "app-ticket-desc": "Sortu amaierako inpresioak jasotzeko txartel laburrak. Kodearekin zuzenean funtzionatzen du, eta modu eramangarri batean ere bai inprimatzeko edo plataformetan itsasteko.",
   "app-qplay-title": "QPlay: Lehiaketa interaktiboa",
   "app-qplay-desc": "Ikasgela gamifikatzeko tresna. Irakasleak galdetegi bat kargatzen du eta ikasleek denbora errealean lehiatzen dute beren gailuetatik sailkapenaren buru izateko.",
+  "app-reloj-title": "Hitzordu Erlojua",
+  "app-reloj-desc": "Dinamika kooperatiboa antolatzen du: ikasleek ikaskideekin hitzorduak adosten dituzte eta bikoteka lan egiten dute irakasleak ordu bat deitzen duenean.",
   "app-boardlive-title": "BoardLive: Pizarra kolaboratiboa",
   "app-boardlive-desc": "Denbora errealeko pizarra kolaboratiboa. Anfitrioiak saioa sortzen du, kodea edo QR partekatzen du eta norbaitek marraztu dezakeen kontrolatzen du. Orrialdeak, marrazteko tresnak, irudiak txertatzea eta PDF esportazioa ditu. Gainera, irakasleek gelako arbel digitalean proiektatu dezakete tabletan denbora errealean idazten edo marrazten dutena."
 }

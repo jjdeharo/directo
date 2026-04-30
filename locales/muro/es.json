@@ -1,4 +1,8 @@
 {
+  "role_title": "Muro interactivo",
+  "role_subtitle": "Elige cómo quieres entrar.",
+  "role_teacher": "Soy profesor/a",
+  "role_student": "Soy alumno/a",
   "create_title": "Crear un nuevo muro de ideas",
   "question_label": "Título o pregunta del muro:",
   "question_placeholder": "Ej: ¿Qué hemos aprendido hoy?",

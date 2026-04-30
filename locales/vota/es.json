@@ -1,4 +1,8 @@
 {
+  "role_title": "Votación simple",
+  "role_subtitle": "Elige cómo quieres entrar.",
+  "role_teacher": "Soy profesor/a",
+  "role_student": "Soy alumno/a",
   "page_title": "Votación en Tiempo Real",
   "create_title": "Crear una nueva votación",
   "question_label": "Tu pregunta:",

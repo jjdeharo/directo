@@ -1,4 +1,8 @@
 {
+  "role_title": "Wortwolke",
+  "role_subtitle": "Wähle aus, wie du beitreten möchtest.",
+  "role_teacher": "Ich bin Lehrer/in",
+  "role_student": "Ich bin Schüler/in",
   "create_title": "Neue Wortwolke erstellen",
   "question_label": "Titel oder Frage:",
   "question_placeholder": "Z. B.: Was bedeutet Biologie für dich?",

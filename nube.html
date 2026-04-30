@@ -212,6 +212,20 @@
             </select>
         </div>
 
+        <div id="role-view" class="bg-white p-6 md:p-8 rounded-xl shadow-lg text-center max-w-2xl mx-auto">
+            <div class="w-14 h-14 rounded-full themed-content-bg border flex items-center justify-center mx-auto mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 themed-info-box-text" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6.75a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 20.25a7.5 7.5 0 0115 0" />
+                </svg>
+            </div>
+            <h1 class="text-2xl md:text-3xl font-extrabold text-gray-900" data-translate-key="role_title">Nube de palabras</h1>
+            <p class="mt-2 mb-6 text-gray-600" data-translate-key="role_subtitle">Elige cómo quieres entrar.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <button onclick="selectRole('presenter')" class="w-full themed-bg themed-bg-hover font-bold py-4 px-5 rounded-lg transition" data-translate-key="role_teacher">Soy profesor/a</button>
+                <button onclick="selectRole('participant')" class="w-full bg-white border border-gray-300 hover:bg-gray-50 text-gray-800 font-bold py-4 px-5 rounded-lg transition" data-translate-key="role_student">Soy alumno/a</button>
+            </div>
+        </div>
+
         <div id="presenter-view" class="hidden">
             <div id="create-session-form" class="themed-content-bg p-6 md:p-8 rounded-xl shadow-lg">
                 <h2 class="text-2xl font-bold mb-6" data-translate-key="create_title">Crear una nueva lluvia de ideas</h2>
@@ -652,11 +666,21 @@
         }
 
         // --- LÓGICA GENERAL DE LA UI ---
+        function selectRole(role) {
+            switchView(role === 'presenter' ? 'presenter' : 'participant');
+        }
+
         function switchView(view) {
+            const roleView = document.getElementById('role-view');
             const presenterView = document.getElementById('presenter-view');
             const participantView = document.getElementById('participant-view');
             
-            if (view === 'presenter') {
+            if (view === 'role') {
+                roleView.classList.remove('hidden');
+                presenterView.classList.add('hidden');
+                participantView.classList.add('hidden');
+            } else if (view === 'presenter') {
+                roleView.classList.add('hidden');
                 presenterView.classList.remove('hidden');
                 participantView.classList.add('hidden');
                 document.getElementById('create-session-form').classList.remove('hidden');
@@ -665,12 +689,13 @@
                     window.analyticsMarkPresenterView('directo-nube');
                 }
             } else {
+                roleView.classList.add('hidden');
                 presenterView.classList.add('hidden');
                 participantView.classList.remove('hidden');
             }
             const appEl = document.getElementById('app');
             appEl.classList.toggle('max-w-5xl', view === 'presenter');
-            appEl.classList.toggle('max-w-2xl', view === 'participant');
+            appEl.classList.toggle('max-w-2xl', view !== 'presenter');
         }
 
         function showToast(messageKey) {
@@ -1086,7 +1111,7 @@
                     switchView('participant');
                 }
             } else {
-                switchView('participant');
+                switchView('role');
             }
         }
 

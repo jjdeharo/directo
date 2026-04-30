@@ -1,4 +1,8 @@
 {
+  "role_title": "Word Cloud",
+  "role_subtitle": "Choose how you want to enter.",
+  "role_teacher": "I am a teacher",
+  "role_student": "I am a student",
   "create_title": "Create a new brainstorm",
   "question_label": "Title or question:",
   "question_placeholder": "E.g., What is biology to you?",

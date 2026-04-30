@@ -1,4 +1,8 @@
 {
+  "role_title": "Balorazio eskala",
+  "role_subtitle": "Aukeratu nola sartu nahi duzun.",
+  "role_teacher": "Irakaslea naiz",
+  "role_student": "Ikaslea naiz",
   "create_title": "Eskala berri bat sortu",
   "question_label": "Adierazpena edo galdera:",
   "question_placeholder": "Adib: Baloratu gaurko saioa",

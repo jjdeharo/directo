@@ -1,8 +1,8 @@
 {
   "main-title": "Connexió en Directe",
   "main-subtitle": "Eines per fomentar la participació simultània a l'aula.",
-  "instructions-title": "Com crear una activitat?",
-  "instructions-body": "Per iniciar una activitat com a presentador, obre l'aplicació que vulguis fer servir i prem a l'enllaç que trobaràs a la part inferior de la pantalla.",
+  "instructions-title": "Com començar?",
+  "instructions-body": "En obrir una eina, tria si entres com a professor/a per crear l'activitat o com a alumne/a per unir-te amb el codi.",
   "manual-link-title": "Manual d'Usuari",
   "app-vota-title": "Votació simple",
   "app-vota-desc": "Crea votacions d'opció múltiple. Els participants s'uneixen amb un codi i voten des dels seus dispositius, veient els resultats en gràfics de barres que s'actualitzen al moment.",
@@ -18,6 +18,8 @@
   "app-ticket-desc": "Crea tiquets breus per recollir impressions finals. Funciona en directe amb codi i també en mode portable per imprimir o enganxar a plataformes.",
   "app-qplay-title": "QPlay: Concurs interactiu",
   "app-qplay-desc": "Una eina per gamificar l'aula. El professor carrega un qüestionari i els alumnes competeixen en temps real des dels seus dispositius per liderar la classificació.",
+  "app-reloj-title": "Rellotge de Cites",
+  "app-reloj-desc": "Organitza una dinàmica cooperativa en què l'alumnat concerta cites amb els companys i treballa per parelles quan el professor crida una hora.",
   "app-boardlive-title": "BoardLive: Pissarra col·laborativa",
   "app-boardlive-desc": "Pissarra col·laborativa en temps real. L'amfitrió crea la sessió, comparteix un codi o QR i controla qui pot dibuixar. Inclou pàgines, eines de dibuix, inserció d'imatges i exportació a PDF. També permet que el professorat projecti a la pissarra digital de l'aula el que escriu o dibuixa a la seva tauleta en temps real."
 }

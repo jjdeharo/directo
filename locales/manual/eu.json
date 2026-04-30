@@ -14,7 +14,7 @@
   "general-joining-p1": "Aurkezleak jarduera bat hasi ondoren, parte-hartzaileek konektatzeko hiru modu erraz dituzte:",
   "general-joining-li1": "<strong>QR kodea:</strong> Modurik azkarrena. Besterik gabe, mugikorraren kamerarekin eskaneratu aurkezlearen pantailan agertzen den QR kodea.",
   "general-joining-li2": "<strong>Esteka zuzena:</strong> Aurkezleak esteka bakarra parteka dezake. Klik egitean, parte-hartzailea zuzenean sartzen da saioan.",
-  "general-joining-li3": "<strong>Eskuzko kodea:</strong> Parte-hartzaileak aplikazioaren orri nagusia ireki dezake eta aurkezlearen pantailan agertzen den kode laburra (normalean 6 karakterekoa) sartu.",
+  "general-joining-li3": "<strong>Eskuzko kodea:</strong> Parte-hartzaileak aplikazioa ireki, <strong>Ikaslea naiz</strong> aukeratu eta aurkezlearen pantailan agertzen den kode laburra (normalean 6 karakterekoa) sar dezake.",
   "general-customization-title": "Jardueraren pertsonalizazioa",
   "general-customization-p1": "Aplikazio guztiek aurkezleari jardueraren estetika bateratzea ahalbidetzen diote, <strong>oinarrizko kolore</strong> bat aukeratuz. Kolore hau botoiei, atzeko planoari eta beste elementu bisual batzuei aplikatzen zaie, esperientzia koherente bat sortuz. Koloreaz gain, jardueraren parametro guztiak konfigura daitezke, hala nola galdera, erantzun-aukerak edo parte-hartze mugak.",
   "general-prepare-title": "\"Prestatu saioa\" funtzioa",

@@ -1,4 +1,8 @@
 {
+  "role_title": "Mur interactiu",
+  "role_subtitle": "Tria com vols entrar.",
+  "role_teacher": "Soc professor/a",
+  "role_student": "Soc alumne/a",
   "create_title": "Crear un nou mur d'idees",
   "question_label": "Títol o pregunta del mur:",
   "question_placeholder": "Ex: Què hem après avui?",

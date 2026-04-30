@@ -1,8 +1,8 @@
 {
   "main-title": "Live Connection",
   "main-subtitle": "Tools to foster simultaneous participation in the classroom.",
-  "instructions-title": "How to create an activity?",
-  "instructions-body": "To start an activity as a presenter, open the application you want to use and click on the link at the bottom of the screen.",
+  "instructions-title": "How to start?",
+  "instructions-body": "When you open a tool, choose whether to enter as a teacher to create the activity or as a student to join with the code.",
   "manual-link-title": "User Manual",
   "app-vota-title": "Simple Voting",
   "app-vota-desc": "Create multiple-choice polls. Participants join with a code and vote from their devices, viewing results in bar charts that update instantly.",
@@ -18,6 +18,8 @@
   "app-ticket-desc": "Create short tickets to capture final reflections. Works live with a code and also in portable mode for printing or pasting into platforms.",
   "app-qplay-title": "QPlay: Interactive contest",
   "app-qplay-desc": "A tool to gamify the classroom. The teacher loads a questionnaire and the students compete in real time from their devices to lead the ranking.",
+  "app-reloj-title": "Appointment Clock",
+  "app-reloj-desc": "Run a cooperative activity where students arrange appointments with classmates and work in pairs when the teacher calls a clock hour.",
   "app-boardlive-title": "BoardLive: Collaborative whiteboard",
   "app-boardlive-desc": "Real-time collaborative whiteboard. The host creates the session, shares a code or QR, and controls who can draw. Includes pages, drawing tools, image insertion, and PDF export. It also lets teachers project on the classroom digital whiteboard what they write or draw on their tablet in real time."
 }

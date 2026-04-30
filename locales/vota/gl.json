@@ -1,4 +1,8 @@
 {
+  "role_title": "Votación sinxela",
+  "role_subtitle": "Escolle como queres entrar.",
+  "role_teacher": "Son profesor/a",
+  "role_student": "Son alumno/a",
   "page_title": "Votación en Tempo Real",
   "create_title": "Crear unha nova votación",
   "question_label": "A túa pregunta:",

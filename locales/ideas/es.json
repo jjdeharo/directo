@@ -1,4 +1,8 @@
 {
+  "role_title": "Lluvia de ideas y votos",
+  "role_subtitle": "Elige cómo quieres entrar.",
+  "role_teacher": "Soy profesor/a",
+  "role_student": "Soy alumno/a",
   "create_title": "Crear una nueva lista de ideas",
   "question_label": "Título o pregunta:",
   "question_placeholder": "Ej: Ideas para mejorar el patio",

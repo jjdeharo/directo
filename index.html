@@ -171,6 +171,21 @@
                 </div>
             </a>
 
+            <a href="https://reloj-citas.github.io/" class="app-card bg-sky-50 rounded-xl shadow-md overflow-hidden">
+                <div class="app-card-content">
+                    <div class="app-icon bg-sky-100 text-sky-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="9" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 7v5l3 2" />
+                        </svg>
+                    </div>
+                    <div class="app-card-description">
+                        <h2 id="app-reloj-title" class="text-xl font-bold mb-2">Reloj de Citas</h2>
+                        <p id="app-reloj-desc" class="mb-4">Organiza una dinámica cooperativa en la que el alumnado concierta citas con sus compañeros y trabaja en parejas cuando el profesor llama una hora.</p>
+                    </div>
+                </div>
+            </a>
+
             <a href="https://boardlive.github.io/" class="app-card bg-rose-50 rounded-xl shadow-md overflow-hidden">
                 <div class="app-card-content">
                     <div class="app-icon bg-rose-100 text-rose-600">
@@ -254,6 +269,7 @@
                 'app-escala-title', 'app-escala-desc',
                 'app-ticket-title', 'app-ticket-desc',
                 'app-qplay-title', 'app-qplay-desc',
+                'app-reloj-title', 'app-reloj-desc',
                 'app-boardlive-title', 'app-boardlive-desc'
             ];
 
@@ -295,7 +311,12 @@
             }
             const savedLang = localStorage.getItem('preferred_language');
             const browserLang = (navigator.language || navigator.userLanguage).split('-')[0];
-            const langToSet = savedLang || (translations[browserLang] ? browserLang : 'es');
+            const urlLang = new URLSearchParams(window.location.search).get('lang');
+            const langToSet = (urlLang && translations[urlLang])
+                ? urlLang
+                : (savedLang && translations[savedLang])
+                    ? savedLang
+                    : (translations[browserLang] ? browserLang : 'es');
             
             document.getElementById('lang-selector').value = langToSet;
             setLanguage(langToSet);

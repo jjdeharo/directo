@@ -36,7 +36,7 @@ No se necesita instalación ni servidor. Simplemente abre el fichero `index.html
 ### Para el presentador
 
 1.  Abre la aplicación que desees utilizar desde la página principal.
-2.  En la pantalla inicial de la aplicación, haz clic en el enlace inferior (normalmente **"¿Eres el presentador? Inicia sesión aquí."**).
+2.  En la pantalla inicial de la aplicación, elige **"Soy profesor/a"**.
 3.  Introduce la pregunta o título de la actividad, configura las opciones específicas (respuestas, límites, etc.) y personaliza el color del tema.
 4.  Haz clic en **"Iniciar Sesión"** o un botón similar.
 5.  Comparte el **código QR**, el **enlace directo** o la **URL principal junto con el código de sesión** con tu audiencia.
@@ -47,7 +47,7 @@ Una vez que el presentador ha iniciado una actividad, los participantes tienen t
 
 * **Código QR**: La forma más rápida. Simplemente escaneando con la cámara del móvil el código QR que se muestra en la pantalla del presentador.
 * **Enlace directo**: El presentador puede compartir un enlace único. Al hacer clic, el participante entra directamente a la sesión.
-* **Código manual**: El participante puede abrir la página principal de la aplicación e introducir el código corto (normalmente de 6 caracteres) que se muestra en la pantalla del presentador.
+* **Código manual**: El participante puede abrir la aplicación, elegir **"Soy alumno/a"** e introducir el código corto (normalmente de 6 caracteres) que se muestra en la pantalla del presentador.
 
 Una vez dentro, simplemente interactúan enviando sus respuestas (votos, ideas, etc.).
 

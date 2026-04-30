@@ -1,4 +1,8 @@
 {
+  "role_title": "Exit Tickets",
+  "role_subtitle": "Choose how you want to enter.",
+  "role_teacher": "I am a teacher",
+  "role_student": "I am a student",
   "main_title": "Exit Tickets",
   "main_subtitle": "Collect quick reflections at the end of the session, live or in portable mode.",
   "presenter_mode_label": "Presenter mode",

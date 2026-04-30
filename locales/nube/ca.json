@@ -1,4 +1,8 @@
 {
+  "role_title": "Núvol de paraules",
+  "role_subtitle": "Tria com vols entrar.",
+  "role_teacher": "Soc professor/a",
+  "role_student": "Soc alumne/a",
   "create_title": "Crear una nova pluja d'idees",
   "question_label": "Títol o pregunta:",
   "question_placeholder": "Ex: Què és per a tu la biologia?",

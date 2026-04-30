@@ -1,4 +1,8 @@
 {
+  "role_title": "Tickets de saída",
+  "role_subtitle": "Escolle como queres entrar.",
+  "role_teacher": "Son profesor/a",
+  "role_student": "Son alumno/a",
   "main_title": "Tickets de saída",
   "main_subtitle": "Recolla impresións rápidas ao final da sesión, en directo ou en modo portátil.",
   "presenter_mode_label": "Modo presentador",

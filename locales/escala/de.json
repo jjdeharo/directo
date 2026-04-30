@@ -1,4 +1,8 @@
 {
+  "role_title": "Bewertungsskala",
+  "role_subtitle": "Wähle aus, wie du beitreten möchtest.",
+  "role_teacher": "Ich bin Lehrer/in",
+  "role_student": "Ich bin Schüler/in",
   "create_title": "Neue Skala erstellen",
   "question_label": "Aussage oder Frage:",
   "question_placeholder": "Z. B.: Bewerte die heutige Sitzung",

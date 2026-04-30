@@ -1,4 +1,8 @@
 {
+  "role_title": "Pluja d'idees i vots",
+  "role_subtitle": "Tria com vols entrar.",
+  "role_teacher": "Soc professor/a",
+  "role_student": "Soc alumne/a",
   "create_title": "Crear una nova llista d'idees",
   "question_label": "Títol o pregunta:",
   "question_placeholder": "Ex: Idees per millorar el pati",

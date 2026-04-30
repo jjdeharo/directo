@@ -62,13 +62,27 @@
                 <p id="main-subtitle" class="text-slate-600" data-translate-key="main_subtitle">Recoge impresiones rápidas al final de la sesión, en directo o en modo portable.</p>
             </div>
             <div class="flex flex-wrap items-center gap-2 no-print">
-                <span class="text-sm font-semibold text-emerald-700" data-translate-key="presenter_mode_label">Modo presentador</span>
+                <span id="mode-label" class="hidden text-sm font-semibold text-emerald-700" data-translate-key="presenter_mode_label">Modo presentador</span>
                 <select id="lang-selector" class="px-3 py-2 rounded-lg border border-slate-300 bg-white text-slate-700"></select>
             </div>
         </header>
 
         <main class="mt-8">
-            <section id="presenter-view" class="space-y-6">
+            <section id="role-view" class="card rounded-2xl shadow-lg border border-slate-200/70 dark:border-slate-800 p-6 md:p-8 text-center max-w-2xl mx-auto">
+                <div class="w-14 h-14 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6.75a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 20.25a7.5 7.5 0 0115 0" />
+                    </svg>
+                </div>
+                <h2 class="text-2xl md:text-3xl font-extrabold" data-translate-key="role_title">Tickets de salida</h2>
+                <p class="mt-2 mb-6 text-slate-600 dark:text-slate-400" data-translate-key="role_subtitle">Elige cómo quieres entrar.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <button onclick="switchView('presenter')" class="w-full px-5 py-4 rounded-lg bg-emerald-600 text-white font-bold hover:bg-emerald-700" data-translate-key="role_teacher">Soy profesor/a</button>
+                    <button onclick="switchView('student')" class="w-full px-5 py-4 rounded-lg bg-white border border-slate-300 text-slate-800 font-bold hover:bg-slate-50" data-translate-key="role_student">Soy alumno/a</button>
+                </div>
+            </section>
+
+            <section id="presenter-view" class="hidden space-y-6">
                 <div class="tab-bar no-print flex flex-wrap gap-2 border-b border-slate-200 pb-3">
                     <button class="tab-btn active px-3 py-2 rounded-lg bg-white border border-slate-300 text-sm font-semibold text-slate-700" data-tab="ticket" data-translate-key="tab_ticket">Ticket</button>
                     <button class="tab-btn px-3 py-2 rounded-lg bg-white border border-slate-300 text-sm font-semibold text-slate-700" data-tab="session" data-translate-key="tab_session">Sesión</button>
@@ -1284,19 +1298,36 @@
         }
 
         function switchView(view) {
+            const role = document.getElementById('role-view');
             const presenter = document.getElementById('presenter-view');
             const student = document.getElementById('student-view');
-            if (view === 'presenter') {
+            const modeLabel = document.getElementById('mode-label');
+            if (view === 'role') {
+                role.classList.remove('hidden');
+                presenter.classList.add('hidden');
+                student.classList.add('hidden');
+                modeLabel.classList.add('hidden');
+            } else if (view === 'presenter') {
+                role.classList.add('hidden');
                 presenter.classList.remove('hidden');
                 student.classList.add('hidden');
+                modeLabel.dataset.translateKey = 'presenter_mode_label';
+                modeLabel.innerText = t('presenter_mode_label', 'Modo presentador');
+                modeLabel.classList.remove('hidden');
                 if (window.analyticsMarkPresenterView) {
                     window.analyticsMarkPresenterView('directo-ticket');
                 }
             } else {
+                role.classList.add('hidden');
                 presenter.classList.add('hidden');
                 student.classList.remove('hidden');
+                modeLabel.dataset.translateKey = 'student_mode';
+                modeLabel.innerText = t('student_mode', 'Alumno');
+                modeLabel.classList.remove('hidden');
             }
-            localStorage.setItem('preferred_role', view);
+            if (view !== 'role') {
+                localStorage.setItem('preferred_role', view);
+            }
         }
 
         function updateSessionButtons() {
@@ -2434,7 +2465,7 @@
             } else if (restoredPreparedState) {
                 switchView('presenter');
             } else {
-                switchView('presenter');
+                switchView('role');
             }
         });
     </script>

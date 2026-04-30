@@ -1,4 +1,8 @@
 {
+  "role_title": "Rating Scale",
+  "role_subtitle": "Choose how you want to enter.",
+  "role_teacher": "I am a teacher",
+  "role_student": "I am a student",
   "create_title": "Create a new scale",
   "question_label": "Statement or question:",
   "question_placeholder": "E.g., Rate today's session",

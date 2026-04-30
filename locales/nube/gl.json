@@ -1,4 +1,8 @@
 {
+  "role_title": "Nube de verbas",
+  "role_subtitle": "Escolle como queres entrar.",
+  "role_teacher": "Son profesor/a",
+  "role_student": "Son alumno/a",
   "create_title": "Crear unha nova chuvia de ideas",
   "question_label": "Título ou pregunta:",
   "question_placeholder": "Ex: Que é para ti a bioloxía?",

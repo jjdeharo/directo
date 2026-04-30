@@ -1,8 +1,8 @@
 {
   "main-title": "Conexión en Directo",
   "main-subtitle": "Herramientas para fomentar la participación simultánea en el aula.",
-  "instructions-title": "¿Cómo crear una actividad?",
-  "instructions-body": "Para iniciar una actividad como presentador, abre la aplicación que quieras usar y pulsa en el enlace que encontrarás en la parte inferior de la pantalla.",
+  "instructions-title": "¿Cómo empezar?",
+  "instructions-body": "Al abrir una herramienta, elige si entras como profesor/a para crear la actividad o como alumno/a para unirte con el código.",
   "manual-link-title": "Manual de Usuario",
   "app-vota-title": "Votación simple",
   "app-vota-desc": "Crea votaciones de opción múltiple. Los participantes se unen con un código y votan desde sus dispositivos, viendo los resultados en gráficos de barras que se actualizan al momento.",
@@ -18,6 +18,8 @@
   "app-ticket-desc": "Crea tickets breves para recoger impresiones finales. Funciona en directo con código y también en modo portable para imprimir o pegar en plataformas.",
   "app-qplay-title": "QPlay: Concurso interactivo",
   "app-qplay-desc": "Una herramienta para gamificar el aula. El profesor carga un cuestionario y los alumnos compiten en tiempo real desde sus dispositivos para liderar la clasificación.",
+  "app-reloj-title": "Reloj de Citas",
+  "app-reloj-desc": "Organiza una dinámica cooperativa en la que el alumnado concierta citas con sus compañeros y trabaja en parejas cuando el profesor llama una hora.",
   "app-boardlive-title": "BoardLive: Pizarra colaborativa",
   "app-boardlive-desc": "Pizarra colaborativa en tiempo real. El anfitrión crea la sesión, comparte un código o QR y controla quién puede dibujar. Incluye páginas, herramientas de dibujo, inserción de imágenes y exportación a PDF. También permite que el profesorado proyecte en la pizarra digital del aula lo que escribe o dibuja en su tablet en tiempo real."
 }

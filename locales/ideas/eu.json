@@ -1,4 +1,8 @@
 {
+  "role_title": "Ideia-jasa eta botoak",
+  "role_subtitle": "Aukeratu nola sartu nahi duzun.",
+  "role_teacher": "Irakaslea naiz",
+  "role_student": "Ikaslea naiz",
   "create_title": "Ideia zerrenda berria sortu",
   "question_label": "Izenburua edo galdera:",
   "question_placeholder": "Adib: Jolastokia hobetzeko ideiak",

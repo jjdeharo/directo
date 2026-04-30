@@ -14,7 +14,7 @@
   "general-joining-p1": "Un cop el presentador ha iniciat una activitat, els participants tenen tres formes senzilles de connectar-se:",
   "general-joining-li1": "<strong>Codi QR:</strong> La forma més ràpida. Simplement escanejant amb la càmera del mòbil el codi QR que es mostra a la pantalla del presentador.",
   "general-joining-li2": "<strong>Enllaç directe:</strong> El presentador pot compartir un enllaç únic. En fer clic, el participant entra directament a la sessió.",
-  "general-joining-li3": "<strong>Codi manual:</strong> El participant pot obrir la pàgina principal de l'aplicació i introduir el codi curt (normalment de 6 caràcters) que es mostra a la pantalla del presentador.",
+  "general-joining-li3": "<strong>Codi manual:</strong> El participant pot obrir l'aplicació, triar <strong>Soc alumne/a</strong> i introduir el codi curt (normalment de 6 caràcters) que es mostra a la pantalla del presentador.",
   "general-customization-title": "Personalització de l'activitat",
   "general-customization-p1": "Totes les aplicacions permeten al presentador unificar l'estètica de l'activitat triant un <strong>color base</strong>. Aquest color s'aplica als botons, fons i altres elements visuals, creant una experiència coherent. A més del color, es poden configurar tots els paràmetres de l'activitat, com la pregunta, les opcions de resposta o els límits de participació.",
   "general-prepare-title": "La funció \"Preparar Sessió\"",

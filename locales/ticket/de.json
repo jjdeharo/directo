@@ -1,4 +1,8 @@
 {
+  "role_title": "Exit-Tickets",
+  "role_subtitle": "Wähle aus, wie du beitreten möchtest.",
+  "role_teacher": "Ich bin Lehrer/in",
+  "role_student": "Ich bin Schüler/in",
   "main_title": "Exit-Tickets",
   "main_subtitle": "Sammle kurze Rückmeldungen am Ende der Stunde, live oder im portablen Modus.",
   "presenter_mode_label": "Präsentationsmodus",

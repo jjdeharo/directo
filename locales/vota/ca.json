@@ -1,4 +1,8 @@
 {
+  "role_title": "Votació simple",
+  "role_subtitle": "Tria com vols entrar.",
+  "role_teacher": "Soc professor/a",
+  "role_student": "Soc alumne/a",
   "page_title": "Votació en Temps Real",
   "create_title": "Crear una nova votació",
   "question_label": "La teva pregunta:",

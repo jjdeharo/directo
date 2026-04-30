@@ -1,4 +1,8 @@
 {
+  "role_title": "Escala de valoración",
+  "role_subtitle": "Elige cómo quieres entrar.",
+  "role_teacher": "Soy profesor/a",
+  "role_student": "Soy alumno/a",
   "create_title": "Crear una nueva escala",
   "question_label": "Afirmación o pregunta:",
   "question_placeholder": "Ej: Valora la sesión de hoy",

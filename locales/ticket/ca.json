@@ -1,4 +1,8 @@
 {
+  "role_title": "Tiquets de sortida",
+  "role_subtitle": "Tria com vols entrar.",
+  "role_teacher": "Soc professor/a",
+  "role_student": "Soc alumne/a",
   "main_title": "Tiquets de sortida",
   "main_subtitle": "Recull impressions ràpides al final de la sessió, en directe o en mode portable.",
   "presenter_mode_label": "Mode presentador",

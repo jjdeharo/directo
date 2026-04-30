@@ -1,4 +1,8 @@
 {
+  "role_title": "Harresi interaktiboa",
+  "role_subtitle": "Aukeratu nola sartu nahi duzun.",
+  "role_teacher": "Irakaslea naiz",
+  "role_student": "Ikaslea naiz",
   "create_title": "Ideia-horma berria sortu",
   "question_label": "Hormaren izenburua edo galdera:",
   "question_placeholder": "Adib: Zer ikasi dugu gaur?",

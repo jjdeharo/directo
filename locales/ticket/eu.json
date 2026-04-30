@@ -1,4 +1,8 @@
 {
+  "role_title": "Irteera-txartelak",
+  "role_subtitle": "Aukeratu nola sartu nahi duzun.",
+  "role_teacher": "Irakaslea naiz",
+  "role_student": "Ikaslea naiz",
   "main_title": "Irteera-txartelak",
   "main_subtitle": "Saioaren amaieran inpresio azkarrak jaso, zuzenean edo modu eramangarrian.",
   "presenter_mode_label": "Aurkezle modua",

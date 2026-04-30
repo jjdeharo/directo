@@ -14,7 +14,7 @@
   "general-joining-p1": "Unha vez que o presentador iniciou una actividade, os participantes teñen tres formas sinxelas de conectarse:",
   "general-joining-li1": "<strong>Código QR:</strong> A forma máis rápida. Simplemente escaneando coa cámara do móbil o código QR que se mostra na pantalla do presentador.",
   "general-joining-li2": "<strong>Ligazón directa:</strong> O presentador pode compartir unha ligazón única. Ao facer clic, o participante entra directamente á sesión.",
-  "general-joining-li3": "<strong>Código manual:</strong> O participante pode abrir a páxina principal da aplicación e introducir o código curto (normalmente de 6 caracteres) que se mostra na pantalla do presentador.",
+  "general-joining-li3": "<strong>Código manual:</strong> O participante pode abrir a aplicación, escoller <strong>Son alumno/a</strong> e introducir o código curto (normalmente de 6 caracteres) que se mostra na pantalla do presentador.",
   "general-customization-title": "Personalización da actividade",
   "general-customization-p1": "Todas as aplicacións permiten ao presentador unificar a estética da actividade elixindo unha <strong>cor base</strong>. Esta cor aplícase aos botóns, fondos e outros elementos visuais, creando unha experiencia coherente. Ademais da cor, pódense configurar todos os parámetros da actividade, como a pregunta, as opcións de resposta ou os límites de participación.",
   "general-prepare-title": "A función \"Preparar Sesión\"",

@@ -1,8 +1,8 @@
 {
   "main-title": "Direktverbindung",
   "main-subtitle": "Werkzeuge, um die gleichzeitige Beteiligung im Unterricht zu fördern.",
-  "instructions-title": "Wie erstellt man eine Aktivität?",
-  "instructions-body": "Um eine Aktivität als Präsentator zu starten, öffne die Anwendung, die du verwenden möchtest, und klicke auf den Link, den du unten auf dem Bildschirm findest.",
+  "instructions-title": "Wie geht es los?",
+  "instructions-body": "Wenn du ein Werkzeug öffnest, wählst du aus, ob du als Lehrkraft die Aktivität erstellst oder als Schüler/in mit dem Code beitrittst.",
   "manual-link-title": "Benutzerhandbuch",
   "app-vota-title": "Einfache Abstimmung",
   "app-vota-desc": "Erstelle Multiple-Choice-Abstimmungen. Die Teilnehmenden treten mit einem Code bei und stimmen von ihren Geräten ab; die Ergebnisse erscheinen in Balkendiagrammen, die sich sofort aktualisieren.",
@@ -18,6 +18,8 @@
   "app-ticket-desc": "Erstelle kurze Exit-Tickets, um Abschlussrückmeldungen zu sammeln. Funktioniert live mit Code und auch im portablen Modus zum Drucken oder Einfügen in Plattformen.",
   "app-qplay-title": "QPlay: Interaktiver Wettbewerb",
   "app-qplay-desc": "Ein Werkzeug, um den Unterricht zu gamifizieren. Die Lehrkraft lädt ein Quiz, und die Schülerinnen und Schüler konkurrieren in Echtzeit von ihren Geräten aus, um die Rangliste anzuführen.",
+  "app-reloj-title": "Terminuhr",
+  "app-reloj-desc": "Organisiere eine kooperative Aktivität, bei der Schüler/innen Termine mit Mitschüler/innen vereinbaren und paarweise arbeiten, wenn die Lehrkraft eine Uhrzeit aufruft.",
   "app-boardlive-title": "BoardLive: Kollaboratives Whiteboard",
   "app-boardlive-desc": "Kollaboratives Whiteboard in Echtzeit. Der Host erstellt die Sitzung, teilt Code oder QR und steuert, wer zeichnen darf. Enthält Seiten, Zeichenwerkzeuge, Bildeinfügen und PDF-Export. Außerdem ermöglicht es Lehrkräften, auf der digitalen Tafel im Klassenraum das zu projizieren, was sie auf ihrem Tablet in Echtzeit schreiben oder zeichnen."
 }

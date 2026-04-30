@@ -291,10 +291,11 @@
             document.querySelectorAll('a[href]').forEach((link) => {
                 const href = link.getAttribute('href');
                 if (!href || href.startsWith('#') || href.startsWith('mailto:')) return;
-                if (!href.includes('.html')) return;
                 try {
                     const url = new URL(href, window.location.href);
-                    if (url.origin !== window.location.origin) return;
+                    const isLocalHtml = url.origin === window.location.origin && url.pathname.endsWith('.html');
+                    const isAppointmentClock = url.origin === 'https://reloj-citas.github.io';
+                    if (!isLocalHtml && !isAppointmentClock) return;
                     url.searchParams.set('lang', lang);
                     link.href = url.href;
                 } catch (e) {

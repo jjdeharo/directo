@@ -43,7 +43,6 @@
   "switch_to_presenter": "Aurkezlea zara? Hasi saioa hemen.",
   "switch_to_student": "Saio batean sartu nahi duzu? Egin klik hemen.",
   "footer_created_by": "Aplikazioa, egilea:",
-  "footer_license": "Creative Commons Aitortu-PartekatuBerdin 4.0 Nazioartekoa",
   "confirm_end_title": "Saioa amaitu?",
   "confirm_end_text": "Honek uneko saioa amaituko du parte-hartzaile guztientzat. Kode berri bat partekatu beharko duzu berriro sartzeko.",
   "cancel_btn": "Ezeztatu",
@@ -52,5 +51,7 @@
   "resume_voting_btn": "Berrekin",
   "voting_paused_title": "Bozketa pausatuta",
   "voting_paused_subtitle": "Aurkezleak erantzunak aldi baterako gelditu ditu.",
-  "qr_expand_hint": "Egin klik handitzeko"
+  "qr_expand_hint": "Egin klik handitzeko",
+  "footer_license_code": "Kodea:",
+  "footer_license_content": "Edukiak:"
 }

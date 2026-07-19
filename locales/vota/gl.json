@@ -43,7 +43,6 @@
   "switch_to_presenter": "Es o presentador? Inicia sesión aquí.",
   "switch_to_student": "Buscas unirte a unha sesión? Fai clic aquí.",
   "footer_created_by": "Aplicación feita por",
-  "footer_license": "Creative Commons Recoñecemento-CompartirIgual 4.0 Internacional",
   "confirm_end_title": "Finalizar a sesión?",
   "confirm_end_text": "Isto rematará a sesión actual para todos os participantes. Deberás compartir un novo código para que se unan de novo.",
   "cancel_btn": "Anular",
@@ -52,5 +51,7 @@
   "resume_voting_btn": "Retomar",
   "voting_paused_title": "Votación pausada",
   "voting_paused_subtitle": "O presentador detivo as respostas temporalmente.",
-  "qr_expand_hint": "Fai clic para ampliar"
+  "qr_expand_hint": "Fai clic para ampliar",
+  "footer_license_code": "Código:",
+  "footer_license_content": "Contidos:"
 }

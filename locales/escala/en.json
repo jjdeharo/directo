@@ -72,5 +72,7 @@
       "I get it"
     ]
   },
-  "qr_expand_hint": "Click to enlarge"
+  "qr_expand_hint": "Click to enlarge",
+  "footer_license_code": "Code:",
+  "footer_license_content": "Content:"
 }

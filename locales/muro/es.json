@@ -42,5 +42,7 @@
   "resume_receiving_btn": "Reanudar",
   "receiving_paused_title": "Recepción en pausa",
   "receiving_paused_subtitle": "El presentador ha detenido el envío de tarjetas.",
-  "qr_expand_hint": "Haz clic para ampliar"
+  "qr_expand_hint": "Haz clic para ampliar",
+  "footer_license_code": "Código:",
+  "footer_license_content": "Contenidos:"
 }

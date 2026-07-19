@@ -72,5 +72,7 @@
       "Ulertzen dut"
     ]
   },
-  "qr_expand_hint": "Egin klik handitzeko"
+  "qr_expand_hint": "Egin klik handitzeko",
+  "footer_license_code": "Kodea:",
+  "footer_license_content": "Edukiak:"
 }

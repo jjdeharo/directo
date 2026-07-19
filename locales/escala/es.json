@@ -72,5 +72,7 @@
       "Lo entiendo"
     ]
   },
-  "qr_expand_hint": "Haz clic para ampliar"
+  "qr_expand_hint": "Haz clic para ampliar",
+  "footer_license_code": "Código:",
+  "footer_license_content": "Contenidos:"
 }

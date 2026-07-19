@@ -42,5 +42,7 @@
   "resume_receiving_btn": "Reprendre",
   "receiving_paused_title": "Recepció en pausa",
   "receiving_paused_subtitle": "El presentador ha aturat l'enviament de targetes.",
-  "qr_expand_hint": "Fes clic per ampliar"
+  "qr_expand_hint": "Fes clic per ampliar",
+  "footer_license_code": "Codi:",
+  "footer_license_content": "Continguts:"
 }

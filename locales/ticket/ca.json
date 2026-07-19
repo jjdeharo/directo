@@ -131,5 +131,7 @@
   "toast_templates_imported": "Plantilles importades.",
   "toast_templates_invalid": "Arxiu de plantilles no vàlid.",
   "timer_label": "Temps restant",
-  "session_closed": "La sessió ha finalitzat."
+  "session_closed": "La sessió ha finalitzat.",
+  "footer_license_code": "Codi:",
+  "footer_license_content": "Continguts:"
 }

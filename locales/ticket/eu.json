@@ -131,5 +131,7 @@
   "toast_templates_imported": "Txantiloiak inportatuta.",
   "toast_templates_invalid": "Txantiloi-fitxategia ez da baliozkoa.",
   "timer_label": "Geratzen den denbora",
-  "session_closed": "Saioa amaitu da."
+  "session_closed": "Saioa amaitu da.",
+  "footer_license_code": "Kodea:",
+  "footer_license_content": "Edukiak:"
 }

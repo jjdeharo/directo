@@ -131,5 +131,7 @@
   "toast_templates_imported": "Plantillas importadas.",
   "toast_templates_invalid": "Arquivo de plantillas non válido.",
   "timer_label": "Tempo restante",
-  "session_closed": "A sesión rematou."
+  "session_closed": "A sesión rematou.",
+  "footer_license_code": "Código:",
+  "footer_license_content": "Contidos:"
 }

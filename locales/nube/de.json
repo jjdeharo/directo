@@ -52,10 +52,11 @@
   "projection_btn_text": "Projizieren",
   "projection_btn_exit_text": "Projektionsmodus beenden",
   "footer_created_by": "Anwendung erstellt von",
-  "footer_license": "Creative Commons Namensnennung-Weitergabe unter gleichen Bedingungen 4.0 International",
   "stop_submission_btn": "Stoppen",
   "resume_submission_btn": "Fortsetzen",
   "submission_paused_title": "Empfang pausiert",
   "submission_paused_subtitle": "Der Präsentator hat das Senden von Wörtern vorübergehend gestoppt.",
-  "qr_expand_hint": "Zum Vergrößern klicken"
+  "qr_expand_hint": "Zum Vergrößern klicken",
+  "footer_license_code": "Code:",
+  "footer_license_content": "Inhalte:"
 }

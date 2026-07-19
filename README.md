@@ -11,7 +11,7 @@
 * **Personalización**: Todas las aplicaciones permiten al presentador unificar la estética de la actividad eligiendo un color base. Este color se aplica a los botones, fondos y otros elementos visuales, creando una experiencia coherente.
 * **Preparar sesión**: Todas las aplicaciones cuentan con una función para generar un enlace que guarda la configuración de una actividad (pregunta, opciones, colores, etc.), permitiendo prepararla con antelación y reutilizarla fácilmente.
 * **Control de la participación**: Todas las aplicaciones incluyen una opción para que el presentador pueda detener y reanudar la recepción de respuestas en cualquier momento, permitiendo gestionar el ritmo de la actividad.
-* **Código abierto**: Todo el proyecto está disponible bajo una licencia Creative Commons que permite su uso, modificación y distribución.
+* **Código abierto**: Todo el proyecto está disponible bajo licencias libres (AGPL v3 para el código y CC BY-SA 4.0 para los contenidos) que permiten su uso, modificación y distribución.
 * **Soporte multilingüe**: La interfaz está disponible en español, catalán, gallego, euskera e inglés.
 
 ---
@@ -65,6 +65,7 @@ Una vez dentro, simplemente interactúan enviando sus respuestas (votos, ideas, 
 
 ## Licencia
 
-Este proyecto está bajo la Licencia **Creative Commons Reconocimiento-CompartirIgual 4.0 Internacional (CC BY-SA 4.0)**.
+* El **código fuente** está bajo la Licencia **[GNU Affero General Public License v3 (AGPL v3)](https://www.gnu.org/licenses/agpl-3.0.html)**.
+* Los **contenidos** (textos, documentación e imágenes) están bajo la Licencia **[Creative Commons Reconocimiento-CompartirIgual 4.0 Internacional (CC BY-SA 4.0)](https://creativecommons.org/licenses/by-sa/4.0/)**.
 
 Creado por Juan José de Haro.

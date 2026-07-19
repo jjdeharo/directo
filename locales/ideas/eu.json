@@ -43,5 +43,7 @@
   "resume_submission_btn": "Berrekin",
   "submission_paused_title": "Harrera pausatuta",
   "submission_paused_subtitle": "Aurkezleak ideien bidalketa gelditu du.",
-  "qr_expand_hint": "Egin klik handitzeko"
+  "qr_expand_hint": "Egin klik handitzeko",
+  "footer_license_code": "Kodea:",
+  "footer_license_content": "Edukiak:"
 }

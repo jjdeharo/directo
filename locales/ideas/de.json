@@ -43,5 +43,7 @@
   "resume_submission_btn": "Fortsetzen",
   "submission_paused_title": "Empfang pausiert",
   "submission_paused_subtitle": "Der Präsentator hat das Senden von Ideen vorübergehend gestoppt.",
-  "qr_expand_hint": "Zum Vergrößern klicken"
+  "qr_expand_hint": "Zum Vergrößern klicken",
+  "footer_license_code": "Code:",
+  "footer_license_content": "Inhalte:"
 }

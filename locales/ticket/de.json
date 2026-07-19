@@ -131,5 +131,7 @@
   "toast_templates_imported": "Vorlagen importiert.",
   "toast_templates_invalid": "Ungültige Vorlagendatei.",
   "timer_label": "Verbleibende Zeit",
-  "session_closed": "Die Sitzung ist beendet."
+  "session_closed": "Die Sitzung ist beendet.",
+  "footer_license_code": "Code:",
+  "footer_license_content": "Inhalte:"
 }

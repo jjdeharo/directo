@@ -52,10 +52,11 @@
   "projection_btn_text": "Proyectar",
   "projection_btn_exit_text": "Salir del proyector",
   "footer_created_by": "Aplicación creada por",
-  "footer_license": "Creative Commons Reconocimiento-CompartirIgual 4.0 Internacional",
   "stop_submission_btn": "Detener",
   "resume_submission_btn": "Reanudar",
   "submission_paused_title": "Recepción en pausa",
   "submission_paused_subtitle": "El presentador ha detenido el envío de palabras.",
-  "qr_expand_hint": "Haz clic para ampliar"
+  "qr_expand_hint": "Haz clic para ampliar",
+  "footer_license_code": "Código:",
+  "footer_license_content": "Contenidos:"
 }

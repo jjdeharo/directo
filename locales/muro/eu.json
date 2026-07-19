@@ -42,5 +42,7 @@
   "resume_receiving_btn": "Berrekin",
   "receiving_paused_title": "Harrera pausatuta",
   "receiving_paused_subtitle": "Aurkezleak txartelen bidalketa gelditu du.",
-  "qr_expand_hint": "Egin klik handitzeko"
+  "qr_expand_hint": "Egin klik handitzeko",
+  "footer_license_code": "Kodea:",
+  "footer_license_content": "Edukiak:"
 }

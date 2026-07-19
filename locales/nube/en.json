@@ -52,10 +52,11 @@
   "projection_btn_text": "Project",
   "projection_btn_exit_text": "Exit projector",
   "footer_created_by": "Application created by",
-  "footer_license": "Creative Commons Attribution-ShareAlike 4.0 International",
   "stop_submission_btn": "Stop",
   "resume_submission_btn": "Resume",
   "submission_paused_title": "Submission paused",
   "submission_paused_subtitle": "The presenter has paused word submissions.",
-  "qr_expand_hint": "Click to enlarge"
+  "qr_expand_hint": "Click to enlarge",
+  "footer_license_code": "Code:",
+  "footer_license_content": "Content:"
 }

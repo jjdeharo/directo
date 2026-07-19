@@ -43,5 +43,7 @@
   "resume_submission_btn": "Resume",
   "submission_paused_title": "Submission paused",
   "submission_paused_subtitle": "The presenter has paused idea submissions.",
-  "qr_expand_hint": "Click to enlarge"
+  "qr_expand_hint": "Click to enlarge",
+  "footer_license_code": "Code:",
+  "footer_license_content": "Content:"
 }

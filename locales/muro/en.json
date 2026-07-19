@@ -42,5 +42,7 @@
   "resume_receiving_btn": "Resume",
   "receiving_paused_title": "Receiving paused",
   "receiving_paused_subtitle": "The presenter has paused card submissions.",
-  "qr_expand_hint": "Click to enlarge"
+  "qr_expand_hint": "Click to enlarge",
+  "footer_license_code": "Code:",
+  "footer_license_content": "Content:"
 }

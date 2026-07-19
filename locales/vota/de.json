@@ -43,7 +43,6 @@
   "switch_to_presenter": "Bist du der Präsentator? Hier anmelden.",
   "switch_to_student": "Möchtest du einer Sitzung beitreten? Klicke hier.",
   "footer_created_by": "Anwendung erstellt von",
-  "footer_license": "Creative Commons Namensnennung-Weitergabe unter gleichen Bedingungen 4.0 International",
   "confirm_end_title": "Sitzung beenden?",
   "confirm_end_text": "Dadurch wird die aktuelle Sitzung für alle Teilnehmenden beendet. Du musst einen neuen Code teilen, damit sie erneut beitreten.",
   "cancel_btn": "Abbrechen",
@@ -52,5 +51,7 @@
   "resume_voting_btn": "Fortsetzen",
   "voting_paused_title": "Abstimmung pausiert",
   "voting_paused_subtitle": "Der Präsentator hat die Antworten vorübergehend gestoppt.",
-  "qr_expand_hint": "Zum Vergrößern klicken"
+  "qr_expand_hint": "Zum Vergrößern klicken",
+  "footer_license_code": "Code:",
+  "footer_license_content": "Inhalte:"
 }

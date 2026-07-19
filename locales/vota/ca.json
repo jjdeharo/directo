@@ -43,7 +43,6 @@
   "switch_to_presenter": "Ets el presentador? Inicia sessió aquí.",
   "switch_to_student": "Busques unir-te a una sessió? Fes clic aquí.",
   "footer_created_by": "Aplicació creada per",
-  "footer_license": "Creative Commons Reconeixement-CompartirIgual 4.0 Internacional",
   "confirm_end_title": "Finalitzar la sessió?",
   "confirm_end_text": "Això acabarà la sessió actual per a tots els participants. Hauràs de compartir un nou codi perquè s'uneixin de nou.",
   "cancel_btn": "Cancel·lar",
@@ -52,5 +51,7 @@
   "resume_voting_btn": "Reprendre",
   "voting_paused_title": "Votació en pausa",
   "voting_paused_subtitle": "El presentador ha aturat les respostes temporalment.",
-  "qr_expand_hint": "Fes clic per ampliar"
+  "qr_expand_hint": "Fes clic per ampliar",
+  "footer_license_code": "Codi:",
+  "footer_license_content": "Continguts:"
 }

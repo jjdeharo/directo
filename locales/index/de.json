@@ -4,6 +4,12 @@
   "instructions-title": "Wie geht es los?",
   "instructions-body": "Wenn du ein Werkzeug öffnest, wählst du aus, ob du als Lehrkraft die Aktivität erstellst oder als Schüler/in mit dem Code beitrittst.",
   "manual-link-title": "Benutzerhandbuch",
+  "filter-all": "Alle",
+  "search-placeholder": "Werkzeug suchen…",
+  "no-results": "Kein Werkzeug entspricht der Suche.",
+  "group-preguntar-title": "Fragen und abstimmen",
+  "group-aportar-title": "Beitragen und gemeinsam gestalten",
+  "group-dinamicas-title": "Unterrichtsaktivitäten",
   "app-vota-title": "Einfache Abstimmung",
   "app-vota-desc": "Erstelle Multiple-Choice-Abstimmungen. Die Teilnehmenden treten mit einem Code bei und stimmen von ihren Geräten ab; die Ergebnisse erscheinen in Balkendiagrammen, die sich sofort aktualisieren.",
   "app-nube-title": "Wortwolke",
@@ -21,5 +27,7 @@
   "app-reloj-title": "Terminuhr",
   "app-reloj-desc": "Organisiere eine kooperative Aktivität, bei der Schüler/innen Termine mit Mitschüler/innen vereinbaren und paarweise arbeiten, wenn die Lehrkraft eine Uhrzeit aufruft.",
   "app-boardlive-title": "BoardLive: Kollaboratives Whiteboard",
-  "app-boardlive-desc": "Kollaboratives Whiteboard in Echtzeit. Der Host erstellt die Sitzung, teilt Code oder QR und steuert, wer zeichnen darf. Enthält Seiten, Zeichenwerkzeuge, Bildeinfügen und PDF-Export. Außerdem ermöglicht es Lehrkräften, auf der digitalen Tafel im Klassenraum das zu projizieren, was sie auf ihrem Tablet in Echtzeit schreiben oder zeichnen."
+  "app-boardlive-desc": "Kollaboratives Whiteboard in Echtzeit. Der Host erstellt die Sitzung, teilt Code oder QR und steuert, wer zeichnen darf. Enthält Seiten, Zeichenwerkzeuge, Bildeinfügen und PDF-Export. Außerdem ermöglicht es Lehrkräften, auf der digitalen Tafel im Klassenraum das zu projizieren, was sie auf ihrem Tablet in Echtzeit schreiben oder zeichnen.",
+  "app-subasta-title": "Satz-Auktion",
+  "app-subasta-desc": "Die Teilnehmenden bieten mit einem Budget auf die Sätze, die sie für richtig halten, oder auf jene, die sie für vorrangig halten. Geeignet zum Wiederholen von Inhalten und zum Diskutieren von Werten."
 }

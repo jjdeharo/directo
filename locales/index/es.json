@@ -4,6 +4,12 @@
   "instructions-title": "¿Cómo empezar?",
   "instructions-body": "Al abrir una herramienta, elige si entras como profesor/a para crear la actividad o como alumno/a para unirte con el código.",
   "manual-link-title": "Manual de Usuario",
+  "filter-all": "Todas",
+  "search-placeholder": "Buscar una herramienta…",
+  "no-results": "No hay ninguna herramienta que coincida con la búsqueda.",
+  "group-preguntar-title": "Preguntar y votar",
+  "group-aportar-title": "Aportar y crear en común",
+  "group-dinamicas-title": "Dinámicas de clase",
   "app-vota-title": "Votación simple",
   "app-vota-desc": "Crea votaciones de opción múltiple. Los participantes se unen con un código y votan desde sus dispositivos, viendo los resultados en gráficos de barras que se actualizan al momento.",
   "app-nube-title": "Nube de palabras",
@@ -21,5 +27,7 @@
   "app-reloj-title": "Reloj de Citas",
   "app-reloj-desc": "Organiza una dinámica cooperativa en la que el alumnado concierta citas con sus compañeros y trabaja en parejas cuando el profesor llama una hora.",
   "app-boardlive-title": "BoardLive: Pizarra colaborativa",
-  "app-boardlive-desc": "Pizarra colaborativa en tiempo real. El anfitrión crea la sesión, comparte un código o QR y controla quién puede dibujar. Incluye páginas, herramientas de dibujo, inserción de imágenes y exportación a PDF. También permite que el profesorado proyecte en la pizarra digital del aula lo que escribe o dibuja en su tablet en tiempo real."
+  "app-boardlive-desc": "Pizarra colaborativa en tiempo real. El anfitrión crea la sesión, comparte un código o QR y controla quién puede dibujar. Incluye páginas, herramientas de dibujo, inserción de imágenes y exportación a PDF. También permite que el profesorado proyecte en la pizarra digital del aula lo que escribe o dibuja en su tablet en tiempo real.",
+  "app-subasta-title": "Subasta de frases",
+  "app-subasta-desc": "Los participantes pujan con un presupuesto por las frases que creen correctas o por las que consideran prioritarias. Sirve para repasar contenidos y para debatir valores."
 }

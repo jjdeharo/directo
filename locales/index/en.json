@@ -4,6 +4,12 @@
   "instructions-title": "How to start?",
   "instructions-body": "When you open a tool, choose whether to enter as a teacher to create the activity or as a student to join with the code.",
   "manual-link-title": "User Manual",
+  "filter-all": "All",
+  "search-placeholder": "Search for a tool…",
+  "no-results": "No tool matches your search.",
+  "group-preguntar-title": "Ask and vote",
+  "group-aportar-title": "Contribute and create together",
+  "group-dinamicas-title": "Classroom activities",
   "app-vota-title": "Simple Voting",
   "app-vota-desc": "Create multiple-choice polls. Participants join with a code and vote from their devices, viewing results in bar charts that update instantly.",
   "app-nube-title": "Word Cloud",
@@ -21,5 +27,7 @@
   "app-reloj-title": "Appointment Clock",
   "app-reloj-desc": "Run a cooperative activity where students arrange appointments with classmates and work in pairs when the teacher calls a clock hour.",
   "app-boardlive-title": "BoardLive: Collaborative whiteboard",
-  "app-boardlive-desc": "Real-time collaborative whiteboard. The host creates the session, shares a code or QR, and controls who can draw. Includes pages, drawing tools, image insertion, and PDF export. It also lets teachers project on the classroom digital whiteboard what they write or draw on their tablet in real time."
+  "app-boardlive-desc": "Real-time collaborative whiteboard. The host creates the session, shares a code or QR, and controls who can draw. Includes pages, drawing tools, image insertion, and PDF export. It also lets teachers project on the classroom digital whiteboard what they write or draw on their tablet in real time.",
+  "app-subasta-title": "Sentence auction",
+  "app-subasta-desc": "Participants use a budget to bid on the sentences they believe are correct or the ones they consider a priority. Useful both for reviewing content and for discussing values."
 }

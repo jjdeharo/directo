@@ -4,6 +4,12 @@
   "instructions-title": "Nola hasi?",
   "instructions-body": "Tresna bat irekitzean, aukeratu irakasle gisa jarduera sortzeko edo ikasle gisa kodearekin sartzeko.",
   "manual-link-title": "Erabiltzailearen Eskuliburua",
+  "filter-all": "Guztiak",
+  "search-placeholder": "Bilatu tresna bat…",
+  "no-results": "Ez dago bilaketarekin bat datorren tresnarik.",
+  "group-preguntar-title": "Galdetu eta bozkatu",
+  "group-aportar-title": "Ekarpenak egin eta batera sortu",
+  "group-dinamicas-title": "Gelako dinamikak",
   "app-vota-title": "Bozketa sinplea",
   "app-vota-desc": "Sortu aukera anitzeko bozkak. Parte-hartzaileak kode batekin batzen dira eta beren gailuetatik bozkatzen dute, emaitzak unean eguneratzen diren barra-diagrametan ikusiz.",
   "app-nube-title": "Hitz-hodeia",
@@ -21,5 +27,7 @@
   "app-reloj-title": "Hitzordu Erlojua",
   "app-reloj-desc": "Dinamika kooperatiboa antolatzen du: ikasleek ikaskideekin hitzorduak adosten dituzte eta bikoteka lan egiten dute irakasleak ordu bat deitzen duenean.",
   "app-boardlive-title": "BoardLive: Pizarra kolaboratiboa",
-  "app-boardlive-desc": "Denbora errealeko pizarra kolaboratiboa. Anfitrioiak saioa sortzen du, kodea edo QR partekatzen du eta norbaitek marraztu dezakeen kontrolatzen du. Orrialdeak, marrazteko tresnak, irudiak txertatzea eta PDF esportazioa ditu. Gainera, irakasleek gelako arbel digitalean proiektatu dezakete tabletan denbora errealean idazten edo marrazten dutena."
+  "app-boardlive-desc": "Denbora errealeko pizarra kolaboratiboa. Anfitrioiak saioa sortzen du, kodea edo QR partekatzen du eta norbaitek marraztu dezakeen kontrolatzen du. Orrialdeak, marrazteko tresnak, irudiak txertatzea eta PDF esportazioa ditu. Gainera, irakasleek gelako arbel digitalean proiektatu dezakete tabletan denbora errealean idazten edo marrazten dutena.",
+  "app-subasta-title": "Esaldien enkantea",
+  "app-subasta-desc": "Parte-hartzaileek aurrekontu batekin eskaintzak egiten dituzte zuzentzat jotzen dituzten esaldiengatik edo lehentasunezkotzat dituztenengatik. Edukiak berrikusteko eta balioak eztabaidatzeko balio du."
 }

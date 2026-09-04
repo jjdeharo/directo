@@ -4,6 +4,12 @@
   "instructions-title": "Com començar?",
   "instructions-body": "En obrir una eina, tria si entres com a professor/a per crear l'activitat o com a alumne/a per unir-te amb el codi.",
   "manual-link-title": "Manual d'Usuari",
+  "filter-all": "Totes",
+  "search-placeholder": "Cerca una eina…",
+  "no-results": "No hi ha cap eina que coincideixi amb la cerca.",
+  "group-preguntar-title": "Preguntar i votar",
+  "group-aportar-title": "Aportar i crear en comú",
+  "group-dinamicas-title": "Dinàmiques d'aula",
   "app-vota-title": "Votació simple",
   "app-vota-desc": "Crea votacions d'opció múltiple. Els participants s'uneixen amb un codi i voten des dels seus dispositius, veient els resultats en gràfics de barres que s'actualitzen al moment.",
   "app-nube-title": "Núvol de paraules",
@@ -21,5 +27,7 @@
   "app-reloj-title": "Rellotge de Cites",
   "app-reloj-desc": "Organitza una dinàmica cooperativa en què l'alumnat concerta cites amb els companys i treballa per parelles quan el professor crida una hora.",
   "app-boardlive-title": "BoardLive: Pissarra col·laborativa",
-  "app-boardlive-desc": "Pissarra col·laborativa en temps real. L'amfitrió crea la sessió, comparteix un codi o QR i controla qui pot dibuixar. Inclou pàgines, eines de dibuix, inserció d'imatges i exportació a PDF. També permet que el professorat projecti a la pissarra digital de l'aula el que escriu o dibuixa a la seva tauleta en temps real."
+  "app-boardlive-desc": "Pissarra col·laborativa en temps real. L'amfitrió crea la sessió, comparteix un codi o QR i controla qui pot dibuixar. Inclou pàgines, eines de dibuix, inserció d'imatges i exportació a PDF. També permet que el professorat projecti a la pissarra digital de l'aula el que escriu o dibuixa a la seva tauleta en temps real.",
+  "app-subasta-title": "Subhasta de frases",
+  "app-subasta-desc": "Els participants pugen amb un pressupost per les frases que creuen correctes o per les que consideren prioritàries. Serveix per repassar continguts i per debatre valors."
 }

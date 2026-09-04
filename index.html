@@ -45,6 +45,61 @@
         .app-card h2, .app-card p, .app-card div {
             color: #1f2937;
         }
+        .filter-bar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            background-color: rgba(243, 244, 246, 0.92);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .filter-bar.is-stuck {
+            border-bottom-color: #e5e7eb;
+            box-shadow: 0 4px 6px -6px rgb(0 0 0 / 0.25);
+        }
+        .filter-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            white-space: nowrap;
+            padding: 0.4rem 0.85rem;
+            border-radius: 9999px;
+            border: 1px solid #d1d5db;
+            background-color: #ffffff;
+            color: #374151;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+        }
+        .filter-chip:hover {
+            border-color: #9ca3af;
+            background-color: #f9fafb;
+        }
+        .filter-chip[aria-pressed="true"] {
+            background-color: #1f2937;
+            border-color: #1f2937;
+            color: #ffffff;
+        }
+        .filter-chip .chip-count {
+            font-size: 0.75rem;
+            font-variant-numeric: tabular-nums;
+            opacity: 0.6;
+        }
+        .filter-chip:focus-visible {
+            outline: 2px solid #2563eb;
+            outline-offset: 2px;
+        }
+        .chips-scroller {
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            scrollbar-width: none;
+            padding-bottom: 2px;
+        }
+        .chips-scroller::-webkit-scrollbar { display: none; }
+        main { scroll-margin-top: 5rem; }
     </style>
 </head>
 <body class="text-gray-800">
@@ -79,126 +134,182 @@
         </div>
 
 
-        <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <nav class="filter-bar py-3 mb-8" aria-label="Filtrar herramientas">
+            <div class="flex flex-col sm:flex-row sm:items-center gap-3">
+                <div class="chips-scroller" id="filter-chips">
+                    <button type="button" class="filter-chip" data-filter="all" data-i18n="filter-all" aria-pressed="true">Todas</button>
+                    <button type="button" class="filter-chip" data-filter="preguntar" data-i18n="group-preguntar-title" aria-pressed="false">Preguntar y votar</button>
+                    <button type="button" class="filter-chip" data-filter="aportar" data-i18n="group-aportar-title" aria-pressed="false">Aportar y crear en común</button>
+                    <button type="button" class="filter-chip" data-filter="dinamicas" data-i18n="group-dinamicas-title" aria-pressed="false">Dinámicas de clase</button>
+                </div>
+                <div class="relative sm:ml-auto sm:w-64 shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z" />
+                    </svg>
+                    <input type="search" id="search-input" data-i18n-placeholder="search-placeholder" placeholder="Buscar una herramienta…" class="w-full bg-white border border-gray-300 rounded-full text-sm text-gray-900 pl-9 pr-3 py-2 focus:ring-blue-500 focus:border-blue-500">
+                </div>
+            </div>
+        </nav>
 
-            <a href="vota.html" class="app-card bg-green-50 rounded-xl shadow-md overflow-hidden">
-                <div class="app-card-content">
-                    <div class="app-icon bg-green-100 text-green-600">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
-                    </div>
-                    <div class="app-card-description">
-                        <h2 id="app-vota-title" class="text-xl font-bold mb-2">Votación simple</h2>
-                        <p id="app-vota-desc" class="mb-4">Crea votaciones de opción múltiple. Los participantes se unen con un código y votan desde sus dispositivos, viendo los resultados en gráficos de barras que se actualizan al momento.</p>
-                    </div>
-                </div>
-            </a>
+        <p id="no-results" class="hidden text-center text-gray-500 py-12">No hay ninguna herramienta que coincida con la búsqueda.</p>
 
-            <a href="escala.html" class="app-card bg-blue-50 rounded-xl shadow-md overflow-hidden">
-                <div class="app-card-content">
-                    <div class="app-icon bg-blue-100 text-blue-600">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                        </svg>
-                    </div>
-                    <div class="app-card-description">
-                        <h2 id="app-escala-title" class="text-xl font-bold mb-2">Escala de valoración</h2>
-                        <p id="app-escala-desc" class="mb-4">Crea escalas de tipo Likert, numéricas o de semáforo para recoger opiniones de forma rápida y visual. Ideal para valoraciones o medir la comprensión.</p>
-                    </div>
-                </div>
-            </a>
+        <main class="space-y-12">
 
-            <a href="ticket.html" class="app-card bg-lime-50 rounded-xl shadow-md overflow-hidden">
-                <div class="app-card-content">
-                    <div class="app-icon bg-lime-100 text-lime-600">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6M7 4h10a2 2 0 012 2v12a2 2 0 01-2 2H7a2 2 0 01-2-2V6a2 2 0 012-2z" />
-                        </svg>
-                    </div>
-                    <div class="app-card-description">
-                        <h2 id="app-ticket-title" class="text-xl font-bold mb-2">Tickets de salida</h2>
-                        <p id="app-ticket-desc" class="mb-4">Crea tickets breves para recoger impresiones finales. Funciona en directo con código y también en modo portable para imprimir o pegar en plataformas.</p>
-                    </div>
-                </div>
-            </a>
+            <section data-group="preguntar">
+                <h2 id="group-preguntar-title" class="text-sm font-bold uppercase tracking-wider text-gray-500 border-b border-gray-300 pb-2 mb-6">Preguntar y votar</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-            <a href="nube.html" class="app-card bg-orange-50 rounded-xl shadow-md overflow-hidden">
-                <div class="app-card-content">
-                    <div class="app-icon bg-orange-100 text-orange-600">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" /></svg>
+                <a href="vota.html" class="app-card bg-green-50 rounded-xl shadow-md overflow-hidden">
+                    <div class="app-card-content">
+                        <div class="app-icon bg-green-100 text-green-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                        </div>
+                        <div class="app-card-description">
+                            <h2 id="app-vota-title" class="text-xl font-bold mb-2">Votación simple</h2>
+                            <p id="app-vota-desc" class="mb-4">Crea votaciones de opción múltiple. Los participantes se unen con un código y votan desde sus dispositivos, viendo los resultados en gráficos de barras que se actualizan al momento.</p>
+                        </div>
                     </div>
-                    <div class="app-card-description">
-                        <h2 id="app-nube-title" class="text-xl font-bold mb-2">Nube de palabras</h2>
-                        <p id="app-nube-desc" class="mb-4">Recopila ideas y visualízalas como una nube dinámica. Puedes descargar la nube como imagen PNG o los datos en una hoja de cálculo (CSV).</p>
-                    </div>
-                </div>
-            </a>
+                </a>
 
-            <a href="ideas.html" class="app-card bg-purple-50 rounded-xl shadow-md overflow-hidden">
-                <div class="app-card-content">
-                    <div class="app-icon bg-purple-100 text-purple-600">
-                         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+                <a href="escala.html" class="app-card bg-blue-50 rounded-xl shadow-md overflow-hidden">
+                    <div class="app-card-content">
+                        <div class="app-icon bg-blue-100 text-blue-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                            </svg>
+                        </div>
+                        <div class="app-card-description">
+                            <h2 id="app-escala-title" class="text-xl font-bold mb-2">Escala de valoración</h2>
+                            <p id="app-escala-desc" class="mb-4">Crea escalas de tipo Likert, numéricas o de semáforo para recoger opiniones de forma rápida y visual. Ideal para valoraciones o medir la comprensión.</p>
+                        </div>
                     </div>
-                     <div class="app-card-description">
-                        <h2 id="app-ideas-title" class="text-xl font-bold mb-2">Lluvia de ideas y votos</h2>
-                        <p id="app-ideas-desc" class="mb-4">Una herramienta en dos fases: primero, los participantes proponen ideas de forma anónima. Después, todos votan las propuestas para priorizar las más populares.</p>
-                    </div>
-                </div>
-            </a>
+                </a>
 
-            <a href="muro.html" class="app-card bg-cyan-50 rounded-xl shadow-md overflow-hidden">
-                <div class="app-card-content">
-                    <div class="app-icon bg-cyan-100 text-cyan-600">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                <a href="ticket.html" class="app-card bg-lime-50 rounded-xl shadow-md overflow-hidden">
+                    <div class="app-card-content">
+                        <div class="app-icon bg-lime-100 text-lime-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6M7 4h10a2 2 0 012 2v12a2 2 0 01-2 2H7a2 2 0 01-2-2V6a2 2 0 012-2z" />
+                            </svg>
+                        </div>
+                        <div class="app-card-description">
+                            <h2 id="app-ticket-title" class="text-xl font-bold mb-2">Tickets de salida</h2>
+                            <p id="app-ticket-desc" class="mb-4">Crea tickets breves para recoger impresiones finales. Funciona en directo con código y también en modo portable para imprimir o pegar en plataformas.</p>
+                        </div>
                     </div>
-                    <div class="app-card-description">
-                        <h2 id="app-muro-title" class="text-xl font-bold mb-2">Muro interactivo</h2>
-                        <p id="app-muro-desc" class="mb-4">Permite a los participantes enviar "post-its" virtuales. El contenido no es persistente, pero puedes exportar el muro a PDF o los datos a una hoja de cálculo (CSV).</p>
-                    </div>
-                </div>
-            </a>
-            
-            <a href="https://jjdeharo.github.io/qplay/" class="app-card bg-yellow-50 rounded-xl shadow-md overflow-hidden">
-                <div class="app-card-content">
-                    <div class="app-icon bg-yellow-100 text-yellow-600">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                           <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-                        </svg>
-                    </div>
-                    <div class="app-card-description">
-                        <h2 id="app-qplay-title" class="text-xl font-bold mb-2">QPlay: Concurso interactivo</h2>
-                        <p id="app-qplay-desc" class="mb-4">Una herramienta para gamificar el aula. El profesor carga un cuestionario y los alumnos compiten en tiempo real desde sus dispositivos para liderar la clasificación.</p>
-                    </div>
-                </div>
-            </a>
+                </a>
 
-            <a href="https://reloj-citas.github.io/" class="app-card bg-sky-50 rounded-xl shadow-md overflow-hidden">
-                <div class="app-card-content">
-                    <div class="app-icon bg-sky-100 text-sky-600">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="9" />
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 7v5l3 2" />
-                        </svg>
-                    </div>
-                    <div class="app-card-description">
-                        <h2 id="app-reloj-title" class="text-xl font-bold mb-2">Reloj de Citas</h2>
-                        <p id="app-reloj-desc" class="mb-4">Organiza una dinámica cooperativa en la que el alumnado concierta citas con sus compañeros y trabaja en parejas cuando el profesor llama una hora.</p>
-                    </div>
                 </div>
-            </a>
+            </section>
 
-            <a href="https://boardlive.github.io/" class="app-card bg-rose-50 rounded-xl shadow-md overflow-hidden">
-                <div class="app-card-content">
-                    <div class="app-icon bg-rose-100 text-rose-600">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
+            <section data-group="aportar">
+                <h2 id="group-aportar-title" class="text-sm font-bold uppercase tracking-wider text-gray-500 border-b border-gray-300 pb-2 mb-6">Aportar y crear en común</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <a href="nube.html" class="app-card bg-orange-50 rounded-xl shadow-md overflow-hidden">
+                    <div class="app-card-content">
+                        <div class="app-icon bg-orange-100 text-orange-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" /></svg>
+                        </div>
+                        <div class="app-card-description">
+                            <h2 id="app-nube-title" class="text-xl font-bold mb-2">Nube de palabras</h2>
+                            <p id="app-nube-desc" class="mb-4">Recopila ideas y visualízalas como una nube dinámica. Puedes descargar la nube como imagen PNG o los datos en una hoja de cálculo (CSV).</p>
+                        </div>
                     </div>
-                    <div class="app-card-description">
-                        <h2 id="app-boardlive-title" class="text-xl font-bold mb-2">BoardLive: Pizarra colaborativa</h2>
-                        <p id="app-boardlive-desc" class="mb-4">Pizarra colaborativa en tiempo real. El anfitrión crea la sesión, comparte un código o QR y controla quién puede dibujar. Incluye páginas, herramientas de dibujo, inserción de imágenes y exportación a PDF. También permite que el profesorado proyecte en la pizarra digital del aula lo que escribe o dibuja en su tablet en tiempo real.</p>
+                </a>
+
+                <a href="ideas.html" class="app-card bg-purple-50 rounded-xl shadow-md overflow-hidden">
+                    <div class="app-card-content">
+                        <div class="app-icon bg-purple-100 text-purple-600">
+                             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+                        </div>
+                         <div class="app-card-description">
+                            <h2 id="app-ideas-title" class="text-xl font-bold mb-2">Lluvia de ideas y votos</h2>
+                            <p id="app-ideas-desc" class="mb-4">Una herramienta en dos fases: primero, los participantes proponen ideas de forma anónima. Después, todos votan las propuestas para priorizar las más populares.</p>
+                        </div>
                     </div>
+                </a>
+
+                <a href="muro.html" class="app-card bg-cyan-50 rounded-xl shadow-md overflow-hidden">
+                    <div class="app-card-content">
+                        <div class="app-icon bg-cyan-100 text-cyan-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                        </div>
+                        <div class="app-card-description">
+                            <h2 id="app-muro-title" class="text-xl font-bold mb-2">Muro interactivo</h2>
+                            <p id="app-muro-desc" class="mb-4">Permite a los participantes enviar "post-its" virtuales. El contenido no es persistente, pero puedes exportar el muro a PDF o los datos a una hoja de cálculo (CSV).</p>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://boardlive.github.io/" class="app-card bg-rose-50 rounded-xl shadow-md overflow-hidden">
+                    <div class="app-card-content">
+                        <div class="app-icon bg-rose-100 text-rose-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                        </div>
+                        <div class="app-card-description">
+                            <h2 id="app-boardlive-title" class="text-xl font-bold mb-2">BoardLive: Pizarra colaborativa</h2>
+                            <p id="app-boardlive-desc" class="mb-4">Pizarra colaborativa en tiempo real. El anfitrión crea la sesión, comparte un código o QR y controla quién puede dibujar. Incluye páginas, herramientas de dibujo, inserción de imágenes y exportación a PDF. También permite que el profesorado proyecte en la pizarra digital del aula lo que escribe o dibuja en su tablet en tiempo real.</p>
+                        </div>
+                    </div>
+                </a>
+
                 </div>
-            </a>
+            </section>
+
+            <section data-group="dinamicas">
+                <h2 id="group-dinamicas-title" class="text-sm font-bold uppercase tracking-wider text-gray-500 border-b border-gray-300 pb-2 mb-6">Dinámicas de clase</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <a href="https://jjdeharo.github.io/subasta_frases/" class="app-card bg-teal-50 rounded-xl shadow-md overflow-hidden">
+                    <div class="app-card-content">
+                        <div class="app-icon bg-teal-100 text-teal-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 20h9" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M7 17l6.5-6.5" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 7.5l3-3 5 5-3 3z" />
+                            </svg>
+                        </div>
+                        <div class="app-card-description">
+                            <h2 id="app-subasta-title" class="text-xl font-bold mb-2">Subasta de frases</h2>
+                            <p id="app-subasta-desc" class="mb-4">Los participantes pujan con un presupuesto por las frases que creen correctas o por las que consideran prioritarias. Sirve para repasar contenidos y para debatir valores.</p>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://jjdeharo.github.io/qplay/" class="app-card bg-yellow-50 rounded-xl shadow-md overflow-hidden">
+                    <div class="app-card-content">
+                        <div class="app-icon bg-yellow-100 text-yellow-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                               <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                            </svg>
+                        </div>
+                        <div class="app-card-description">
+                            <h2 id="app-qplay-title" class="text-xl font-bold mb-2">QPlay: Concurso interactivo</h2>
+                            <p id="app-qplay-desc" class="mb-4">Una herramienta para gamificar el aula. El profesor carga un cuestionario y los alumnos compiten en tiempo real desde sus dispositivos para liderar la clasificación.</p>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://reloj-citas.github.io/" class="app-card bg-sky-50 rounded-xl shadow-md overflow-hidden">
+                    <div class="app-card-content">
+                        <div class="app-icon bg-sky-100 text-sky-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="9" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 7v5l3 2" />
+                            </svg>
+                        </div>
+                        <div class="app-card-description">
+                            <h2 id="app-reloj-title" class="text-xl font-bold mb-2">Reloj de Citas</h2>
+                            <p id="app-reloj-desc" class="mb-4">Organiza una dinámica cooperativa en la que el alumnado concierta citas con sus compañeros y trabaja en parejas cuando el profesor llama una hora.</p>
+                        </div>
+                    </div>
+                </a>
+
+                </div>
+            </section>
 
         </main>
 
@@ -262,6 +373,8 @@
             
             const keys = [
                 'main-title', 'main-subtitle', 'instructions-title', 'instructions-body', 'manual-link-title',
+                'group-preguntar-title', 'group-aportar-title', 'group-dinamicas-title',
+                'no-results',
                 'app-vota-title', 'app-vota-desc',
                 'app-nube-title', 'app-nube-desc',
                 'app-ideas-title', 'app-ideas-desc',
@@ -270,7 +383,8 @@
                 'app-ticket-title', 'app-ticket-desc',
                 'app-qplay-title', 'app-qplay-desc',
                 'app-reloj-title', 'app-reloj-desc',
-                'app-boardlive-title', 'app-boardlive-desc'
+                'app-boardlive-title', 'app-boardlive-desc',
+                'app-subasta-title', 'app-subasta-desc'
             ];
 
             keys.forEach(key => {
@@ -284,6 +398,19 @@
                 }
             });
 
+            document.querySelectorAll('[data-i18n]').forEach((element) => {
+                const key = element.dataset.i18n;
+                const value = translations[lang][key];
+                if (!value) return;
+                const label = element.querySelector('.chip-label');
+                if (label) label.textContent = value; else element.textContent = value;
+            });
+
+            document.querySelectorAll('[data-i18n-placeholder]').forEach((element) => {
+                const value = translations[lang][element.dataset.i18nPlaceholder];
+                if (value) element.setAttribute('placeholder', value);
+            });
+
             updateAppLinks(lang);
         }
 
@@ -295,13 +422,74 @@
                     const url = new URL(href, window.location.href);
                     const isLocalHtml = url.origin === window.location.origin && url.pathname.endsWith('.html');
                     const isAppointmentClock = url.origin === 'https://reloj-citas.github.io';
-                    if (!isLocalHtml && !isAppointmentClock) return;
+                    const isAuction = url.origin === 'https://jjdeharo.github.io'
+                        && url.pathname.startsWith('/subasta_frases');
+                    if (!isLocalHtml && !isAppointmentClock && !isAuction) return;
                     url.searchParams.set('lang', lang);
                     link.href = url.href;
                 } catch (e) {
                     console.warn('No se pudo actualizar el enlace', href, e);
                 }
             });
+        }
+
+        function normalize(text) {
+            return text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        }
+
+        let activeFilter = 'all';
+
+        function applyFilters() {
+            const query = normalize(document.getElementById('search-input').value.trim());
+            let visibleCards = 0;
+
+            document.querySelectorAll('main section[data-group]').forEach((section) => {
+                const matchesFilter = activeFilter === 'all' || section.dataset.group === activeFilter;
+                let visibleInSection = 0;
+
+                section.querySelectorAll('.app-card').forEach((card) => {
+                    const matchesQuery = !query || normalize(card.innerText).includes(query);
+                    const visible = matchesFilter && matchesQuery;
+                    card.classList.toggle('hidden', !visible);
+                    if (visible) visibleInSection++;
+                });
+
+                section.classList.toggle('hidden', visibleInSection === 0);
+                visibleCards += visibleInSection;
+            });
+
+            document.getElementById('no-results').classList.toggle('hidden', visibleCards > 0);
+        }
+
+        function setUpFilters() {
+            // El contador de cada categoría se calcula a partir del propio menú,
+            // para que no haga falta actualizarlo al añadir o quitar herramientas.
+            document.querySelectorAll('#filter-chips .filter-chip').forEach((chip) => {
+                const group = chip.dataset.filter;
+                const count = group === 'all'
+                    ? document.querySelectorAll('main .app-card').length
+                    : document.querySelectorAll(`main section[data-group="${group}"] .app-card`).length;
+                chip.innerHTML = `<span class="chip-label">${chip.textContent.trim()}</span><span class="chip-count">${count}</span>`;
+
+                chip.addEventListener('click', () => {
+                    activeFilter = group;
+                    document.querySelectorAll('#filter-chips .filter-chip').forEach((other) => {
+                        other.setAttribute('aria-pressed', String(other === chip));
+                    });
+                    applyFilters();
+                    document.querySelector('main').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            });
+
+            document.getElementById('search-input').addEventListener('input', applyFilters);
+
+            // Sombra en la barra solo cuando queda fijada en la parte superior.
+            const bar = document.querySelector('.filter-bar');
+            const sentinel = document.createElement('div');
+            bar.parentNode.insertBefore(sentinel, bar);
+            new IntersectionObserver(([entry]) => {
+                bar.classList.toggle('is-stuck', !entry.isIntersecting);
+            }).observe(sentinel);
         }
 
         window.onload = async () => {
@@ -320,6 +508,7 @@
                     : (translations[browserLang] ? browserLang : 'es');
             
             document.getElementById('lang-selector').value = langToSet;
+            setUpFilters();
             setLanguage(langToSet);
         };
     </script>

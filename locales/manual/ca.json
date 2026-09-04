@@ -58,5 +58,10 @@
   "footer-code-label": "Codi:",
   "footer-code-link": "Llicència AGPL v3",
   "footer-content-label": "Continguts:",
-  "footer-content-link": "Llicència CC BY-SA 4.0"
+  "footer-content-link": "Llicència CC BY-SA 4.0",
+  "group-general-title": "Informació general",
+  "group-preguntar-title": "Preguntar i votar",
+  "group-aportar-title": "Aportar i crear en comú",
+  "group-dinamicas-title": "Dinàmiques d'aula",
+  "section-selector-label": "Apartat"
 }

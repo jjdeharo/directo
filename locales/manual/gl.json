@@ -58,5 +58,10 @@
   "footer-code-label": "Código:",
   "footer-code-link": "Licenza AGPL v3",
   "footer-content-label": "Contidos:",
-  "footer-content-link": "Licenza CC BY-SA 4.0"
+  "footer-content-link": "Licenza CC BY-SA 4.0",
+  "group-general-title": "Información xeral",
+  "group-preguntar-title": "Preguntar e votar",
+  "group-aportar-title": "Achegar e crear en común",
+  "group-dinamicas-title": "Dinámicas de aula",
+  "section-selector-label": "Apartado"
 }

@@ -58,5 +58,10 @@
   "footer-code-label": "Code:",
   "footer-code-link": "AGPL-v3-Lizenz",
   "footer-content-label": "Inhalte:",
-  "footer-content-link": "CC-BY-SA-4.0-Lizenz"
+  "footer-content-link": "CC-BY-SA-4.0-Lizenz",
+  "group-general-title": "Allgemeine Informationen",
+  "group-preguntar-title": "Fragen und abstimmen",
+  "group-aportar-title": "Beitragen und gemeinsam gestalten",
+  "group-dinamicas-title": "Unterrichtsaktivitäten",
+  "section-selector-label": "Abschnitt"
 }

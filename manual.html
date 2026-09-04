@@ -13,7 +13,10 @@
             font-family: 'Inter', sans-serif;
         }
         .prose {
-            max-width: 80ch;
+            max-width: 68rem;
+        }
+        #tab-content {
+            max-width: 75ch;
         }
         .prose h2 {
             font-size: 1.875rem;
@@ -38,25 +41,57 @@
             list-style-type: disc;
             padding-left: 0.5rem;
         }
+        .prose h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+        }
+        .nav-group + .nav-group {
+            margin-top: 1.5rem;
+        }
+        .nav-group-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #9ca3af;
+            margin-bottom: 0.5rem;
+            padding-left: 0.75rem;
+        }
         .tab-button {
-            transition: all 0.2s ease-in-out;
-            border-bottom: 3px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            width: 100%;
+            text-align: left;
+            font-size: 0.95rem;
+            line-height: 1.35;
+            color: #4b5563;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+            border-left: 3px solid transparent;
+            transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+        }
+        .tab-button:hover {
+            background-color: #f3f4f6;
+            color: #1f2937;
         }
         .tab-button.active {
             font-weight: 700;
+            background-color: #f9fafb;
         }
-        .tab-button.active.vota { border-color: #22c55e; color: #166534; }
-        .tab-button.active.nube { border-color: #f97316; color: #9a3412; }
-        .tab-button.active.ideas { border-color: #a855f7; color: #7e22ce; }
-        .tab-button.active.muro { border-color: #0891b2; color: #155e75; }
-        .tab-button.active.escala { border-color: #3b82f6; color: #1e40af; }
-        .tab-button.active.qplay { border-color: #facc15; color: #b45309; }
-        .tab-button.active.boardlive { border-color: #f472b6; color: #9d174d; }
-        .tab-button.active.ticket { border-color: #84cc16; color: #4d7c0f; }
-        .tab-button.active.subasta { border-color: #14b8a6; color: #0f766e; }
-        .tab-button.active.reloj { border-color: #0ea5e9; color: #075985; }
-        .tab-button.active.general { border-color: #6b7280; color: #1f2937; }
-        .tab-button.active.privacidad { border-color: #6b7280; color: #1f2937; }
+        .tab-button.active.vota { border-left-color: #22c55e; color: #22c55e; }
+        .tab-button.active.nube { border-left-color: #f97316; color: #f97316; }
+        .tab-button.active.ideas { border-left-color: #a855f7; color: #a855f7; }
+        .tab-button.active.muro { border-left-color: #0891b2; color: #0891b2; }
+        .tab-button.active.escala { border-left-color: #3b82f6; color: #3b82f6; }
+        .tab-button.active.qplay { border-left-color: #eab308; color: #eab308; }
+        .tab-button.active.boardlive { border-left-color: #ec4899; color: #ec4899; }
+        .tab-button.active.ticket { border-left-color: #84cc16; color: #84cc16; }
+        .tab-button.active.subasta { border-left-color: #14b8a6; color: #14b8a6; }
+        .tab-button.active.reloj { border-left-color: #0ea5e9; color: #0ea5e9; }
+        .tab-button.active.general { border-left-color: #6b7280; color: #1f2937; }
+        .tab-button.active.privacidad { border-left-color: #6b7280; color: #1f2937; }
     </style>
 </head>
 <body class="bg-gray-100">
@@ -85,74 +120,93 @@
             <div class="p-8 sm:p-12">
                 <h1 id="main-title">Guía de Uso: Conexión en Directo</h1>
 
-                <div class="border-b border-gray-200 mb-8">
-                    <nav class="-mb-px flex flex-wrap gap-x-6" aria-label="Tabs">
-                        <button onclick="showTab('general')" class="tab-button general active flex items-center gap-2 p-4 text-lg" data-translate-key="general-title">
-                            Aspectos Generales
-                        </button>
-                         <button onclick="showTab('privacidad')" class="tab-button privacidad flex items-center gap-2 p-4 text-lg" data-translate-key="privacy-title">
-                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <div class="md:grid md:grid-cols-[15rem_1fr] md:gap-10">
+                    <div class="md:hidden mb-8">
+                        <label class="sr-only" for="section-selector" id="section-selector-label">Apartado</label>
+                        <select id="section-selector" onchange="showTab(this.value)" class="w-full bg-white border border-gray-300 text-gray-900 rounded-lg p-2.5"></select>
+                    </div>
+
+                    <nav id="section-nav" class="hidden md:block self-start md:sticky md:top-8" aria-label="Apartados de la guía">
+                        <div class="nav-group" data-group="general">
+                            <p class="nav-group-title" id="group-general-title">Información general</p>
+                            <button onclick="showTab('general')" class="tab-button general active" data-translate-key="general-title">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                </svg>
+                                Aspectos Generales
+                            </button>
+                            <button onclick="showTab('privacidad')" class="tab-button privacidad" data-translate-key="privacy-title">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                              </svg>
-                            Privacidad
-                        </button>
-                        <button onclick="showTab('vota')" class="tab-button vota flex items-center gap-2 p-4 text-lg" data-translate-key="app-vota-title">
-                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
-                             Votación Simple
-                        </button>
-                         <button onclick="showTab('nube')" class="tab-button nube flex items-center gap-2 p-4 text-lg" data-translate-key="app-nube-title">
-                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" /></svg>
-                             Nube de Palabras
-                        </button>
-                        <button onclick="showTab('ideas')" class="tab-button ideas flex items-center gap-2 p-4 text-lg" data-translate-key="app-ideas-title">
-                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
-                            Lluvia de Ideas
-                        </button>
-                        <button onclick="showTab('muro')" class="tab-button muro flex items-center gap-2 p-4 text-lg" data-translate-key="app-muro-title">
-                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
-                            Muro Interactivo
-                        </button>
-                        <button onclick="showTab('escala')" class="tab-button escala flex items-center gap-2 p-4 text-lg" data-translate-key="app-escala-title">
-                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                Privacidad
+                            </button>
+                        </div>
+                        <div class="nav-group" data-group="preguntar">
+                            <p class="nav-group-title" id="group-preguntar-title">Preguntar y votar</p>
+                            <button onclick="showTab('vota')" class="tab-button vota" data-translate-key="app-vota-title">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                                Votación Simple
+                            </button>
+                            <button onclick="showTab('escala')" class="tab-button escala" data-translate-key="app-escala-title">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                              </svg>
-                            Escala de Valoración
-                        </button>
-                        <button onclick="showTab('ticket')" class="tab-button ticket flex items-center gap-2 p-4 text-lg" data-translate-key="app-ticket-title">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                Escala de Valoración
+                            </button>
+                            <button onclick="showTab('ticket')" class="tab-button ticket" data-translate-key="app-ticket-title">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6M7 4h10a2 2 0 012 2v12a2 2 0 01-2 2H7a2 2 0 01-2-2V6a2 2 0 012-2z" />
                             </svg>
-                            Tickets de Salida
-                        </button>
-                        <button onclick="showTab('qplay')" class="tab-button qplay flex items-center gap-2 p-4 text-lg" data-translate-key="app-qplay-title">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                               <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-                            </svg>
-                           QPlay
-                       </button>
-                        <button onclick="showTab('boardlive')" class="tab-button boardlive flex items-center gap-2 p-4 text-lg" data-translate-key="app-boardlive-title">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                Tickets de salida
+                            </button>
+                        </div>
+                        <div class="nav-group" data-group="aportar">
+                            <p class="nav-group-title" id="group-aportar-title">Aportar y crear en común</p>
+                            <button onclick="showTab('nube')" class="tab-button nube" data-translate-key="app-nube-title">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" /></svg>
+                                Nube de Palabras
+                            </button>
+                            <button onclick="showTab('ideas')" class="tab-button ideas" data-translate-key="app-ideas-title">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+                                Lluvia de Ideas y Votos
+                            </button>
+                            <button onclick="showTab('muro')" class="tab-button muro" data-translate-key="app-muro-title">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                                Muro Interactivo
+                            </button>
+                            <button onclick="showTab('boardlive')" class="tab-button boardlive" data-translate-key="app-boardlive-title">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
                             </svg>
-                           BoardLive
-                       </button>
-                        <button onclick="showTab('subasta')" class="tab-button subasta flex items-center gap-2 p-4 text-lg" data-translate-key="app-subasta-title">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                BoardLive: Pizarra colaborativa
+                            </button>
+                        </div>
+                        <div class="nav-group" data-group="dinamicas">
+                            <p class="nav-group-title" id="group-dinamicas-title">Dinámicas de clase</p>
+                            <button onclick="showTab('subasta')" class="tab-button subasta" data-translate-key="app-subasta-title">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 20h9" />
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M7 17l6.5-6.5" />
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 7.5l3-3 5 5-3 3z" />
                             </svg>
-                           Subasta de frases
-                       </button>
-                        <button onclick="showTab('reloj')" class="tab-button reloj flex items-center gap-2 p-4 text-lg" data-translate-key="app-reloj-title">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                Subasta de frases
+                            </button>
+                            <button onclick="showTab('qplay')" class="tab-button qplay" data-translate-key="app-qplay-title">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                               <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                            </svg>
+                                QPlay: Concurso Interactivo
+                            </button>
+                            <button onclick="showTab('reloj')" class="tab-button reloj" data-translate-key="app-reloj-title">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <circle cx="12" cy="12" r="9" />
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 7v5l3 2" />
                             </svg>
-                           Reloj de Citas
-                       </button>
+                                Reloj de Citas
+                            </button>
+                        </div>
                     </nav>
-                </div>
 
                 <div id="tab-content">
                     <section id="general" class="tab-pane active">
@@ -253,6 +307,7 @@
                         <p id="app-reloj-desc">Organiza una dinámica cooperativa de emparejamiento. Cada participante concierta citas con compañeros distintos en las horas de un reloj y, cuando el profesorado llama una hora concreta, se reúne con la pareja que anotó en esa hora para trabajar la tarea propuesta. Sirve para formar parejas variadas y evitar que el alumnado trabaje siempre con las mismas personas. Es una aplicación externa que se abre en su propia página.</p>
                     </section>
                 </div>
+                </div>
             </div>
         </article>
 
@@ -327,6 +382,7 @@
                 const heading = document.getElementById(`${key}-content`);
                 if (heading) heading.innerHTML = translations[lang]?.[key] || translations.es[key];
             });
+            buildSectionSelector();
             document.getElementById('home-link').setAttribute('title', translations[lang]?.['home-link-title'] || translations.es['home-link-title']);
         }
 
@@ -341,6 +397,28 @@
                 button.classList.remove('active');
             });
             document.querySelector(`.tab-button.${tabName}`).classList.add('active');
+            document.getElementById('section-selector').value = tabName;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // El desplegable de móvil se genera a partir de la columna lateral,
+        // de modo que hereda sus apartados y sus traducciones.
+        function buildSectionSelector() {
+            const select = document.getElementById('section-selector');
+            const active = document.querySelector('.tab-button.active');
+            select.innerHTML = '';
+            document.querySelectorAll('#section-nav .nav-group').forEach((group) => {
+                const optgroup = document.createElement('optgroup');
+                optgroup.label = group.querySelector('.nav-group-title').textContent;
+                group.querySelectorAll('.tab-button').forEach((button) => {
+                    const option = document.createElement('option');
+                    option.value = button.className.split(' ')[1];
+                    option.textContent = button.textContent.trim();
+                    optgroup.appendChild(option);
+                });
+                select.appendChild(optgroup);
+            });
+            if (active) select.value = active.className.split(' ')[1];
         }
 
         window.onload = async () => {

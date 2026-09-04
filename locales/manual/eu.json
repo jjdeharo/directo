@@ -58,5 +58,10 @@
   "footer-code-label": "Kodea:",
   "footer-code-link": "AGPL v3 lizentzia",
   "footer-content-label": "Edukiak:",
-  "footer-content-link": "CC BY-SA 4.0 lizentzia"
+  "footer-content-link": "CC BY-SA 4.0 lizentzia",
+  "group-general-title": "Informazio orokorra",
+  "group-preguntar-title": "Galdetu eta bozkatu",
+  "group-aportar-title": "Ekarpenak egin eta batera sortu",
+  "group-dinamicas-title": "Gelako dinamikak",
+  "section-selector-label": "Atala"
 }

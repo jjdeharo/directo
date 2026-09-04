@@ -52,6 +52,9 @@
         .tab-button.active.escala { border-color: #3b82f6; color: #1e40af; }
         .tab-button.active.qplay { border-color: #facc15; color: #b45309; }
         .tab-button.active.boardlive { border-color: #f472b6; color: #9d174d; }
+        .tab-button.active.ticket { border-color: #84cc16; color: #4d7c0f; }
+        .tab-button.active.subasta { border-color: #14b8a6; color: #0f766e; }
+        .tab-button.active.reloj { border-color: #0ea5e9; color: #075985; }
         .tab-button.active.general { border-color: #6b7280; color: #1f2937; }
         .tab-button.active.privacidad { border-color: #6b7280; color: #1f2937; }
     </style>
@@ -115,6 +118,12 @@
                              </svg>
                             Escala de Valoración
                         </button>
+                        <button onclick="showTab('ticket')" class="tab-button ticket flex items-center gap-2 p-4 text-lg" data-translate-key="app-ticket-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6M7 4h10a2 2 0 012 2v12a2 2 0 01-2 2H7a2 2 0 01-2-2V6a2 2 0 012-2z" />
+                            </svg>
+                            Tickets de Salida
+                        </button>
                         <button onclick="showTab('qplay')" class="tab-button qplay flex items-center gap-2 p-4 text-lg" data-translate-key="app-qplay-title">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
@@ -126,6 +135,21 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
                             </svg>
                            BoardLive
+                       </button>
+                        <button onclick="showTab('subasta')" class="tab-button subasta flex items-center gap-2 p-4 text-lg" data-translate-key="app-subasta-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 20h9" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M7 17l6.5-6.5" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 7.5l3-3 5 5-3 3z" />
+                            </svg>
+                           Subasta de frases
+                       </button>
+                        <button onclick="showTab('reloj')" class="tab-button reloj flex items-center gap-2 p-4 text-lg" data-translate-key="app-reloj-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="9" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 7v5l3 2" />
+                            </svg>
+                           Reloj de Citas
                        </button>
                     </nav>
                 </div>
@@ -208,6 +232,10 @@
                         <h2 id="app-escala-title-content" class="text-blue-700">Escala de Valoración</h2>
                         <p id="app-escala-desc">Permite crear diferentes tipos de escalas de valoración (tipo Likert, numéricas, semáforo o totalmente personalizadas) para recoger la opinión de la audiencia sobre un tema. Los resultados se visualizan como gráficos de barras o en un formato de semáforo, facilitando una interpretación rápida del sentir general. Es ideal para realizar sondeos de opinión, medir el grado de acuerdo o evaluar la comprensión de un concepto.</p>
                     </section>
+                    <section id="ticket" class="tab-pane hidden">
+                        <h2 id="app-ticket-title-content" class="text-lime-700">Tickets de Salida</h2>
+                        <p id="app-ticket-desc">Permite crear tickets breves para recoger impresiones al terminar una sesión. Cada pregunta admite distintos tipos de respuesta: texto breve o largo, opción única, varias opciones, escala, respuesta numérica y verdadero/falso. Las preguntas se pueden guardar como plantillas para reutilizarlas y es posible fijar un tiempo límite para responder. La herramienta funciona de dos maneras: <strong>en directo</strong>, compartiendo un código o QR para recibir las respuestas al momento, o en <strong>modo portable</strong>, generando un ticket para copiar, imprimir o pegar en la plataforma que utilices habitualmente. En el modo portable las respuestas no se recogen dentro de la aplicación. Los resultados de una sesión en directo se pueden exportar como hoja de cálculo (<strong>CSV</strong>).</p>
+                    </section>
                     <section id="qplay" class="tab-pane hidden">
                         <h2 id="app-qplay-title-content" class="text-yellow-700">QPlay: Concurso Interactivo</h2>
                         <p id="app-qplay-desc">Una herramienta para gamificar el aula. El profesor carga un cuestionario y los alumnos compiten en tiempo real desde sus dispositivos para liderar la clasificación.</p>
@@ -216,12 +244,20 @@
                         <h2 id="app-boardlive-title-content" class="text-pink-700">BoardLive: Pizarra colaborativa</h2>
                         <p id="app-boardlive-desc">Pizarra colaborativa en tiempo real pensada para clases, tutorías y talleres. El anfitrión crea la sesión, comparte un código o QR y decide quién puede dibujar (bloqueo global, permisos individuales y revocación instantánea). El lienzo se sincroniza en vivo entre todos los participantes, incluyendo la vista, el zoom y el fondo, para que vean exactamente lo mismo. Incluye páginas múltiples con miniaturas, herramientas de dibujo (trazo libre, resaltador, figuras, borrador) y control de color y grosor, además de inserción y edición de imágenes. Permite exportar el trabajo a PDF y gestionar el contenido por páginas. También permite que el profesorado proyecte en la pizarra digital del aula lo que escribe o dibuja en su tablet en tiempo real, facilitando explicaciones dinámicas y seguimiento inmediato del grupo.</p>
                     </section>
+                    <section id="subasta" class="tab-pane hidden">
+                        <h2 id="app-subasta-title-content" class="text-teal-700">Subasta de frases</h2>
+                        <p id="app-subasta-desc">Los participantes reciben un presupuesto en una moneda que decide el profesorado y pujan por frases. Tiene tres modalidades: en <strong>Conocimiento</strong> se puja por las frases que se creen correctas y, al adjudicar cada una, se revela si lo era; en <strong>Valores y prioridades</strong> cada persona reparte su presupuesto entre todas las frases, lo que hace visible qué le importa más al grupo; y en <strong>Roles y conceptos</strong> cada equipo recibe un rol y puja por las frases que cree que le corresponden. Los resultados se pueden exportar como hoja de cálculo (<strong>CSV</strong>). Es una aplicación externa que se abre en su propia página.</p>
+                    </section>
+                    <section id="reloj" class="tab-pane hidden">
+                        <h2 id="app-reloj-title-content" class="text-sky-700">Reloj de Citas</h2>
+                        <p id="app-reloj-desc">Organiza una dinámica cooperativa de emparejamiento. Cada participante concierta citas con compañeros distintos en las horas de un reloj y, cuando el profesorado llama una hora concreta, se reúne con la pareja que anotó en esa hora para trabajar la tarea propuesta. Sirve para formar parejas variadas y evitar que el alumnado trabaje siempre con las mismas personas. Es una aplicación externa que se abre en su propia página.</p>
+                    </section>
                 </div>
             </div>
         </article>
 
         <footer class="text-center py-6 text-sm text-gray-500">
-            Código: <a href="https://www.gnu.org/licenses/agpl-3.0.html" target="_blank" rel="license" class="underline hover:text-gray-700">Licencia AGPL v3</a> · Contenidos: <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="license" class="underline hover:text-gray-700">Licencia CC BY-SA 4.0</a>
+            <span id="footer-code-label">Código:</span> <a href="https://www.gnu.org/licenses/agpl-3.0.html" target="_blank" rel="license" class="underline hover:text-gray-700" id="footer-code-link">Licencia AGPL v3</a> · <span id="footer-content-label">Contenidos:</span> <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="license" class="underline hover:text-gray-700" id="footer-content-link">Licencia CC BY-SA 4.0</a>
         </footer>
     </div>
 
@@ -286,15 +322,11 @@
                 }
             });
             
-            document.getElementById('general-title-content').innerHTML = translations[lang]?.['general-title'] || translations.es['general-title'];
-            document.getElementById('privacy-title-content').innerHTML = translations[lang]?.['privacy-title'] || translations.es['privacy-title'];
-            document.getElementById('app-vota-title-content').innerHTML = translations[lang]?.['app-vota-title'] || translations.es['app-vota-title'];
-            document.getElementById('app-nube-title-content').innerHTML = translations[lang]?.['app-nube-title'] || translations.es['app-nube-title'];
-            document.getElementById('app-ideas-title-content').innerHTML = translations[lang]?.['app-ideas-title'] || translations.es['app-ideas-title'];
-            document.getElementById('app-muro-title-content').innerHTML = translations[lang]?.['app-muro-title'] || translations.es['app-muro-title'];
-            document.getElementById('app-escala-title-content').innerHTML = translations[lang]?.['app-escala-title'] || translations.es['app-escala-title'];
-            document.getElementById('app-qplay-title-content').innerHTML = translations[lang]?.['app-qplay-title'] || translations.es['app-qplay-title'];
-            document.getElementById('app-boardlive-title-content').innerHTML = translations[lang]?.['app-boardlive-title'] || translations.es['app-boardlive-title'];
+            // Los títulos de cada apartado repiten la clave de su pestaña con el sufijo "-content".
+            Object.keys(translations.es).forEach(key => {
+                const heading = document.getElementById(`${key}-content`);
+                if (heading) heading.innerHTML = translations[lang]?.[key] || translations.es[key];
+            });
             document.getElementById('home-link').setAttribute('title', translations[lang]?.['home-link-title'] || translations.es['home-link-title']);
         }
 

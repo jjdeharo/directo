@@ -29,5 +29,12 @@
   "app-boardlive-title": "BoardLive: Pizarra colaborativa",
   "app-boardlive-desc": "Pizarra colaborativa en tiempo real. El anfitrión crea la sesión, comparte un código o QR y controla quién puede dibujar. Incluye páginas, herramientas de dibujo, inserción de imágenes y exportación a PDF. También permite que el profesorado proyecte en la pizarra digital del aula lo que escribe o dibuja en su tablet en tiempo real.",
   "app-subasta-title": "Subasta de frases",
-  "app-subasta-desc": "Los participantes pujan con un presupuesto por las frases que creen correctas o por las que consideran prioritarias. Sirve para repasar contenidos y para debatir valores."
+  "app-subasta-desc": "Los participantes pujan con un presupuesto por las frases que creen correctas o por las que consideran prioritarias. Sirve para repasar contenidos y para debatir valores.",
+  "footer-author": "Creado por Juan José de Haro",
+  "footer-code-label": "Código:",
+  "footer-code-link": "Licencia AGPL v3",
+  "footer-content-label": "Contenidos:",
+  "footer-content-link": "Licencia CC BY-SA 4.0",
+  "footer-issues": "Sugerencias y errores",
+  "footer-github-title": "Ver el proyecto en GitHub"
 }

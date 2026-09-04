@@ -29,5 +29,12 @@
   "app-boardlive-title": "BoardLive: Collaborative whiteboard",
   "app-boardlive-desc": "Real-time collaborative whiteboard. The host creates the session, shares a code or QR, and controls who can draw. Includes pages, drawing tools, image insertion, and PDF export. It also lets teachers project on the classroom digital whiteboard what they write or draw on their tablet in real time.",
   "app-subasta-title": "Sentence auction",
-  "app-subasta-desc": "Participants use a budget to bid on the sentences they believe are correct or the ones they consider a priority. Useful both for reviewing content and for discussing values."
+  "app-subasta-desc": "Participants use a budget to bid on the sentences they believe are correct or the ones they consider a priority. Useful both for reviewing content and for discussing values.",
+  "footer-author": "Created by Juan José de Haro",
+  "footer-code-label": "Code:",
+  "footer-code-link": "AGPL v3 License",
+  "footer-content-label": "Content:",
+  "footer-content-link": "CC BY-SA 4.0 License",
+  "footer-issues": "Suggestions and issues",
+  "footer-github-title": "View the project on GitHub"
 }

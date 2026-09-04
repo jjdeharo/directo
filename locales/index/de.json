@@ -29,5 +29,12 @@
   "app-boardlive-title": "BoardLive: Kollaboratives Whiteboard",
   "app-boardlive-desc": "Kollaboratives Whiteboard in Echtzeit. Der Host erstellt die Sitzung, teilt Code oder QR und steuert, wer zeichnen darf. Enthält Seiten, Zeichenwerkzeuge, Bildeinfügen und PDF-Export. Außerdem ermöglicht es Lehrkräften, auf der digitalen Tafel im Klassenraum das zu projizieren, was sie auf ihrem Tablet in Echtzeit schreiben oder zeichnen.",
   "app-subasta-title": "Satz-Auktion",
-  "app-subasta-desc": "Die Teilnehmenden bieten mit einem Budget auf die Sätze, die sie für richtig halten, oder auf jene, die sie für vorrangig halten. Geeignet zum Wiederholen von Inhalten und zum Diskutieren von Werten."
+  "app-subasta-desc": "Die Teilnehmenden bieten mit einem Budget auf die Sätze, die sie für richtig halten, oder auf jene, die sie für vorrangig halten. Geeignet zum Wiederholen von Inhalten und zum Diskutieren von Werten.",
+  "footer-author": "Erstellt von Juan José de Haro",
+  "footer-code-label": "Code:",
+  "footer-code-link": "AGPL-v3-Lizenz",
+  "footer-content-label": "Inhalte:",
+  "footer-content-link": "CC-BY-SA-4.0-Lizenz",
+  "footer-issues": "Vorschläge und Fehler",
+  "footer-github-title": "Das Projekt auf GitHub ansehen"
 }

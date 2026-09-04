@@ -29,5 +29,12 @@
   "app-boardlive-title": "BoardLive: Pizarra kolaboratiboa",
   "app-boardlive-desc": "Denbora errealeko pizarra kolaboratiboa. Anfitrioiak saioa sortzen du, kodea edo QR partekatzen du eta norbaitek marraztu dezakeen kontrolatzen du. Orrialdeak, marrazteko tresnak, irudiak txertatzea eta PDF esportazioa ditu. Gainera, irakasleek gelako arbel digitalean proiektatu dezakete tabletan denbora errealean idazten edo marrazten dutena.",
   "app-subasta-title": "Esaldien enkantea",
-  "app-subasta-desc": "Parte-hartzaileek aurrekontu batekin eskaintzak egiten dituzte zuzentzat jotzen dituzten esaldiengatik edo lehentasunezkotzat dituztenengatik. Edukiak berrikusteko eta balioak eztabaidatzeko balio du."
+  "app-subasta-desc": "Parte-hartzaileek aurrekontu batekin eskaintzak egiten dituzte zuzentzat jotzen dituzten esaldiengatik edo lehentasunezkotzat dituztenengatik. Edukiak berrikusteko eta balioak eztabaidatzeko balio du.",
+  "footer-author": "Juan José de Harok sortua",
+  "footer-code-label": "Kodea:",
+  "footer-code-link": "AGPL v3 lizentzia",
+  "footer-content-label": "Edukiak:",
+  "footer-content-link": "CC BY-SA 4.0 lizentzia",
+  "footer-issues": "Iradokizunak eta akatsak",
+  "footer-github-title": "Ikusi proiektua GitHuben"
 }

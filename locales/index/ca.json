@@ -29,5 +29,12 @@
   "app-boardlive-title": "BoardLive: Pissarra col·laborativa",
   "app-boardlive-desc": "Pissarra col·laborativa en temps real. L'amfitrió crea la sessió, comparteix un codi o QR i controla qui pot dibuixar. Inclou pàgines, eines de dibuix, inserció d'imatges i exportació a PDF. També permet que el professorat projecti a la pissarra digital de l'aula el que escriu o dibuixa a la seva tauleta en temps real.",
   "app-subasta-title": "Subhasta de frases",
-  "app-subasta-desc": "Els participants pugen amb un pressupost per les frases que creuen correctes o per les que consideren prioritàries. Serveix per repassar continguts i per debatre valors."
+  "app-subasta-desc": "Els participants pugen amb un pressupost per les frases que creuen correctes o per les que consideren prioritàries. Serveix per repassar continguts i per debatre valors.",
+  "footer-author": "Creat per Juan José de Haro",
+  "footer-code-label": "Codi:",
+  "footer-code-link": "Llicència AGPL v3",
+  "footer-content-label": "Continguts:",
+  "footer-content-link": "Llicència CC BY-SA 4.0",
+  "footer-issues": "Suggeriments i errors",
+  "footer-github-title": "Veure el projecte a GitHub"
 }

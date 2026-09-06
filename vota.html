@@ -30,6 +30,55 @@
         .bar-transition {
             transition: width 0.5s ease-in-out;
         }
+        .pie-chart-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .pie-chart-svg {
+            width: 100%;
+            max-width: 380px;
+            height: auto;
+        }
+        .pie-slice {
+            transition: d 0.5s ease-in-out, opacity 0.2s;
+            stroke: #ffffff;
+            stroke-width: 1;
+            stroke-linejoin: round;
+        }
+        .pie-legend {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.75rem;
+            width: 100%;
+        }
+        .pie-legend-item {
+            display: flex;
+            align-items: baseline;
+            gap: 0.75rem;
+        }
+        .pie-legend-swatch {
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 0.375rem;
+            flex-shrink: 0;
+            align-self: center;
+        }
+        body.projection-mode .pie-chart-svg {
+            max-width: min(52vh, 100%);
+        }
+        body.projection-mode .pie-chart-wrapper {
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+        body.projection-mode .pie-legend {
+            width: auto;
+            min-width: 18rem;
+        }
         .loader {
             border: 4px solid #f3f3f3;
             border-top: 4px solid var(--theme-color-primary);
@@ -71,6 +120,7 @@
         body.projection-mode #lang-selector-container,
         body.projection-mode #sharing-info-container,
         body.projection-mode #projection-btn,
+        body.projection-mode #chart-type-btn,
         body.projection-mode #edit-btn,
         body.projection-mode .role-switch-link,
         body.projection-mode footer {
@@ -78,6 +128,13 @@
         }
         body.projection-mode #results-view {
              padding: 0;
+        }
+        /* Deja libre la esquina donde flota el selector de idioma. */
+        #results-header {
+            padding-right: 6rem;
+        }
+        body.projection-mode #results-header {
+            padding-right: 0;
         }
         body.projection-mode .results-grid {
             display: flex;
@@ -202,15 +259,20 @@
             </div>
             
             <div id="results-view" class="hidden themed-content-bg p-6 md:p-8 rounded-xl">
-                <div class="flex justify-between items-start gap-4 mb-8">
+                <div id="results-header" class="flex justify-between items-start gap-4 mb-8">
                     <h2 id="results-question" class="text-4xl md:text-5xl font-extrabold flex-grow text-gray-800"></h2>
-                    <div class="flex gap-2 flex-shrink-0">
+                    <div class="flex flex-wrap justify-end gap-2 flex-shrink-0">
                         <button id="stop-btn" onclick="toggleVotingStatus()" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg inline-flex items-center text-sm">
                             <span data-translate-key="stop_voting_btn">Detener</span>
                         </button>
                         <button id="edit-btn" onclick="confirmEndSession()" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-lg inline-flex items-center text-sm">
                             <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" /><path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" /></svg>
                             <span data-translate-key="edit_btn_text">Editar</span>
+                        </button>
+                        <button id="chart-type-btn" onclick="toggleChartType()" class="bg-white hover:bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded-lg inline-flex items-center text-sm border border-gray-300">
+                            <svg id="chart-icon-pie" class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9 9 0 1020.945 13H11V3.055z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9A9.004 9.004 0 0015 3.512V9h5.488z"></path></svg>
+                            <svg id="chart-icon-bars" class="w-4 h-4 mr-2 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h11M4 12h16M4 18h7"></path></svg>
+                            <span id="chart-type-btn-text" data-translate-key="chart_pie_btn">Sectores</span>
                         </button>
                         <button id="projection-btn" onclick="toggleProjectionMode()" class="bg-white hover:bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded-lg inline-flex items-center text-sm border border-gray-300">
                             <svg id="projection-icon-enter" class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5"></path></svg>
@@ -420,6 +482,7 @@
                     ? savedLang
                     : (translations[browserLang] ? browserLang : 'es');
             setLanguage(langToSet);
+            updateChartTypeButton();
 
             checkURLParameters();
 
@@ -475,6 +538,7 @@
         let sessionData = {};
         let voteTimeout = null;
         let countdownInterval = null;
+        let chartType = localStorage.getItem('vota_chart_type') === 'pie' ? 'pie' : 'bars';
 
         const peerConfig = {
             host: '0.peerjs.com',
@@ -749,13 +813,22 @@
         function updateResultsView(data) {
             document.getElementById('results-question').innerText = data.question;
             const resultsContainer = document.getElementById('results-container');
-            resultsContainer.innerHTML = '';
             const totalVotes = data.options.reduce((sum, option) => sum + option.votes, 0);
             document.getElementById('total-votes').innerText = totalVotes;
 
-            data.options.forEach(option => {
+            if (chartType === 'pie') {
+                resultsContainer.classList.remove('space-y-6');
+                resultsContainer.innerHTML = renderPieChart(data.options, totalVotes);
+            } else {
+                resultsContainer.classList.add('space-y-6');
+                resultsContainer.innerHTML = renderBarChart(data.options, totalVotes);
+            }
+        }
+
+        function renderBarChart(options, totalVotes) {
+            return options.map(option => {
                 const percentage = totalVotes > 0 ? (option.votes / totalVotes) * 100 : 0;
-                resultsContainer.innerHTML += `
+                return `
                     <div>
                         <div class="flex justify-between items-baseline mb-2">
                             <span class="text-xl text-gray-800 font-medium">${option.text}</span>
@@ -766,7 +839,123 @@
                         </div>
                     </div>
                 `;
-            });
+            }).join('');
+        }
+
+        function renderPieChart(options, totalVotes) {
+            const colors = buildPalette(options.length);
+            const cx = 50, cy = 50, r = 46;
+            let slices = '';
+
+            if (totalVotes === 0) {
+                slices = `<circle cx="${cx}" cy="${cy}" r="${r}" fill="#e5e7eb"></circle>`;
+            } else {
+                let startAngle = -Math.PI / 2;
+                options.forEach((option, index) => {
+                    if (option.votes === 0) return;
+                    const fraction = option.votes / totalVotes;
+                    const endAngle = startAngle + fraction * 2 * Math.PI;
+
+                    if (fraction >= 0.9999) {
+                        slices += `<circle class="pie-slice" cx="${cx}" cy="${cy}" r="${r}" fill="${colors[index]}"></circle>`;
+                    } else {
+                        const x1 = cx + r * Math.cos(startAngle), y1 = cy + r * Math.sin(startAngle);
+                        const x2 = cx + r * Math.cos(endAngle), y2 = cy + r * Math.sin(endAngle);
+                        const largeArc = fraction > 0.5 ? 1 : 0;
+                        slices += `<path class="pie-slice" d="M ${cx} ${cy} L ${x1.toFixed(3)} ${y1.toFixed(3)} A ${r} ${r} 0 ${largeArc} 1 ${x2.toFixed(3)} ${y2.toFixed(3)} Z" fill="${colors[index]}"></path>`;
+                    }
+
+                    if (fraction >= 0.06) {
+                        const midAngle = startAngle + (endAngle - startAngle) / 2;
+                        const lx = cx + r * 0.62 * Math.cos(midAngle);
+                        const ly = cy + r * 0.62 * Math.sin(midAngle);
+                        slices += `<text x="${lx.toFixed(3)}" y="${ly.toFixed(3)}" text-anchor="middle" dominant-baseline="central" fill="#ffffff" font-size="7" font-weight="700">${Math.round(fraction * 100)}%</text>`;
+                    }
+                    startAngle = endAngle;
+                });
+            }
+
+            const legend = options.map((option, index) => {
+                const percentage = totalVotes > 0 ? (option.votes / totalVotes) * 100 : 0;
+                return `
+                    <div class="pie-legend-item">
+                        <span class="pie-legend-swatch" style="background-color: ${colors[index]}"></span>
+                        <span class="text-xl text-gray-800 font-medium flex-grow">${option.text}</span>
+                        <span class="text-xl font-bold text-gray-900 whitespace-nowrap">${option.votes} <span class="text-lg text-gray-600 font-medium">(${percentage.toFixed(0)}%)</span></span>
+                    </div>
+                `;
+            }).join('');
+
+            return `
+                <div class="pie-chart-wrapper">
+                    <svg class="pie-chart-svg" viewBox="0 0 100 100" role="img">${slices}</svg>
+                    <div class="pie-legend">${legend}</div>
+                </div>
+            `;
+        }
+
+        // Genera una paleta a partir del color del tema, repartiendo tonos y luminosidad.
+        function buildPalette(count) {
+            const root = getComputedStyle(document.documentElement);
+            const primary = (root.getPropertyValue('--theme-color-primary') || '#16a34a').trim();
+            const [h, s, l] = hexToHsl(primary);
+            const palette = [];
+            for (let i = 0; i < count; i++) {
+                const hue = (h + (360 / Math.max(count, 1)) * i) % 360;
+                const light = Math.min(72, Math.max(32, l + (i % 2 === 0 ? 0 : 12)));
+                palette.push(hslToHex(hue, Math.min(85, Math.max(40, s)), light));
+            }
+            return palette;
+        }
+
+        function hexToHsl(hex) {
+            const clean = hex.replace('#', '');
+            const full = clean.length === 3 ? clean.split('').map(c => c + c).join('') : clean;
+            const r = parseInt(full.substring(0, 2), 16) / 255;
+            const g = parseInt(full.substring(2, 4), 16) / 255;
+            const b = parseInt(full.substring(4, 6), 16) / 255;
+            const max = Math.max(r, g, b), min = Math.min(r, g, b);
+            const l = (max + min) / 2;
+            let h = 0, s = 0;
+            if (max !== min) {
+                const d = max - min;
+                s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+                if (max === r) h = ((g - b) / d + (g < b ? 6 : 0));
+                else if (max === g) h = (b - r) / d + 2;
+                else h = (r - g) / d + 4;
+                h *= 60;
+            }
+            return [h, s * 100, l * 100];
+        }
+
+        function hslToHex(h, s, l) {
+            const sn = s / 100, ln = l / 100;
+            const k = n => (n + h / 30) % 12;
+            const a = sn * Math.min(ln, 1 - ln);
+            const f = n => {
+                const value = ln - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
+                return Math.round(255 * value).toString(16).padStart(2, '0');
+            };
+            return `#${f(0)}${f(8)}${f(4)}`;
+        }
+
+        function toggleChartType() {
+            chartType = chartType === 'pie' ? 'bars' : 'pie';
+            localStorage.setItem('vota_chart_type', chartType);
+            updateChartTypeButton();
+            if (sessionData) updateResultsView(sessionData);
+        }
+
+        function updateChartTypeButton() {
+            const btnText = document.getElementById('chart-type-btn-text');
+            if (!btnText) return;
+            // El botón anuncia el gráfico al que se cambiará.
+            const key = chartType === 'pie' ? 'chart_bars_btn' : 'chart_pie_btn';
+            btnText.setAttribute('data-translate-key', key);
+            const fallback = chartType === 'pie' ? 'Barras' : 'Sectores';
+            btnText.innerText = (translations[currentLang] && translations[currentLang][key]) || fallback;
+            document.getElementById('chart-icon-pie').classList.toggle('hidden', chartType === 'pie');
+            document.getElementById('chart-icon-bars').classList.toggle('hidden', chartType !== 'pie');
         }
         function joinSession() {
             const hostId = document.getElementById('code-input').value.trim().toUpperCase();

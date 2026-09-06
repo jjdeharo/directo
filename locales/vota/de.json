@@ -24,6 +24,8 @@
   "projection_btn_text": "Projizieren",
   "edit_btn_text": "Bearbeiten",
   "projection_btn_exit_text": "Projektionsmodus beenden",
+  "chart_pie_btn": "Kreisdiagramm",
+  "chart_bars_btn": "Balkendiagramm",
   "total_votes_label": "Gesamtstimmen",
   "join_title": "Einer Abstimmung beitreten",
   "session_code_label": "Sitzungscode:",

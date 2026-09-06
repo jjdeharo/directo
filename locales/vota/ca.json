@@ -24,6 +24,8 @@
   "projection_btn_text": "Projectar",
   "edit_btn_text": "Edita",
   "projection_btn_exit_text": "Sortir del mode projector",
+  "chart_pie_btn": "Sectors",
+  "chart_bars_btn": "Barres",
   "total_votes_label": "Vots totals",
   "join_title": "Unir-se a una votació",
   "session_code_label": "Codi de la sessió:",

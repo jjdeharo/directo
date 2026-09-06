@@ -24,6 +24,8 @@
   "projection_btn_text": "Proiektatu",
   "edit_btn_text": "Editatu",
   "projection_btn_exit_text": "Proiektagailu modutik irten",
+  "chart_pie_btn": "Sektoreak",
+  "chart_bars_btn": "Barrak",
   "total_votes_label": "Botoak guztira",
   "join_title": "Bozketa batean sartu",
   "session_code_label": "Saioaren kodea:",

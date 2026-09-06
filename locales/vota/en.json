@@ -24,6 +24,8 @@
   "projection_btn_text": "Project",
   "edit_btn_text": "Edit",
   "projection_btn_exit_text": "Exit projection mode",
+  "chart_pie_btn": "Pie chart",
+  "chart_bars_btn": "Bar chart",
   "total_votes_label": "Total votes",
   "join_title": "Join a poll",
   "session_code_label": "Session code:",

@@ -36,7 +36,7 @@
   "privacy-advantages-li3": "<strong>Full control by the presenter:</strong> The presenter is the only one who receives and views the data on their device. If they decide to export the results (to PDF or CSV), those files are saved locally on their own computer, under their control and responsibility.",
   "privacy-p2p-p2": "This approach ensures a high level of privacy, making it ideal for any type of gathering (educational, professional, or social), as neither the tool creator nor third parties have access to the data generated during the activities.",
   "app-vota-title": "Simple Voting",
-  "app-vota-desc": "A tool for quickly launching multiple-choice questions. The presenter defines a question and several answer options. Participants choose an option, and the results are instantly displayed as a percentage bar chart on the presenter's screen.",
+  "app-vota-desc": "A tool for quickly launching multiple-choice questions. The presenter defines a question and several answer options. Participants choose an option, and the results appear instantly on the presenter's screen. The display can be switched at any time between a <strong>bar chart</strong> and a <strong>pie chart</strong> using the button above the results; the chart colours are generated from the colour chosen for the session, and the preference is remembered for later votes.",
   "app-nube-title": "Word Cloud",
   "app-nube-desc": "Ideal for quick brainstorming. Participants submit short words or phrases in response to a question. These words form a dynamic cloud where the frequency of each term determines its size. The final result can be exported as a <strong>PNG</strong> image or the raw data as a spreadsheet (<strong>CSV</strong>).",
   "app-ideas-title": "Brainstorming and Voting",

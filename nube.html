@@ -715,38 +715,51 @@
         }
 
         function openQrPopup(sessionUrl) {
-            const popup = window.open('', 'qrWindow', 'width=720,height=720,resizable=yes,scrollbars=yes');
+            // El QR se genera aquí y se envía como imagen: la ventana emergente se abre
+            // sobre about:blank y ahí la librería del CDN no llega a cargarse.
+            const dataUrl = buildQrDataUrl(sessionUrl, 1024);
+            if (!dataUrl) return;
+            const popup = window.open('', 'qrWindow', 'width=720,height=720,resizable=yes,scrollbars=no');
             if (!popup) return;
             const popupDoc = popup.document;
             popupDoc.open();
             popupDoc.write(`<!DOCTYPE html>
-<html lang="es">
+<html lang="${document.documentElement.lang || 'es'}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QR</title>
     <style>
-        body { margin: 0; display: flex; align-items: center; justify-content: center; background: #f8fafc; font-family: 'Inter', sans-serif; }
-        #qr-wrapper { padding: 24px; background: white; border-radius: 16px; box-shadow: 0 10px 30px rgba(15, 23, 42, 0.2); }
+        html, body { height: 100%; }
+        body { margin: 0; display: flex; align-items: center; justify-content: center; background: #f8fafc; }
+        #qr-wrapper { padding: 24px; background: #ffffff; border-radius: 16px; box-shadow: 0 10px 30px rgba(15, 23, 42, 0.2); }
+        img { display: block; width: min(80vw, 80vh); height: auto; image-rendering: pixelated; }
     </style>
 </head>
 <body>
-    <div id="qr-wrapper"><div id="qr"></div></div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"><\/script>
-    <script>
-        const sessionUrl = ${JSON.stringify(sessionUrl)};
-        const qrContainer = document.getElementById('qr');
-        function renderQr() {
-            const size = Math.max(240, Math.min(window.innerWidth, window.innerHeight) - 80);
-            qrContainer.innerHTML = '';
-            new QRCode(qrContainer, { text: sessionUrl, width: size, height: size });
-        }
-        window.addEventListener('load', renderQr);
-        window.addEventListener('resize', renderQr);
-    <\/script>
+    <div id="qr-wrapper"><img src="${dataUrl}" alt="QR"></div>
 </body>
 </html>`);
             popupDoc.close();
+            popup.focus();
+        }
+
+        // Dibuja un QR fuera de pantalla y devuelve su imagen como data URL.
+        function buildQrDataUrl(url, size) {
+            const holder = document.createElement('div');
+            holder.style.cssText = 'position:absolute;left:-9999px;top:0;';
+            document.body.appendChild(holder);
+            let dataUrl = '';
+            try {
+                new QRCode(holder, { text: url, width: size, height: size });
+                const canvas = holder.querySelector('canvas');
+                const img = holder.querySelector('img');
+                dataUrl = canvas ? canvas.toDataURL('image/png') : (img ? img.src : '');
+            } catch (error) {
+                console.error('No se ha podido generar el QR ampliado', error);
+            }
+            holder.remove();
+            return dataUrl;
         }
         function generateQRCode(url) {
             const container = document.getElementById('qrcode-container');
